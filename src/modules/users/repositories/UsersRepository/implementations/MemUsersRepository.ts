@@ -6,9 +6,9 @@ const users: Array<IUser> = [];
 
 export class MemUsersRepository implements IUsersRepository {
 
-	async create(data: Omit<IUser, 'id'>): Promise<IUser> {
+	async create(data: Omit<IUser, 'id'>, id?: string): Promise<IUser> {
 		const User = {
-			id: uuid(),
+			id: id || uuid(),
 			...data
 		};
 		users.push(User);

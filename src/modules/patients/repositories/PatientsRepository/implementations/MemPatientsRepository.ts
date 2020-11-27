@@ -2,7 +2,16 @@ import { IPatientsRepository } from '../models/IPatientsRepository';
 import { v4 as uuid } from 'uuid';
 import { IPatient } from '../../../entities/models/IPatient';
 
-const patients: Array<IPatient> = [];
+const patients: Array<IPatient> = [
+	{
+		age: 18,
+		name: 'Paciente1',
+		id: '11',
+		observations: '',
+		ownerId: '1',
+		sex: 'male'
+	}
+];
 
 export class MemPatientsRepository implements IPatientsRepository {
 

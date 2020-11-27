@@ -19,6 +19,7 @@ export class CreateSessionService {
 			throw new Error('User not found');
 		}
 
+
 		if (!await bcrypt.compare(password, user.password)) {
 			throw new Error('Wrong password');
 		}

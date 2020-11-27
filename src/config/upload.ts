@@ -2,7 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import crypto from 'crypto';
 
-export const uploadsDirectory = path.resolve(__dirname, '..', '..', 'upload');
+export const uploadsDirectory = path.resolve(__dirname, '..', '..', 'uploads');
 
 export const uploadConfig = {
 	storage: multer.diskStorage({

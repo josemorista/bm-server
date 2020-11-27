@@ -1,5 +1,6 @@
 import { IExamsRepository } from '../models/IExamsRepository';
 import { v4 as uuid } from 'uuid';
+import { IExam } from '../../../entities/IExam';
 
 const exams: Array<IExam> = [];
 
@@ -16,5 +17,9 @@ export class MemExamsRepository implements IExamsRepository {
 
 	async findById(id: string): Promise<IExam | undefined> {
 		return exams.find(el => el.id === id);
+	}
+
+	async findByPatient(patientId: string): Promise<Array<IExam>> {
+		return exams.filter(el => el.patientId === patientId);
 	}
 }

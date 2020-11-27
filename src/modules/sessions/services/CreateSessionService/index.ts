@@ -24,7 +24,7 @@ export class CreateSessionService {
 		}
 
 		return {
-			userId: user.id,
+			user: { ...user, password: undefined },
 			token: jwt.sign({ user: { id: user.id } }, authConfig.secret, {
 				expiresIn: authConfig.expiresIn
 			})

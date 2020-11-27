@@ -18,4 +18,8 @@ export class MemPatientsRepository implements IPatientsRepository {
 	async findById(id: string): Promise<IPatient | undefined> {
 		return patients.find(el => el.id === id);
 	}
+
+	async findByOwner(ownerId: string): Promise<Array<IPatient>> {
+		return patients.filter(el => el.ownerId === ownerId);
+	}
 }

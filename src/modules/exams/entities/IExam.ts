@@ -1,6 +1,7 @@
-interface IExam {
+export interface IExam {
 	id: string;
 	name: string;
+	patientId: string;
 	minDicomValue: number;
 	maxDicomValue: number;
 	currentStep: number;

@@ -4,4 +4,5 @@ export interface IPatient {
 	age: number;
 	sex: 'male' | 'female';
 	observations: string;
+	ownerId: string;
 }

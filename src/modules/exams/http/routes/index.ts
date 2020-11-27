@@ -34,4 +34,9 @@ examsRouter.get('/:id', async (request, response) => {
 	return response.json(await getExamService.execute(id));
 });
 
+examsRouter.get('/', async (request, response) => {
+	const { patientId } = request.query;
+	return response.json(await examsRepository.findByPatient(String(patientId)));
+});
+
 export { examsRouter };

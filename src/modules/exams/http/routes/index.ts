@@ -1,4 +1,4 @@
-import { request, response, Router } from 'express';
+import { Router } from 'express';
 import { uploader } from '../../../../shared/http/middlewares/uploader';
 import { MemExamsRepository } from '../../repositories/ExamsRepository/implementations/MemExamsRepository';
 import { CreateExamService } from '../../services/CreateExamService';

@@ -1,5 +1,6 @@
 import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExamsRepository';
-
+import dotenv from 'dotenv';
+dotenv.config();
 export class GetExamService {
 
 	constructor(private examsRepository: IExamsRepository) { }
@@ -7,10 +8,13 @@ export class GetExamService {
 	async execute(id: string) {
 		const exam = await this.examsRepository.findById(id);
 		if (exam) {
-			exam.dicomFileURL = `${process.env.baseURL}${exam.dicomFileURL}`;
-			exam.originalImgURL = `${process.env.baseURL}${exam.originalImgURL}`;
-			exam.processedImgURL = `${process.env.baseURL}${exam.processedImgURL}`;
+			return {
+				...exam,
+				dicomFileURL: `${process.env.baseURL}/public/${exam.dicomFileURL}`,
+				originalImgURL: `${process.env.baseURL}/public/${exam.originalImgURL}`,
+				processedImgURL: `${process.env.baseURL}/public/${exam.processedImgURL}`
+			};
 		}
-		return exam;
+		return undefined;
 	}
 }

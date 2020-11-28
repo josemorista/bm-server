@@ -23,6 +23,19 @@ export class SegmentExamService {
 				String(max),
 				path.resolve(uploadsDirectory, exam.processedImgURL)
 			]);
+
+			if (exam.segmentationParams[0] === -1) {
+				spawnSync('python3', [
+					path.resolve(__dirname, 'dicomParser.py'),
+					path.resolve(uploadsDirectory, exam.dicomFileURL),
+					String(0),
+					String(300),
+					path.resolve(uploadsDirectory, exam.originalImgURL)
+				]);
+			}
+
+			// update segmentation params
+
 		}
 
 	}

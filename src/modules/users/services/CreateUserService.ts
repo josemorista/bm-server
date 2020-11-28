@@ -21,7 +21,7 @@ export class CreateUserService {
 			name,
 			email,
 			password: await bcrypt.hash(password, 10)
-		}, '1');
+		});
 
 		return { ...user, password: undefined };
 

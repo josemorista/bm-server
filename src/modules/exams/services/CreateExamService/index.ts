@@ -10,9 +10,10 @@ export class CreateExamService {
 
 	constructor(private examsRepository: IExamsRepository) { }
 
-	async execute({ filename, name }: ICreateExamServiceDTO) {
+	async execute({ filename, name, patientId }: ICreateExamServiceDTO) {
 		const exam = await this.examsRepository.create({
 			currentStep: 0,
+			patientId,
 			dicomFileURL: filename,
 			filteringOperations: [],
 			minDicomValue: 50,
@@ -20,8 +21,9 @@ export class CreateExamService {
 			name,
 			originalImgURL: `org-${filename.replace('.dcm', '.png')}`,
 			processedImgURL: `proc-${filename.replace('.dcm', '.png')}`,
-			segmentationParams: [50, 500]
-		})
+			segmentationParams: [-1, -1]
+		});
+
 		return exam;
 	}
 }

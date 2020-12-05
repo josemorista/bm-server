@@ -1,0 +1,74 @@
+[
+	{
+		"centroid": [
+			125,
+			431
+		],
+		"arcLength": 153.78174459934235,
+		"area": 874.5,
+		"eccentricity": 0.87
+	},
+	{
+		"centroid": [
+			109,
+			150
+		],
+		"arcLength": 95.94112491607666,
+		"area": 296.0,
+		"eccentricity": 0.79
+	},
+	{
+		"centroid": [
+			30,
+			451
+		],
+		"arcLength": 132.81118214130402,
+		"area": 198.5,
+		"eccentricity": 0.91
+	},
+	{
+		"centroid": [
+			161,
+			440
+		],
+		"arcLength": 54.041630148887634,
+		"area": 135.5,
+		"eccentricity": 0.68
+	},
+	{
+		"centroid": [
+			131,
+			368
+		],
+		"arcLength": 49.21320307254791,
+		"area": 131.5,
+		"eccentricity": 0.26
+	},
+	{
+		"centroid": [
+			134,
+			218
+		],
+		"arcLength": 48.28427076339722,
+		"area": 110.0,
+		"eccentricity": 0.62
+	},
+	{
+		"centroid": [
+			221,
+			433
+		],
+		"arcLength": 38.38477599620819,
+		"area": 94.5,
+		"eccentricity": 0.64
+	},
+	{
+		"centroid": [
+			173,
+			298
+		],
+		"arcLength": 16.242640614509583,
+		"area": 17.5,
+		"eccentricity": 0.62
+	}
+]

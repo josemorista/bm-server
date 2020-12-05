@@ -24,16 +24,17 @@ def getSegmentedBGR(pixelArray, rows, cols, minimum, maximum):
     return image
 
 
-src = sys.argv[1]
-minimum = int(sys.argv[2])
-maximum = int(sys.argv[3])
-output = sys.argv[4]
-ds = dicom.dcmread(src)
+def execute(src, minimum, maximum, output):
+    ds = dicom.dcmread(src)
 
-rows = ds.Rows
-cols = ds.Columns
+    rows = ds.Rows
+    cols = ds.Columns
 
-patientId = ds.PatientID
-im = getSegmentedBGR(ds.pixel_array, rows, cols, minimum, maximum)
+    patientId = ds.PatientID
+    im = getSegmentedBGR(ds.pixel_array, rows, cols, minimum, maximum)
 
-cv2.imwrite(output, im)
+    im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+
+    cv2.imwrite(output, im)
+
+execute(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), sys.argv[4])

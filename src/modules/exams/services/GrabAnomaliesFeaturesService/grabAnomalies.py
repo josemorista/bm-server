@@ -5,7 +5,7 @@ from math import sqrt, pow
 
 def execute(src, out, minArea=5):
     img = cv.imread(src, 0)
-    contours, hierarchy = cv.findContours(img, cv.RETR_TREE,  cv.CHAIN_APPROX_NONE)
+    contours, hierarchy = cv.findContours(img, cv.RETR_EXTERNAL,  cv.CHAIN_APPROX_NONE)
     # Sort by larger areas
     contoursFeatures = []
     cnts = sorted(contours, key=cv.contourArea, reverse=True)

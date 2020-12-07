@@ -5,6 +5,7 @@ from math import sqrt, pow
 
 def execute(src, out, minArea=5):
     img = cv.imread(src, 0)
+		# External tree or external as param
     contours, hierarchy = cv.findContours(img, cv.RETR_EXTERNAL,  cv.CHAIN_APPROX_NONE)
     # Sort by larger areas
     contoursFeatures = []
@@ -34,7 +35,7 @@ def execute(src, out, minArea=5):
                 features['eccentricity'] = eccentricity
             except Error:
                 print(Error)
-                features['eccentricity'] = -1
+                features['eccentricity'] = 0
             contoursFeatures.append(features)
     f = open(out, 'w')
     f.write(json.dumps(contoursFeatures))

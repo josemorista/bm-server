@@ -1,0 +1,202 @@
+[
+	{
+		"xCentroid": 136,
+		"yCentroid": 275,
+		"arcLength": 496.5168067216873,
+		"area": 2071.5,
+		"eccentricity": 0.93,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 129,
+		"yCentroid": 495,
+		"arcLength": 172.02438521385193,
+		"area": 865.0,
+		"eccentricity": 0.87,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "bladder"
+	},
+	{
+		"xCentroid": 153,
+		"yCentroid": 198,
+		"arcLength": 166.95331752300262,
+		"area": 661.5,
+		"eccentricity": 0.78,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 76,
+		"yCentroid": 260,
+		"arcLength": 68.87005722522736,
+		"area": 117.5,
+		"eccentricity": 0.86,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 157,
+		"yCentroid": 671,
+		"arcLength": 58.28427076339722,
+		"area": 98.0,
+		"eccentricity": 0.88,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 174,
+		"yCentroid": 650,
+		"arcLength": 27.313708305358887,
+		"area": 48.0,
+		"eccentricity": 0.32,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 121,
+		"yCentroid": 306,
+		"arcLength": 52.62741661071777,
+		"area": 47.0,
+		"eccentricity": 0.51,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 153,
+		"yCentroid": 152,
+		"arcLength": 47.79898953437805,
+		"area": 37.0,
+		"eccentricity": 0.96,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 191,
+		"yCentroid": 255,
+		"arcLength": 28.727921843528748,
+		"area": 35.5,
+		"eccentricity": 0.86,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 139,
+		"yCentroid": 149,
+		"arcLength": 42.97056245803833,
+		"area": 32.0,
+		"eccentricity": 0.85,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 129,
+		"yCentroid": 541,
+		"arcLength": 20.242640614509583,
+		"area": 26.5,
+		"eccentricity": 0.6,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 53,
+		"yCentroid": 459,
+		"arcLength": 23.899494767189026,
+		"area": 23.5,
+		"eccentricity": 0.81,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 128,
+		"yCentroid": 152,
+		"arcLength": 29.899494767189026,
+		"area": 18.5,
+		"eccentricity": 0.16,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 75,
+		"yCentroid": 241,
+		"arcLength": 19.071067690849304,
+		"area": 16.5,
+		"eccentricity": 0.73,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 207,
+		"yCentroid": 457,
+		"arcLength": 18.485281229019165,
+		"area": 16.0,
+		"eccentricity": 0.27,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 167,
+		"yCentroid": 658,
+		"arcLength": 19.071067690849304,
+		"area": 14.5,
+		"eccentricity": 0.61,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 89,
+		"yCentroid": 647,
+		"arcLength": 23.071067690849304,
+		"area": 14.5,
+		"eccentricity": 0.86,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 165,
+		"yCentroid": 844,
+		"arcLength": 25.313708305358887,
+		"area": 10.0,
+		"eccentricity": 0.95,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 165,
+		"yCentroid": 835,
+		"arcLength": 18.242640614509583,
+		"area": 6.5,
+		"eccentricity": 0.81,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	},
+	{
+		"xCentroid": 98,
+		"yCentroid": 653,
+		"arcLength": 8.828427076339722,
+		"area": 5.0,
+		"eccentricity": 0.81,
+		"type": "ant",
+		"applicationHours": 3,
+		"label": "osteoblasticImplant"
+	}
+]

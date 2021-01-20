@@ -7,13 +7,14 @@ import { patientsRouter } from '../modules/patients/http/routes/patients.routes'
 import { examsRouter } from '../modules/exams/http/routes/exams.routes';
 import { uploadConfig } from '../config/upload';
 import { errorHandler } from './http/middlewares/errorHandler';
+import './infra/typeorm/databases';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/public', express.static(uploadConfig.diskStorageProviderConfig.destination));
+app.use('/uploads', express.static(uploadConfig.diskStorageProviderConfig.destination));
 
 app.use('/users', usersRouter);
 app.use('/patients', patientsRouter);

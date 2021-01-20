@@ -4,7 +4,6 @@ import { DiskStorageProvider } from '../../../../shared/providers/StorageProvide
 import { ensureAuthentication } from '../../../users/http/middlewares/ensureAuthentication';
 import { FakeExamsRepository } from '../../repositories/ExamsRepository/fakes/FakeExamsRepository';
 import { CreateExamService } from '../../services/CreateExamService';
-import { GetExamService } from '../../services/GetExamService';
 import { SegmentExamService } from '../../services/SegmentExamService';
 
 const examsRouter = Router();
@@ -37,8 +36,7 @@ examsRouter.patch('/:id/segmentation', async (request, response) => {
 examsRouter.get('/:id', async (request, response) => {
 	const examsRepository = new FakeExamsRepository();
 	const { id } = request.params;
-	const getExamService = new GetExamService(examsRepository);
-	return response.json(await getExamService.execute(id));
+	return response.json(await examsRepository.findById(id));
 });
 
 examsRouter.get('/', async (request, response) => {

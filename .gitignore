@@ -4,5 +4,6 @@ uploads/*
 tmp/*
 !tmp/.gitkeep
 .env
+ormconfig.json
 */**/*.dcm
 */**/*.png

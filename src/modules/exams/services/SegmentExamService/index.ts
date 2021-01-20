@@ -18,19 +18,19 @@ export class SegmentExamService {
 		if (exam) {
 			spawnSync('python3', [
 				path.resolve(__dirname, 'dicomParser.py'),
-				path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFileURL),
+				path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFile),
 				String(min),
 				String(max),
-				path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.processedImgURL || `pro-${exam.dicomFileURL.replace('.dcm', '.png')}`)
+				path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.processedImg || `pro-${exam.dicomFile.replace('.dcm', '.png')}`)
 			]);
 
-			if (!exam.originalImgURL) {
+			if (!exam.originalImg) {
 				spawnSync('python3', [
 					path.resolve(__dirname, 'dicomParser.py'),
-					path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFileURL),
+					path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFile),
 					String(0),
 					String(300),
-					path.resolve(uploadConfig.diskStorageProviderConfig.destination, `org-${exam.dicomFileURL.replace('.dcm', '.png')}`)
+					path.resolve(uploadConfig.diskStorageProviderConfig.destination, `org-${exam.dicomFile.replace('.dcm', '.png')}`)
 				]);
 			}
 

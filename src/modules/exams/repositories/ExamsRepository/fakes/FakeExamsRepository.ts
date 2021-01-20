@@ -1,5 +1,6 @@
 import { ICreateExamDTO, IExamsRepository } from '../models/IExamsRepository';
 import { IExam } from '../../../entities/models/IExam';
+import { AppError } from '../../../../../shared/errors/AppError';
 
 
 export class FakeExamsRepository implements IExamsRepository {
@@ -22,5 +23,17 @@ export class FakeExamsRepository implements IExamsRepository {
 
 	async findByPatient(patientId: string): Promise<Array<IExam>> {
 		return this.exams.filter(el => el.patientId === patientId);
+	}
+
+	async updateById(id: string, data: IExam): Promise<void> {
+		const index = this.exams.findIndex(el => el.id === id);
+		if (index === -1) {
+			throw new AppError('exam does not exists');
+		}
+		this.exams = this.exams.filter(el => el.id !== id);
+		this.exams.push({
+			...data,
+			id
+		});
 	}
 }

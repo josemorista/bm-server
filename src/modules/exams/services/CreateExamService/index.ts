@@ -18,13 +18,13 @@ export class CreateExamService {
 			id: uuid(),
 			currentStep: 0,
 			patientId,
-			dicomFileURL: await this.storageProvider.save(filename),
+			dicomFile: await this.storageProvider.save(filename),
 			filteringOperations: [],
 			minDicomValue: 50,
 			maxDicomValue: 500,
 			name,
-			originalImgURL: null,
-			processedImgURL: null,
+			originalImg: null,
+			processedImg: null,
 			segmentationParams: []
 		});
 

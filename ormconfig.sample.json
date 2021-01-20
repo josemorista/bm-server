@@ -1,0 +1,19 @@
+[
+	{
+		"type": "postgres",
+		"host": "localhost",
+		"port": 5432,
+		"username": "postgres",
+		"password": "docker",
+		"database": "bonemetastasis",
+		"entities": [
+			"src/modules/*/infra/typeorm/entities/*.ts"
+		],
+		"migrations": [
+			"./src/shared/infra/typeorm/migrations/default/*.ts"
+		],
+		"cli": {
+			"migrationsDir": "./src/shared/infra/typeorm/migrations/default"
+		}
+	}
+]

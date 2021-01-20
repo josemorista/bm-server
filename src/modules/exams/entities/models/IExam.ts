@@ -10,9 +10,9 @@ export interface IExam {
 	currentStep: number;
 	segmentationParams: Array<number>;
 	filteringOperations: Array<string>;
-	processedImgURL: string | null;
-	originalImgURL: string | null;
-	dicomFileURL: string;
+	processedImg: string | null;
+	originalImg: string | null;
+	dicomFile: string;
 	createdAt: Date;
 	updatedAt: Date;
 }

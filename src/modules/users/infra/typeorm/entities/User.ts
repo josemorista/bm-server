@@ -9,13 +9,13 @@ import { env } from '../../../../../shared/env';
 @Entity('users')
 export class User implements IUser {
 
-	@PrimaryColumn({ type: 'varchar' })
+	@PrimaryColumn({ type: 'varchar', name: 'id' })
 	id: string;
 
-	@Column({ type: 'varchar' })
+	@Column({ type: 'varchar', name: 'firstname' })
 	firstName: string;
 
-	@Column({ type: 'varchar' })
+	@Column({ type: 'varchar', name: 'lastname' })
 	lastName: string;
 
 	@Exclude()
@@ -25,10 +25,10 @@ export class User implements IUser {
 	@Column({ type: 'varchar' })
 	email: string;
 
-	@Column({ type: 'varchar' })
+	@Column({ type: 'varchar', name: 'cpforcnpj' })
 	cpfOrCnpj: string;
 
-	@Column({ type: 'timestamp', nullable: true })
+	@Column({ type: 'timestamp', nullable: true, name: 'birthdate' })
 	birthDate: Date | null;
 
 	@Column({ type: 'varchar', nullable: true })
@@ -41,10 +41,10 @@ export class User implements IUser {
 		return null;
 	}
 
-	@CreateDateColumn()
+	@CreateDateColumn({ name: 'createdat' })
 	createdAt: Date;
 
-	@UpdateDateColumn()
+	@UpdateDateColumn({ name: 'updatedat' })
 	updatedAt: Date;
 
 }

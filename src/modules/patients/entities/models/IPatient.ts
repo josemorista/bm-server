@@ -3,7 +3,7 @@ import { IUser } from '../../../users/entities/models/IUser';
 export interface IPatient {
 	id: string;
 	name: string;
-	age: number;
+	birthDate: Date;
 	sex: 'male' | 'female';
 	history: string;
 	ownerId: string;

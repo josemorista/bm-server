@@ -3,6 +3,6 @@ export interface IPatient {
 	name: string;
 	age: number;
 	sex: 'male' | 'female';
-	observations: string;
+	history: string;
 	ownerId: string;
 }

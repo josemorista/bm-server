@@ -1,6 +1,6 @@
 import { IExamsRepository } from '../models/IExamsRepository';
 import { v4 as uuid } from 'uuid';
-import { IExam } from '../../../entities/IExam';
+import { IExam } from '../../../entities/models/IExam';
 
 const exams: Array<IExam> = [];
 

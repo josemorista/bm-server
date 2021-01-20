@@ -1,6 +1,8 @@
 node_modules
 uploads/*
 !uploads/.gitkeep
+tmp/*
+!tmp/.gitkeep
 .env
 */**/*.dcm
 */**/*.png

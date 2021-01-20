@@ -1,16 +1,21 @@
 import { Router } from 'express';
 import { upload } from '../../../../shared/http/middlewares/upload';
-import { MemExamsRepository } from '../../repositories/ExamsRepository/implementations/MemExamsRepository';
+import { DiskStorageProvider } from '../../../../shared/providers/StorageProvider/implementations/DiskStorageProvider';
+import { ensureAuthentication } from '../../../users/http/middlewares/ensureAuthentication';
+import { FakeExamsRepository } from '../../repositories/ExamsRepository/fakes/FakeExamsRepository';
 import { CreateExamService } from '../../services/CreateExamService';
 import { GetExamService } from '../../services/GetExamService';
 import { SegmentExamService } from '../../services/SegmentExamService';
 
 const examsRouter = Router();
 
-const examsRepository = new MemExamsRepository();
+examsRouter.use(ensureAuthentication);
+
 
 examsRouter.post('/', upload.single('dicom'), async (request, response) => {
-	const createExamService = new CreateExamService(examsRepository);
+	const examsRepository = new FakeExamsRepository();
+	const storageProvider = new DiskStorageProvider();
+	const createExamService = new CreateExamService(examsRepository, storageProvider);
 	return response.json(await createExamService.execute({
 		filename: request.file.filename,
 		name: request.file.originalname,
@@ -19,6 +24,7 @@ examsRouter.post('/', upload.single('dicom'), async (request, response) => {
 });
 
 examsRouter.patch('/:id/segmentation', async (request, response) => {
+	const examsRepository = new FakeExamsRepository();
 	const { id } = request.params;
 	const segmentExamService = new SegmentExamService(examsRepository);
 	return response.json(await segmentExamService.execute({
@@ -29,12 +35,14 @@ examsRouter.patch('/:id/segmentation', async (request, response) => {
 });
 
 examsRouter.get('/:id', async (request, response) => {
+	const examsRepository = new FakeExamsRepository();
 	const { id } = request.params;
 	const getExamService = new GetExamService(examsRepository);
 	return response.json(await getExamService.execute(id));
 });
 
 examsRouter.get('/', async (request, response) => {
+	const examsRepository = new FakeExamsRepository();
 	const { patientId } = request.query;
 	return response.json(await examsRepository.findByPatient(String(patientId)));
 });

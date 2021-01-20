@@ -1,4 +1,4 @@
-import { IPatientsRepository } from '../models/IPatientsRepository';
+import { IPatientsRepository, ICreatePatientDTO } from '../models/IPatientsRepository';
 import { IPatient } from '../../../entities/models/IPatient';
 
 export class FakePatientsRepository implements IPatientsRepository {
@@ -9,8 +9,12 @@ export class FakePatientsRepository implements IPatientsRepository {
 		this.patients = [];
 	}
 
-	async create(data: IPatient): Promise<IPatient> {
-		const patient = data;
+	async create(data: ICreatePatientDTO): Promise<IPatient> {
+		const patient = {
+			...data,
+			createdAt: new Date(),
+			updatedAt: new Date()
+		};
 		this.patients.push(patient);
 		return patient;
 	}

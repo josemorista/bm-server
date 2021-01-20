@@ -1,6 +1,4 @@
 import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExamsRepository';
-import dotenv from 'dotenv';
-dotenv.config();
 export class GetExamService {
 
 	constructor(private examsRepository: IExamsRepository) { }

@@ -1,9 +1,9 @@
 node_modules
+.env
 uploads/*
 !uploads/.gitkeep
 tmp/*
 !tmp/.gitkeep
-.env
 ormconfig.json
 */**/*.dcm
 */**/*.png

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express from 'express';
+import express, { request, response } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import { usersRouter } from '../modules/users/http/routes/users.routes';
@@ -13,6 +13,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.get('/', (request, response) => {
+	return response.json({
+		message: 'Enjoy the silence'
+	});
+});
 
 app.use('/uploads', express.static(uploadConfig.diskStorageProviderConfig.destination));
 

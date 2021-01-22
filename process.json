@@ -1,0 +1,12 @@
+{
+	"apps": [
+		{
+			"name": "bm-server",
+			"script": "ts-node-dev --inspect --respawn --ignore-watch node_modules src/shared/app.ts",
+			"exec_mode": "cluster",
+			"instances": 1,
+			"merge_logs": true,
+			"log_date_format": "YYYY-MM-DD HH:mm Z"
+		}
+	]
+}

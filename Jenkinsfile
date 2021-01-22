@@ -17,8 +17,7 @@ pipeline {
 				stage('Publish') {
 					steps {
 						sh """
-							ssh ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com "
-							cd /tmp &&
+							ssh ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com cd /tmp &&
 							rm -rf /home/ubuntu/bmdeploy/* &&
 							tar -xf bmsartifact.tgz -C /home/ubuntu/bmdeploy &&
 							rm bmsartifact.tgz

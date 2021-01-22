@@ -9,7 +9,7 @@ pipeline {
         stage('Build') { 
             steps {
                 sh 'npm install'
-								sh 'tar --exclude='./git' -cvz artifact.zip .'
+								sh 'tar --exclude=.git -cvz artifact.zip .'
 								sh 'rsync -v artifact.zip ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com:/tmp'
             }
         }

@@ -8,8 +8,8 @@ pipeline {
             steps {
 							sh """
                 npm install
-								tar czf bm-artifact.tgz node_modules package.json docker-compose.yml tmp uploads ormconfig.sample.json src
-								scp ./bm-artifact.tgz ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com:/tmp/bmdeploy/bm-artifact.tgz
+								tar czf bmsartifact.tgz node_modules package.json docker-compose.yml tmp uploads ormconfig.sample.json src
+								scp ./bmsartifact.tgz ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com:/tmp/bmsartifact.tgz
 							"""
             }
         }
@@ -18,8 +18,10 @@ pipeline {
 					steps {
 						sh """
 							ssh ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com << EOF
-							cd /tmp/bmdeploy 
-							tar -xf bm-artifact.tgz -C /home/ubuntu/bmdeploy
+							cd /tmp
+							rm -rf /home/ubuntu/bmdeploy/*
+							tar -xf bmsartifact.tgz -C /home/ubuntu/bmdeploy
+							rm bmsartifact.tgz
 							EOF
 							"""
 					}

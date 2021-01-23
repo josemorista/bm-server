@@ -22,6 +22,11 @@ pipeline {
 							rm -rf /home/ubuntu/bmdeploy/*
 							tar -xf bmsartifact.tgz -C /home/ubuntu/bmdeploy
 							rm bmsartifact.tgz
+							cd /home/ubuntu/bmdeploy
+							mv ./orm-config.sample.json ./ormconfig.json
+							sudo docker-compose up -d
+							pm2 delete process.json &> /dev/null
+							pm2 start process.json
 EOF"""
 					}
 				}

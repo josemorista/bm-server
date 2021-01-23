@@ -8,7 +8,7 @@ pipeline {
             steps {
 							sh """
                 npm install
-								tar czf bmsartifact.tgz node_modules package.json docker-compose.yml tmp uploads ormconfig.sample.json src
+								tar czf bmsartifact.tgz node_modules package.json docker-compose.yml tmp uploads ormconfig.sample.json src process.json
 								scp ./bmsartifact.tgz ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com:/tmp/bmsartifact.tgz
 							"""
             }

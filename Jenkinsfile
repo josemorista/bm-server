@@ -27,6 +27,7 @@ pipeline {
 							sudo docker-compose up -d
 							pm2 delete process.json &> /dev/null
 							pm2 start process.json
+							pm2 logs process.json
 EOF"""
 					}
 				}

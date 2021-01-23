@@ -2,7 +2,8 @@
 	"apps": [
 		{
 			"name": "bm-server",
-			"script": "ts-node-dev --inspect --respawn --ignore-watch node_modules src/shared/app.ts",
+			"script": "npm",
+			"args": "dev:server",
 			"exec_mode": "cluster",
 			"instances": 1,
 			"merge_logs": true,

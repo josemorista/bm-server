@@ -16,7 +16,7 @@ pipeline {
 								npm run build:tsc
 								tar czf $artifact node_modules package.json docker-compose.yml tmp uploads ormconfig.sample.json dist process.json
 								scp ./$artifact ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com:/tmp/$artifact
-								rm ./*
+								rm -rf ./*
 							"""
             }
         }

@@ -6,4 +6,5 @@ tmp/*
 !tmp/.gitkeep
 ormconfig.json
 */**/*.dcm
+dist
 */**/*.png

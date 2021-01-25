@@ -3,7 +3,7 @@
 		{
 			"name": "bm-server",
 			"script": "npm",
-			"args": "run dev:server",
+			"args": "run start",
 			"exec_mode": "cluster",
 			"instances": 1,
 			"merge_logs": true,

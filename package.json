@@ -4,6 +4,7 @@
 	"main": "index.js",
 	"license": "MIT",
 	"scripts": {
+		"build:tsc": "npx tsc",
 		"build": "./node_modules/.bin/babel src --ignore node_modules,.git --extensions \".js,.ts\" --out-dir dist --copy-files",
 		"typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
 		"start": "node dist/src/shared/app.js",

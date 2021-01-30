@@ -8,3 +8,5 @@ ormconfig.json
 */**/*.dcm
 dist
 */**/*.png
+*/*.png
+*/*.dcm

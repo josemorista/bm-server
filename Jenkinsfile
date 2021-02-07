@@ -13,7 +13,7 @@ pipeline {
             steps {
 							sh """
                 npm install
-								npm run build:tsc
+								npm run build
 								tar czf $artifact node_modules package.json docker-compose.yml tmp uploads ormconfig.sample.json dist process.json tsconfig.json src
 								scp ./$artifact ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com:/tmp/$artifact
 								rm -rf ./*
@@ -25,10 +25,9 @@ pipeline {
 					steps {
 						sh """
 							ssh ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com << EOF 
-							cd /tmp
 							rm -rf $directory/*
-							tar -xf ./$artifact -C $directory
-							rm $artifact
+							tar -xf /tmp/$artifact -C $directory
+							rm /tmp/$artifact
 							cd $directory
 							mv ./ormconfig.sample.json ./ormconfig.json
 							sudo docker-compose up -d

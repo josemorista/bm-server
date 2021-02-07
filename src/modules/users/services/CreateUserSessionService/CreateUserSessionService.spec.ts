@@ -17,10 +17,8 @@ describe('Unit: CreateUserSessionService', () => {
 			id: '1',
 			email: 'test@gmail.com',
 			password: '123',
-			cpfOrCnpj: '123456',
 			firstName: 'user',
 			lastName: 'userLastName',
-			birthDate: null,
 			avatar: null
 		});
 		hashProvider = new FakeHashProvider();

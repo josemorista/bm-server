@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { container } from 'tsyringe';
-import { v4 as uuid } from 'uuid';
 import { ensureAuthentication } from '../../../users/http/middlewares/ensureAuthentication';
-import { FakePatientsRepository } from '../../repositories/PatientsRepository/fakes/FakePatientsRepository';
 import { IPatientsRepository } from '../../repositories/PatientsRepository/models/IPatientsRepository';
+import { classToClass } from 'class-transformer';
+import { CreatePatientService } from '../../services/CreatePatientService';
 
 const patientsRouter = Router();
 
@@ -15,13 +15,13 @@ patientsRouter.get('/', async (request, response) => {
 });
 
 patientsRouter.post('/', async (request, response) => {
-	const patientsRepository: IPatientsRepository = container.resolve('PatientsRepository');
-	return response.json(await patientsRepository.create({ ...request.body, id: uuid(), ownerId: request.user.id }));
+	const createPatientService = container.resolve(CreatePatientService);
+	return response.json(await createPatientService.execute({ ...request.body, ownerId: request.user.id }));
 });
 
 patientsRouter.get('/:id', async (request, response) => {
 	const patientsRepository: IPatientsRepository = container.resolve('PatientsRepository');
-	return response.json(await patientsRepository.findById(String(request.params.id)));
+	return response.json(classToClass(await patientsRepository.findById(String(request.params.id))));
 });
 
 export { patientsRouter };

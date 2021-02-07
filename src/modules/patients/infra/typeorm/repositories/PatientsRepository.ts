@@ -1,7 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 import { AppError } from '../../../../../shared/errors/AppError';
 import { IPatient } from '../../../entities/models/IPatient';
-import { ICreatePatientDTO, IPatientsRepository } from '../../../repositories/PatientsRepository/models/IPatientsRepository';
+import { ICreatePatientDTO, IFindByNameAndOwnerDTO, IPatientsRepository } from '../../../repositories/PatientsRepository/models/IPatientsRepository';
 import { Patient } from '../entities/Patient';
 
 export class PatientsRepository implements IPatientsRepository {
@@ -31,5 +31,9 @@ export class PatientsRepository implements IPatientsRepository {
 
 	async findByOwner(ownerId: string): Promise<Array<IPatient>> {
 		return (await this.ormRepository.find({ where: { ownerId } }));
+	}
+
+	async findByNameAndOwner({ name, ownerId }: IFindByNameAndOwnerDTO): Promise<IPatient | undefined> {
+		return (await this.ormRepository.findOne({ where: { name, ownerId } }));
 	}
 }

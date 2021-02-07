@@ -30,7 +30,7 @@ pipeline {
 							tar -xf /tmp/$artifact -C $directory
 							rm /tmp/$artifact
 							cd $directory
-							sed 's/src/dist/g' ormconfig.sample.json &> ./ormconfig.json
+							sed 's/src/dist/g' ormconfig.sample.json | sed 's/.ts/.js/g' &> ormconfig.json
 							sudo docker-compose up -d
 							npm run typeorm migration:run
 							rm -rf ./src

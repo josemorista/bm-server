@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express, { request, response } from 'express';
+import express from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import { usersRouter } from '../modules/users/http/routes/users.routes';
@@ -8,6 +8,7 @@ import { examsRouter } from '../modules/exams/http/routes/exams.routes';
 import { uploadConfig } from '../config/upload';
 import { errorHandler } from './http/middlewares/errorHandler';
 import './infra/typeorm/databases';
+import './container';
 
 const app = express();
 app.use(cors());

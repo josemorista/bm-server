@@ -4,8 +4,13 @@ export interface IPatient {
 	id: string;
 	name: string;
 	birthDate: Date;
-	sex: 'male' | 'female';
-	history: string;
+	sex: 'M' | 'F';
+	previousBoneLesions: boolean;
+	previousQt: boolean;
+	previousRt: boolean;
+	previousCancerDiagnosis: boolean;
+	previousCancerDiagnosisType?: string;
+	observations: string;
 	ownerId: string;
 	owner?: IUser;
 	createdAt: Date;

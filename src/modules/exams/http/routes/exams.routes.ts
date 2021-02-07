@@ -11,7 +11,7 @@ const examsRouter = Router();
 examsRouter.use(ensureAuthentication);
 
 
-examsRouter.post('/', upload.single('dicom'), async (request, response) => {
+/*examsRouter.post('/', upload.single('dicom'), async (request, response) => {
 	const examsRepository = new FakeExamsRepository();
 	const storageProvider = new DiskStorageProvider();
 	const createExamService = new CreateExamService(examsRepository, storageProvider);
@@ -43,6 +43,6 @@ examsRouter.get('/', async (request, response) => {
 	const examsRepository = new FakeExamsRepository();
 	const { patientId } = request.query;
 	return response.json(await examsRepository.findByPatient(String(patientId)));
-});
+});*/
 
 export { examsRouter };

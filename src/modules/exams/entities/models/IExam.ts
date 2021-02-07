@@ -2,17 +2,15 @@ import { IPatient } from '../../../patients/entities/models/IPatient';
 
 export interface IExam {
 	id: string;
-	name: string;
+	label: string;
 	patientId: string;
 	patient?: IPatient;
-	minDicomValue: number | null;
-	maxDicomValue: number | null;
+	maxDicomValue: number;
 	currentStep: number;
-	segmentationParams: Array<number>;
-	filteringOperations: Array<string>;
-	processedImg: string | null;
-	originalImg: string | null;
-	dicomFile: string;
+	adaptiveHistogram: boolean;
+	processedImgLocation: string | null;
+	originalImgLocation: string | null;
+	dicomFileLocation: string;
 	createdAt: Date;
 	updatedAt: Date;
 }

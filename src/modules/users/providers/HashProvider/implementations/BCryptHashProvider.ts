@@ -8,6 +8,6 @@ export class BCryptHashProvider implements IHashProvider {
 	}
 
 	async compare(data: string, hashed: string): Promise<boolean> {
-		return await compare(hashed, data);
+		return await compare(data, hashed);
 	}
 }

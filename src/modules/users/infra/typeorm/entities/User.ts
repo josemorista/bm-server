@@ -25,12 +25,6 @@ export class User implements IUser {
 	@Column({ type: 'varchar' })
 	email: string;
 
-	@Column({ type: 'varchar', name: 'cpforcnpj' })
-	cpfOrCnpj: string;
-
-	@Column({ type: 'timestamp', nullable: true, name: 'birthdate' })
-	birthDate: Date | null;
-
 	@Column({ type: 'varchar', nullable: true })
 	avatar: string | null;
 

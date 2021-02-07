@@ -17,8 +17,12 @@ export class FakeExamsRepository implements IExamsRepository {
 		return exam;
 	}
 
-	async findById(id: string): Promise<IExam | undefined> {
-		return this.exams.find(el => el.id === id);
+	async findById(id: string): Promise<IExam> {
+		const exam = this.exams.find(el => el.id === id);
+		if (!exam) {
+			throw new AppError('Exam not found');
+		}
+		return exam;
 	}
 
 	async findByPatient(patientId: string): Promise<Array<IExam>> {

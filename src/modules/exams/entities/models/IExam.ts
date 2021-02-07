@@ -7,9 +7,12 @@ export interface IExam {
 	patient?: IPatient;
 	maxDicomValue: number;
 	currentStep: number;
-	adaptiveHistogram: boolean;
-	processedImgLocation: string | null;
-	originalImgLocation: string | null;
+	denoiseFilter: 'median' | null;
+	histogramEqualization: 'adaptative' | null;
+	edgeFilter: 'roberts' | 'sobel' | 'prewitt' | 'scharr' | null;
+	segmentationMethod: 'otsu' | 'randomWalker';
+	processedImgLocation: string;
+	originalImgLocation: string;
 	dicomFileLocation: string;
 	createdAt: Date;
 	updatedAt: Date;

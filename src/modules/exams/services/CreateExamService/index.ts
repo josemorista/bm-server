@@ -4,7 +4,7 @@ import { IExam } from '../../entities/models/IExam';
 import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
 
 interface ICreateExamServiceDTO {
-	name: string;
+	label: string;
 	filename: string;
 	patientId: string;
 }
@@ -13,19 +13,21 @@ export class CreateExamService {
 
 	constructor(private examsRepository: IExamsRepository, private storageProvider: IStorageProvider) { }
 
-	async execute({ filename, name, patientId }: ICreateExamServiceDTO): Promise<IExam> {
+	async execute({ filename, label, patientId }: ICreateExamServiceDTO): Promise<IExam> {
+		const dicomFileLocation = await this.storageProvider.save(filename);
+		const id = uuid();
+
 		const exam = await this.examsRepository.create({
-			id: uuid(),
+			id,
+			label,
 			currentStep: 0,
 			patientId,
-			dicomFile: await this.storageProvider.save(filename),
-			filteringOperations: [],
-			minDicomValue: 50,
-			maxDicomValue: 500,
-			name,
-			originalImg: null,
-			processedImg: null,
-			segmentationParams: []
+			dicomFileLocation,
+			edgeFilter: null,
+			equalizationHistogram: null,
+			maxDicomValue: 300,
+			originalImgLocation: `org-${id}.png`,
+			processedImgLocation: `proc-${id}.png`,
 		});
 
 		return exam;

@@ -10,7 +10,7 @@ export interface IExam {
 	denoiseFilter: 'median' | null;
 	histogramEqualization: 'adaptative' | null;
 	edgeFilter: 'roberts' | 'sobel' | 'prewitt' | 'scharr' | null;
-	segmentationMethod: 'otsu' | 'randomWalker';
+	segmentationMethod: 'otsu' | 'randomWalker' | null;
 	processedImgLocation: string;
 	originalImgLocation: string;
 	dicomFileLocation: string;

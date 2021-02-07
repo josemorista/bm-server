@@ -19,7 +19,7 @@ export class createPatientsTable1611167114853 implements MigrationInterface {
 				updatedAt timestamp not null default current_timestamp,
 				unique(id),
 				unique(name),
-				foreign key(ownerId) references users(id)
+				foreign key(ownerId) references users(id) on delete cascade
 			);
 			`);
 	}

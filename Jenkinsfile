@@ -3,7 +3,7 @@ pipeline {
 
 		environment {
 			artifact = 'bmsartifact.tgz'
-			directory = '/home/ubuntu/bmdeploy'
+			directory = '/home/ubuntu/bmserver'
 		}
 
     tools {nodejs "nodejs"}
@@ -25,11 +25,12 @@ pipeline {
 					steps {
 						sh """
 							ssh ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com << EOF 
+							mkdir -p $directory
 							rm -rf $directory/*
 							tar -xf /tmp/$artifact -C $directory
 							rm /tmp/$artifact
 							cd $directory
-							mv ./ormconfig.sample.json ./ormconfig.json
+							sed 's/src/dist/g' ormconfig.sample.json &> ./ormconfig.json
 							sudo docker-compose up -d
 							npm run typeorm migration:run
 							rm -rf ./src

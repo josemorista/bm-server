@@ -13,9 +13,9 @@ userSessionsRouter.post('/', async (request, response) => {
 	return response.json(await createSessionService.execute(request.body));
 });
 
-userSessionsRouter.get('/verify', async (request, response) => {
+userSessionsRouter.post('/verify', async (request, response) => {
 	const verifySessionTokenService = new VerifySessionTokenService();
-	const token = String(request.query.token);
+	const token = String(request.body.token);
 	return response.json({
 		valid: await verifySessionTokenService.execute(token)
 	});

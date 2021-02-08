@@ -24,10 +24,12 @@ export class CreateExamService {
 			patientId,
 			dicomFileLocation,
 			edgeFilter: null,
-			equalizationHistogram: null,
+			histogramEqualization: null,
 			maxDicomValue: 300,
 			originalImgLocation: `org-${id}.png`,
 			processedImgLocation: `proc-${id}.png`,
+			denoiseFilter: null,
+			segmentationMethod: null
 		});
 
 		return exam;

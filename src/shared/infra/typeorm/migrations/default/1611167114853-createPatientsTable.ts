@@ -6,7 +6,7 @@ export class createPatientsTable1611167114853 implements MigrationInterface {
 		await queryRunner.query(`create table if not exists patients(
 				id varchar not null primary key,
 				name varchar not null,
-				birthDate timestamp not null,
+				birthDate timestamp,
 				sex varchar not null,			
 				previousBoneLesions boolean not null,
 				previousQt boolean not null,

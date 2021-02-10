@@ -24,6 +24,8 @@ RUN sed 's/src/dist/g' ormconfig.sample.json | sed 's/.ts/.js/g' | sed 's/localh
 
 RUN npm install
 
+RUN npm run build
+
 RUN rm -rf ./src
 
 RUN mkdir ./uploads
@@ -32,4 +34,4 @@ RUN mkdir ./tmp
 
 EXPOSE 3333
 
-CMD [ "sh", "-c", "npm run typeorm migration:run && npx pm2 start process.json" ]
+CMD [ "sh", "-c", "npm run typeorm migration:run && npm start" ]

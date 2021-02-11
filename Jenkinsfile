@@ -2,6 +2,7 @@ pipeline {
     agent any
 
 		environment {
+			host = 'ec2-34-203-244-243.compute-1.amazonaws.com'
 			artifact = 'bmsartifact.tgz'
 			directory = '/home/ubuntu/bmserver'
 		}
@@ -15,7 +16,7 @@ pipeline {
                 npm install
 								npm run build
 								tar czf $artifact node_modules package.json docker-compose.yml uploads ormconfig.sample.json dist process.json
-								scp ./$artifact ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com:/tmp/$artifact
+								scp ./$artifact ubuntu@$host:/tmp/$artifact
 								rm -rf ./*
 							"""
             }
@@ -24,7 +25,7 @@ pipeline {
 				stage('Publish') {
 					steps {
 						sh """
-							ssh ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com << EOF 
+							ssh ubuntu@$host << EOF 
 							mkdir -p $directory
 							rm -rf $directory/*
 							tar -xf /tmp/$artifact -C $directory

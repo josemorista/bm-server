@@ -7,19 +7,21 @@ interface ICreateExamServiceDTO {
 	label: string;
 	filename: string;
 	patientId: string;
+	category: IExam['category'];
 }
 
 export class CreateExamService {
 
 	constructor(private examsRepository: IExamsRepository, private storageProvider: IStorageProvider) { }
 
-	async execute({ filename, label, patientId }: ICreateExamServiceDTO): Promise<IExam> {
+	async execute({ filename, label, patientId, category }: ICreateExamServiceDTO): Promise<IExam> {
 		const dicomFileLocation = await this.storageProvider.save(filename);
 		const id = uuid();
 
 		const exam = await this.examsRepository.create({
 			id,
 			label,
+			category,
 			currentStep: 0,
 			patientId,
 			dicomFileLocation,

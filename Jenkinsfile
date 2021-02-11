@@ -14,7 +14,7 @@ pipeline {
 							sh """
                 npm install
 								npm run build
-								tar czf $artifact node_modules package.json docker-compose.yml tmp uploads ormconfig.sample.json dist process.json tsconfig.json src
+								tar czf $artifact node_modules package.json docker-compose.yml uploads ormconfig.sample.json dist process.json
 								scp ./$artifact ubuntu@ec2-54-89-241-219.compute-1.amazonaws.com:/tmp/$artifact
 								rm -rf ./*
 							"""
@@ -31,10 +31,8 @@ pipeline {
 							rm /tmp/$artifact
 							cd $directory
 							sed 's/src/dist/g' ormconfig.sample.json | sed 's/.ts/.js/g' &> ormconfig.json
-							sudo docker-compose up -d
-							npm run typeorm migration:run
-							rm -rf ./src
-							rm tsconfig.json
+							sudo docker-compose up -d postgres
+							mkdir ./tmp
 							pm2 delete process.json &> /dev/null
 							pm2 start process.json
 EOF"""

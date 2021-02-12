@@ -2,6 +2,7 @@ import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExa
 import { v4 as uuid } from 'uuid';
 import { IExam } from '../../entities/models/IExam';
 import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
+import { inject, injectable } from 'tsyringe';
 
 interface ICreateExamServiceDTO {
 	label: string;
@@ -10,9 +11,14 @@ interface ICreateExamServiceDTO {
 	category: IExam['category'];
 }
 
+@injectable()
 export class CreateExamService {
 
-	constructor(private examsRepository: IExamsRepository, private storageProvider: IStorageProvider) { }
+	constructor(
+		@inject('ExamsRepository')
+		private examsRepository: IExamsRepository,
+		@inject('StorageProvider')
+		private storageProvider: IStorageProvider) { }
 
 	async execute({ filename, label, patientId, category }: ICreateExamServiceDTO): Promise<IExam> {
 		const dicomFileLocation = await this.storageProvider.save(filename);

@@ -7,11 +7,11 @@ import { IStorageProvider } from '../../../../shared/providers/StorageProvider/m
 
 interface ISegmentExamServiceDTO {
 	id: string;
-	max: number;
+	maxDicomValue: number;
 }
 
 @injectable()
-export class SegmentExamService {
+export class ClipAndConvertToImgService {
 
 	constructor(
 		@inject('ExamsRepository')
@@ -20,16 +20,21 @@ export class SegmentExamService {
 		private storageProvider: IStorageProvider
 	) { }
 
-	async execute({ id, max }: ISegmentExamServiceDTO): Promise<void> {
+	async execute({ id, maxDicomValue }: ISegmentExamServiceDTO): Promise<void> {
 		const exam = await this.examsRepository.findById(id);
 
 		spawnSync('python3', [
 			path.resolve(__dirname, 'clipAndConvert.py'),
 			path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFileLocation),
 			path.resolve(uploadConfig.tmpUploadsPath, exam.originalImgLocation),
-			String(max)
+			String(maxDicomValue)
 		]);
 
 		await this.storageProvider.save(exam.originalImgLocation);
+
+		await this.examsRepository.updateById(exam.id, {
+			...exam,
+			maxDicomValue
+		});
 	}
 }

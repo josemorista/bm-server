@@ -5,13 +5,16 @@ import path from 'path';
 
 export class DiskStorageProvider implements IStorageProvider {
 
-	async save(tmpFileName: string): Promise<string> {
+	async save(tmpFileName: string, fileName?: string): Promise<string> {
+
+		const nameToSave = fileName ? `${fileName}.${tmpFileName.split('.')[1]}` : tmpFileName;
+
 		await fs.promises.copyFile(
 			path.join(uploadConfig.tmpUploadsPath, tmpFileName),
-			path.join(uploadConfig.diskStorageProviderConfig.destination, tmpFileName)
+			path.join(uploadConfig.diskStorageProviderConfig.destination, nameToSave)
 		);
 		await fs.promises.unlink(path.join(uploadConfig.tmpUploadsPath, tmpFileName));
-		return tmpFileName;
+		return nameToSave;
 	}
 
 	async remove(fileName: string): Promise<void> {

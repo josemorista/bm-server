@@ -21,8 +21,9 @@ export class CreateExamService {
 		private storageProvider: IStorageProvider) { }
 
 	async execute({ filename, label, patientId, category }: ICreateExamServiceDTO): Promise<IExam> {
-		const dicomFileLocation = await this.storageProvider.save(filename);
 		const id = uuid();
+
+		const dicomFileLocation = await this.storageProvider.save(filename, id);
 
 		const exam = await this.examsRepository.create({
 			id,

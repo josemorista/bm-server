@@ -5,10 +5,13 @@ import { upload } from '../../../../shared/http/middlewares/upload';
 import { ensureAuthentication } from '../../../users/http/middlewares/ensureAuthentication';
 import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExamsRepository';
 import { CreateExamService } from '../../services/CreateExamService';
+import { examsPreProcessingRouter } from './examsPreProcessing.routes';
 
 const examsRouter = Router();
 
 examsRouter.use(ensureAuthentication);
+
+examsRouter.use('/preProcessing', examsPreProcessingRouter);
 
 examsRouter.get('/', async (request, response) => {
 	const { patientId } = request.query;

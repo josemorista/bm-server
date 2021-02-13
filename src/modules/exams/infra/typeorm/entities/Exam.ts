@@ -41,6 +41,11 @@ export class Exam implements IExam {
 	@Column({ type: 'varchar', name: 'processedimglocation' })
 	processedImgLocation: IExam['processedImgLocation'];
 
+	@Expose({ name: 'processedImgLocationURL' })
+	processedImgLocationURL(): string {
+		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.processedImgLocation}`;
+	}
+
 	@Column({ type: 'varchar', name: 'originalimglocation' })
 	originalImgLocation: string;
 

@@ -19,6 +19,12 @@ patientsRouter.post('/', async (request, response) => {
 	return response.json(await createPatientService.execute({ ...request.body, ownerId: request.user.id }));
 });
 
+patientsRouter.put('/:id', async (request, response) => {
+	const { id } = request.params;
+	const patientsRepository: IPatientsRepository = container.resolve('PatientsRepository');
+	return response.json(await patientsRepository.updatePatientById(id, request.body));
+});
+
 patientsRouter.get('/:id', async (request, response) => {
 	const patientsRepository: IPatientsRepository = container.resolve('PatientsRepository');
 	return response.json(classToPlain(await patientsRepository.findById(String(request.params.id))));

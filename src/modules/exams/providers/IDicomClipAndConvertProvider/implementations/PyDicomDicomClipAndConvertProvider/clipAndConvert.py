@@ -4,7 +4,6 @@ from skimage import img_as_float;
 from matplotlib import pyplot as plt;
 
 def execute(imgPath, outFilePath, maxDicomValue):
-	print(imgPath, outFilePath, maxDicomValue);
 	ds = dicom.dcmread(imgPath);
 	#pixelArea = ds.PixelSpacing[0] * ds.PixelSpacing[1];
 	#rows = ds.Rows;

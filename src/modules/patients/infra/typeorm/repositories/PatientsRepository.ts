@@ -36,4 +36,9 @@ export class PatientsRepository implements IPatientsRepository {
 	async findByNameAndOwner({ name, ownerId }: IFindByNameAndOwnerDTO): Promise<IPatient | undefined> {
 		return (await this.ormRepository.findOne({ where: { name, ownerId } }));
 	}
+
+	async updatePatientById(id: string, data: Partial<IPatient>): Promise<void> {
+		const patient = await this.findById(id);
+		await this.ormRepository.save({ ...data, id: patient.id });
+	}
 }

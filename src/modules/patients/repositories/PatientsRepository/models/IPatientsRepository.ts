@@ -8,6 +8,7 @@ export interface IFindByNameAndOwnerDTO {
 }
 export interface IPatientsRepository {
 	create(data: ICreatePatientDTO): Promise<IPatient>;
+	updatePatientById(id: string, data: Partial<IPatient>): Promise<void>;
 	findById(id: string): Promise<IPatient | undefined>;
 	findByOwner(ownerId: string): Promise<Array<IPatient>>;
 	findByNameAndOwner(data: IFindByNameAndOwnerDTO): Promise<IPatient | undefined>;

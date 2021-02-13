@@ -15,7 +15,7 @@ examsPreProcessingRouter.post('/:id/clipAndConvertToImage', async (request, resp
 	return response.sendStatus(204);
 });
 
-examsPreProcessingRouter.patch('/:id/denoise', async (request, response) => {
+examsPreProcessingRouter.patch('/:id/applyDenoiseFilter', async (request, response) => {
 	const denoiseImgService = container.resolve(DenoiseImgService);
 	const { id } = request.params;
 	await denoiseImgService.execute({

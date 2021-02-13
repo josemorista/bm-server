@@ -6,6 +6,7 @@ import { ensureAuthentication } from '../../../users/http/middlewares/ensureAuth
 import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExamsRepository';
 import { CreateExamService } from '../../services/CreateExamService';
 import { examsPreProcessingRouter } from './examsPreProcessing.routes';
+import { classToPlain } from 'class-transformer';
 
 const examsRouter = Router();
 
@@ -19,13 +20,13 @@ examsRouter.get('/', async (request, response) => {
 		throw new AppError('patientId not provided');
 	}
 	const examsRepository: IExamsRepository = container.resolve('ExamsRepository');
-	return response.json(await examsRepository.findByPatient(String(patientId)));
+	return response.json(classToPlain((await examsRepository.findByPatient(String(patientId)))));
 });
 
 examsRouter.get('/:id', async (request, response) => {
 	const { id } = request.params;
 	const examsRepository: IExamsRepository = container.resolve('ExamsRepository');
-	return response.json(await examsRepository.findById(id));
+	return response.json(classToPlain(await examsRepository.findById(id)));
 });
 
 examsRouter.post('/', upload.single('dicom'), async (request, response) => {

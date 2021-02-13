@@ -2,6 +2,8 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn,
 import { IPatient } from '../../../../patients/entities/models/IPatient';
 import { Patient } from '../../../../patients/infra/typeorm/entities/Patient';
 import { IExam } from '../../../entities/models/IExam';
+import { Expose } from 'class-transformer';
+import { uploadConfig } from '../../../../../config/upload';
 
 @Entity('exams')
 export class Exam implements IExam {
@@ -41,6 +43,11 @@ export class Exam implements IExam {
 
 	@Column({ type: 'varchar', name: 'originalimglocation' })
 	originalImgLocation: string;
+
+	@Expose({ name: 'originalImgLocationURL' })
+	originalImgLocationURL(): string {
+		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.originalImgLocation}`;
+	}
 
 	@Column({ type: 'varchar', name: 'dicomfilelocation' })
 	dicomFileLocation: string;

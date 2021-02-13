@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { container } from 'tsyringe';
 import { ensureAuthentication } from '../../../users/http/middlewares/ensureAuthentication';
 import { IPatientsRepository } from '../../repositories/PatientsRepository/models/IPatientsRepository';
-import { classToClass } from 'class-transformer';
+import { classToPlain } from 'class-transformer';
 import { CreatePatientService } from '../../services/CreatePatientService';
 
 const patientsRouter = Router();
@@ -21,7 +21,7 @@ patientsRouter.post('/', async (request, response) => {
 
 patientsRouter.get('/:id', async (request, response) => {
 	const patientsRepository: IPatientsRepository = container.resolve('PatientsRepository');
-	return response.json(classToClass(await patientsRepository.findById(String(request.params.id))));
+	return response.json(classToPlain(await patientsRepository.findById(String(request.params.id))));
 });
 
 export { patientsRouter };

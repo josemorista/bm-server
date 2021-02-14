@@ -1,5 +1,7 @@
 FROM node:14-alpine
 
+RUN npm install pm2 -g
+
 ENV port=3333 apiUrl=https://api.bm-diag.org
 
 RUN mkdir -p /home/apps/bmserver
@@ -34,4 +36,4 @@ RUN mkdir ./tmp
 
 EXPOSE 3333
 
-CMD [ "sh", "-c", "npm run typeorm migration:run && npm start" ]
+CMD [ "pm2-runtime", "start", "process.json" ]

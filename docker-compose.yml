@@ -15,6 +15,7 @@ services:
       - postgres-network
   api:
     container_name: bm-api
+    image: bm-api
     build: .
     depends_on: 
       - postgres

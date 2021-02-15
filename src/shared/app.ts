@@ -30,5 +30,5 @@ app.use('/exams', examsRouter);
 app.use(errorHandler);
 
 app.listen('3333', () => {
-	console.log('app is on, 3333 is the magic port!');
+	console.log('Server is on, 3333 is the magic port! :)');
 });

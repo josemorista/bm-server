@@ -4,7 +4,7 @@ import { uploadConfig } from '../../../../config/upload';
 import { inject, injectable } from 'tsyringe';
 import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
 import { IExam } from '../../entities/models/IExam';
-import { IMedianDenoiseProvider } from '../../providers/IMedianDenoiseProvider/models/IMedianDenoiseProvider';
+import { IMedianDenoiseProvider } from '../../providers/MedianDenoiseProvider/models/IMedianDenoiseProvider';
 import { AppError } from '../../../../shared/errors/AppError';
 
 interface IDenoiseImgServiceDTO {

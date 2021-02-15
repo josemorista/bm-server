@@ -1,9 +1,9 @@
 import { container } from 'tsyringe';
 import { ExamsRepository } from '../../modules/exams/infra/typeorm/repositories/ExamsRepository';
-import { PyDicomDicomClipAndConvertProvider } from '../../modules/exams/providers/IDicomClipAndConvertProvider/implementations/PyDicomDicomClipAndConvertProvider';
-import { IDicomClipAndConvertProvider } from '../../modules/exams/providers/IDicomClipAndConvertProvider/models/IDicomClipAndConvertProvider';
-import { ScipyMedianDenoiseProvider } from '../../modules/exams/providers/IMedianDenoiseProvider/implementations/ScipyMedianDenoiseProvider/index.';
-import { IMedianDenoiseProvider } from '../../modules/exams/providers/IMedianDenoiseProvider/models/IMedianDenoiseProvider';
+import { PyDicomDicomClipAndConvertProvider } from '../../modules/exams/providers/DicomClipAndConvertProvider/implementations/PyDicomDicomClipAndConvertProvider';
+import { IDicomClipAndConvertProvider } from '../../modules/exams/providers/DicomClipAndConvertProvider/models/IDicomClipAndConvertProvider';
+import { ScipyMedianDenoiseProvider } from '../../modules/exams/providers/MedianDenoiseProvider/implementations/ScipyMedianDenoiseProvider/index.';
+import { IMedianDenoiseProvider } from '../../modules/exams/providers/MedianDenoiseProvider/models/IMedianDenoiseProvider';
 import { IExamsRepository } from '../../modules/exams/repositories/ExamsRepository/models/IExamsRepository';
 import { PatientsRepository } from '../../modules/patients/infra/typeorm/repositories/PatientsRepository';
 import { IPatientsRepository } from '../../modules/patients/repositories/PatientsRepository/models/IPatientsRepository';

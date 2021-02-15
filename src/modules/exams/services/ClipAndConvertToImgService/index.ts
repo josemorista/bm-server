@@ -3,7 +3,7 @@ import path from 'path';
 import { uploadConfig } from '../../../../config/upload';
 import { inject, injectable } from 'tsyringe';
 import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
-import { IDicomClipAndConvertProvider } from '../../providers/IDicomClipAndConvertProvider/models/IDicomClipAndConvertProvider';
+import { IDicomClipAndConvertProvider } from '../../providers/DicomClipAndConvertProvider/models/IDicomClipAndConvertProvider';
 
 interface ISegmentExamServiceDTO {
 	id: string;

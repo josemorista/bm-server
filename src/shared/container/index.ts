@@ -15,6 +15,10 @@ import { IHashProvider } from '../../modules/users/providers/HashProvider/models
 import { IUsersRepository } from '../../modules/users/repositories/models/IUsersRepository';
 import { DiskStorageProvider } from '../providers/StorageProvider/implementations/DiskStorageProvider';
 import { IStorageProvider } from '../providers/StorageProvider/models/IStorageProvider';
+import { IOtsuSegmentationProvider } from '../../modules/exams/providers/OtsuSegmentationProvider/models/IOtsuSegmentationProvider';
+import { SkimageOtsuSegmentationProvider } from '../../modules/exams/providers/OtsuSegmentationProvider/implementations/SkimageOtsuSegmentationProvider';
+import { ISobelEdgeFilterProvider } from '../../modules/exams/providers/SobelEdgeFilterProvider/models/ISobelEdgeFilterProvider';
+import { SkimageSobelEdgeFilterProvider } from '../../modules/exams/providers/SobelEdgeFilterProvider/implementations/SkimageSobelEdgeFilterProvider';
 
 // Providers
 container.register<IHashProvider>('HashProvider', BCryptHashProvider);
@@ -23,6 +27,9 @@ container.register<IStorageProvider>('StorageProvider', DiskStorageProvider);
 container.register<IDicomClipAndConvertProvider>('DicomClipAndConvertProvider', PyDicomDicomClipAndConvertProvider);
 container.register<IMedianDenoiseProvider>('MedianDenoiseProvider', ScipyMedianDenoiseProvider);
 container.register<IAdapthistEqualizeHistogramProvider>('AdapthistEqualizeHistogramProvider', SkImageAdapthistEqualizeHistogramProvider);
+container.register<IOtsuSegmentationProvider>('OtsuSegmentationProvider', SkimageOtsuSegmentationProvider);
+container.register<ISobelEdgeFilterProvider>('SobelEdgeFilterProvider', SkimageSobelEdgeFilterProvider);
+
 
 // Repositories
 container.register<IUsersRepository>('UsersRepository', UsersRepository);

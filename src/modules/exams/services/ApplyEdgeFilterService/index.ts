@@ -4,31 +4,31 @@ import { IExam } from '../../entities/models/IExam';
 import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExamsRepository';
 import path from 'path';
 import { uploadConfig } from '../../../../config/upload';
-import { IOtsuSegmentationProvider } from '../../providers/OtsuSegmentationProvider/models/IOtsuSegmentationProvider';
+import { ISobelEdgeFilterProvider } from '../../providers/SobelEdgeFilterProvider/models/ISobelEdgeFilterProvider';
 
-interface ISegmentImgServiceDTO {
+interface IApplyEdgeFilterServiceDTO {
 	id: string;
-	method: IExam['segmentationMethod'];
+	method: IExam['edgeFilter'];
 }
 
 @injectable()
-export class SegmentImgService {
+export class ApplyEdgeFilterService {
 
 	constructor(
 		@inject('ExamsRepository')
 		private examsRepository: IExamsRepository,
 		@inject('StorageProvider')
 		private storageProvider: IStorageProvider,
-		@inject('OtsuSegmentationProvider')
-		private otsuSegmentationProvider: IOtsuSegmentationProvider
+		@inject('SobelEdgeFilterProvider')
+		private sobelEdgeFilterProvider: ISobelEdgeFilterProvider
 	) { }
 
-	async execute({ method, id }: ISegmentImgServiceDTO): Promise<void> {
+	async execute({ method, id }: IApplyEdgeFilterServiceDTO): Promise<void> {
 
 		const exam = await this.examsRepository.findById(id);
 
-		if (method === 'otsu') {
-			await this.otsuSegmentationProvider.applyOtsuSegmentation({
+		if (method === 'sobel') {
+			await this.sobelEdgeFilterProvider.applySobel({
 				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.processedImgLocation),
 				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, exam.processedImgLocation)
 			});
@@ -38,7 +38,7 @@ export class SegmentImgService {
 
 		await this.examsRepository.updateById(id, {
 			...exam,
-			segmentationMethod: method
+			edgeFilter: method
 		});
 	}
 }

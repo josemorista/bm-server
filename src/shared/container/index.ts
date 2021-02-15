@@ -1,5 +1,7 @@
 import { container } from 'tsyringe';
 import { ExamsRepository } from '../../modules/exams/infra/typeorm/repositories/ExamsRepository';
+import { IAdapthistEqualizeHistogramProvider } from '../../modules/exams/providers/AdapthistEqualizeHistogramProvider/models/IAdapthistEqualizeHistogramProvider';
+import { SkImageAdapthistEqualizeHistogramProvider } from '../../modules/exams/providers/AdapthistEqualizeHistogramProvider/implementations/SkImageAdapthistEqualizeHistogramProvider';
 import { PyDicomDicomClipAndConvertProvider } from '../../modules/exams/providers/DicomClipAndConvertProvider/implementations/PyDicomDicomClipAndConvertProvider';
 import { IDicomClipAndConvertProvider } from '../../modules/exams/providers/DicomClipAndConvertProvider/models/IDicomClipAndConvertProvider';
 import { ScipyMedianDenoiseProvider } from '../../modules/exams/providers/MedianDenoiseProvider/implementations/ScipyMedianDenoiseProvider/index.';
@@ -20,6 +22,7 @@ container.register<IStorageProvider>('StorageProvider', DiskStorageProvider);
 
 container.register<IDicomClipAndConvertProvider>('DicomClipAndConvertProvider', PyDicomDicomClipAndConvertProvider);
 container.register<IMedianDenoiseProvider>('MedianDenoiseProvider', ScipyMedianDenoiseProvider);
+container.register<IAdapthistEqualizeHistogramProvider>('AdapthistEqualizeHistogramProvider', SkImageAdapthistEqualizeHistogramProvider);
 
 // Repositories
 container.register<IUsersRepository>('UsersRepository', UsersRepository);

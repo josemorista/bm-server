@@ -9,7 +9,7 @@ export interface IExam {
 	maxDicomValue: number;
 	currentStep: number;
 	denoiseFilter: 'median' | null;
-	histogramEqualization: 'adaptative' | null;
+	histogramEqualization: 'adapthist' | null;
 	edgeFilter: 'roberts' | 'sobel' | 'prewitt' | 'scharr' | null;
 	segmentationMethod: 'otsu' | 'randomWalker' | null;
 	processedImgLocation: string;

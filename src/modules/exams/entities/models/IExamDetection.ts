@@ -3,8 +3,8 @@ import { IExam } from './IExam';
 export interface IExamDetection {
 	id: string;
 	examId: string;
-	automaticClassificationId: string;
-	revisedClassificationId: string;
+	automaticClassificationId: string | null;
+	revisedClassificationId: string | null;
 	area: number;
 	aspectRatio: number;
 	perimeter: number;
@@ -17,9 +17,6 @@ export interface IExamDetection {
 	//minIntensity: number;
 	orientation: number;
 	eccentricity: number;
-	rt: number | null;
-	qt: number | null;
-	sex: 'M' | 'F';
 	exam?: IExam;
 	createdAt: Date;
 	updatedAt: Date;

@@ -9,11 +9,11 @@ export class ExamDetection implements IExamDetection {
 	@Column({ type: 'varchar' })
 	examId: string;
 
-	@Column({ type: 'varchar' })
-	automaticClassificationId: string;
+	@Column({ type: 'varchar', nullable: true })
+	automaticClassificationId: string | null;
 
-	@Column({ type: 'varchar' })
-	revisedClassificationId: string;
+	@Column({ type: 'varchar', nullable: true })
+	revisedClassificationId: string | null;
 
 	@Column({ type: 'int' })
 	area: number;
@@ -50,15 +50,6 @@ export class ExamDetection implements IExamDetection {
 
 	@Column({ type: 'float' })
 	eccentricity: number;
-
-	@Column({ type: 'float' })
-	rt: number | null;
-
-	@Column({ type: 'float' })
-	qt: number | null;
-
-	@Column({ type: 'character' })
-	sex: 'M' | 'F';
 
 	@CreateDateColumn()
 	createdAt: Date;

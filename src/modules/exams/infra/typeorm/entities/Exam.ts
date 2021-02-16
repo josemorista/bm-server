@@ -26,52 +26,52 @@ export class Exam implements IExam {
 	@Column({ type: 'smallint', name: 'currentstep' })
 	currentStep: number;
 
-	@Column({ type: 'varchar', name: 'denoisefilter' })
+	@Column({ type: 'varchar', name: 'denoisefilter', nullable: true })
 	denoiseFilter: IExam['denoiseFilter'];
 
-	@Column({ type: 'varchar', name: 'histogramequalization' })
+	@Column({ type: 'varchar', name: 'histogramequalization', nullable: true })
 	histogramEqualization: IExam['histogramEqualization'];
 
-	@Column({ type: 'varchar', name: 'edgefilter' })
+	@Column({ type: 'varchar', name: 'edgefilter', nullable: true })
 	edgeFilter: IExam['edgeFilter'];
 
-	@Column({ type: 'varchar', name: 'segmentationmethod' })
+	@Column({ type: 'varchar', name: 'segmentationmethod', nullable: true })
 	segmentationMethod: IExam['segmentationMethod'];
 
-	@Column({ type: 'varchar', name: 'denoisedimglocation' })
+	@Column({ type: 'varchar', name: 'denoisedimglocation', nullable: true })
 	denoisedImgLocation: IExam['denoisedImgLocation'];
 
 	@Expose({ name: 'denoisedImgLocationURL' })
-	denoisedImgLocationURL(): string {
+	denoisedImgLocationURL(): string | null {
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.denoisedImgLocation}`;
 	}
 
-	@Column({ type: 'varchar', name: 'equalizedimglocation' })
+	@Column({ type: 'varchar', name: 'equalizedimglocation', nullable: true })
 	equalizedImgLocation: string | null;
 
 	@Expose({ name: 'equalizedImgLocationURL' })
-	equalizedImgLocationURL(): string {
+	equalizedImgLocationURL(): string | null {
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.equalizedImgLocation}`;
 	}
 
-	@Column({ type: 'varchar', name: 'segmentedimglocation' })
+	@Column({ type: 'varchar', name: 'segmentedimglocation', nullable: true })
 	segmentedImgLocation: IExam['segmentedImgLocation'];
 
 	@Expose({ name: 'segmentedImgLocationURL' })
-	segmentedImgLocationURL(): string {
+	segmentedImgLocationURL(): string | null {
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.segmentedImgLocation}`;
 	}
 
-	@Column({ type: 'varchar', name: 'edgedimglocation' })
+	@Column({ type: 'varchar', name: 'edgedimglocation', nullable: true })
 	edgedImgLocation: IExam['edgedImgLocation'];
 
 	@Expose({ name: 'edgedImgLocationURL' })
-	edgedImgLocationURL(): string {
+	edgedImgLocationURL(): string | null {
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.edgedImgLocation}`;
 	}
 
-	@Column({ type: 'varchar', name: 'originalimglocation' })
-	originalImgLocation: string;
+	@Column({ type: 'varchar', name: 'originalimglocation', nullable: true })
+	originalImgLocation: string | null;
 
 	@Expose({ name: 'originalImgLocationURL' })
 	originalImgLocationURL(): string {

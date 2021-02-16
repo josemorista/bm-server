@@ -3,11 +3,11 @@ import { IUser } from '../../../users/entities/models/IUser';
 export interface IPatient {
 	id: string;
 	name: string;
-	birthDate: Date;
+	birthDate: Date | null;
 	sex: 'M' | 'F';
 	previousBoneLesions: boolean;
-	previousQt: boolean;
-	previousRt: boolean;
+	previousQt: boolean | null;
+	previousRt: boolean | null;
 	previousCancerDiagnosis: boolean;
 	previousCancerDiagnosisType?: string;
 	observations: string;

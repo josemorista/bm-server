@@ -1,4 +1,4 @@
-export interface IExamDetectionClassificationOption {
+export interface IExamDetectionClassification {
 	id: string;
 	name: string;
 	description: string;

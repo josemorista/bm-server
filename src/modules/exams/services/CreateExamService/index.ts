@@ -35,8 +35,11 @@ export class CreateExamService {
 			edgeFilter: null,
 			histogramEqualization: null,
 			maxDicomValue: 300,
-			originalImgLocation: `org-${id}.png`,
-			processedImgLocation: `proc-${id}.png`,
+			originalImgLocation: null,
+			denoisedImgLocation: null,
+			edgedImgLocation: null,
+			equalizedImgLocation: null,
+			segmentedImgLocation: null,
 			denoiseFilter: null,
 			segmentationMethod: null
 		});

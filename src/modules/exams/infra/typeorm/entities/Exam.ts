@@ -38,12 +38,36 @@ export class Exam implements IExam {
 	@Column({ type: 'varchar', name: 'segmentationmethod' })
 	segmentationMethod: IExam['segmentationMethod'];
 
-	@Column({ type: 'varchar', name: 'processedimglocation' })
-	processedImgLocation: IExam['processedImgLocation'];
+	@Column({ type: 'varchar', name: 'denoisedimglocation' })
+	denoisedImgLocation: IExam['denoisedImgLocation'];
 
-	@Expose({ name: 'processedImgLocationURL' })
-	processedImgLocationURL(): string {
-		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.processedImgLocation}`;
+	@Expose({ name: 'denoisedImgLocationURL' })
+	denoisedImgLocationURL(): string {
+		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.denoisedImgLocation}`;
+	}
+
+	@Column({ type: 'varchar', name: 'equalizedimglocation' })
+	equalizedImgLocation: string | null;
+
+	@Expose({ name: 'equalizedImgLocationURL' })
+	equalizedImgLocationURL(): string {
+		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.equalizedImgLocation}`;
+	}
+
+	@Column({ type: 'varchar', name: 'segmentedimglocation' })
+	segmentedImgLocation: IExam['segmentedImgLocation'];
+
+	@Expose({ name: 'segmentedImgLocationURL' })
+	segmentedImgLocationURL(): string {
+		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.segmentedImgLocation}`;
+	}
+
+	@Column({ type: 'varchar', name: 'edgedimglocation' })
+	edgedImgLocation: IExam['edgedImgLocation'];
+
+	@Expose({ name: 'edgedImgLocationURL' })
+	edgedImgLocationURL(): string {
+		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.edgedImgLocation}`;
 	}
 
 	@Column({ type: 'varchar', name: 'originalimglocation' })

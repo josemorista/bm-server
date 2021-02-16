@@ -12,8 +12,11 @@ export interface IExam {
 	histogramEqualization: 'adapthist' | null;
 	edgeFilter: 'roberts' | 'sobel' | 'prewitt' | 'scharr' | null;
 	segmentationMethod: 'otsu' | 'randomWalker' | null;
-	processedImgLocation: string;
-	originalImgLocation: string;
+	denoisedImgLocation: string | null;
+	equalizedImgLocation: string | null;
+	segmentedImgLocation: string | null;
+	edgedImgLocation: string | null;
+	originalImgLocation: string | null;
 	dicomFileLocation: string;
 	createdAt: Date;
 	updatedAt: Date;

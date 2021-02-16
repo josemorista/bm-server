@@ -5,6 +5,7 @@ import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExa
 import path from 'path';
 import { uploadConfig } from '../../../../config/upload';
 import { ISobelEdgeFilterProvider } from '../../providers/SobelEdgeFilterProvider/models/ISobelEdgeFilterProvider';
+import { AppError } from '../../../../shared/errors/AppError';
 
 interface IApplyEdgeFilterServiceDTO {
 	id: string;
@@ -27,18 +28,25 @@ export class ApplyEdgeFilterService {
 
 		const exam = await this.examsRepository.findById(id);
 
+		if (!exam.segmentedImgLocation) {
+			throw new AppError('no segmented image to process');
+		}
+
+		const edgedImgLocation = `edg-${id}.png`;
+
 		if (method === 'sobel') {
 			await this.sobelEdgeFilterProvider.applySobel({
-				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.processedImgLocation),
-				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, exam.processedImgLocation)
+				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.segmentedImgLocation),
+				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, edgedImgLocation)
 			});
 		}
 
-		await this.storageProvider.save(exam.processedImgLocation);
+		await this.storageProvider.save(edgedImgLocation);
 
 		await this.examsRepository.updateById(id, {
 			...exam,
-			edgeFilter: method
+			edgeFilter: method,
+			edgedImgLocation
 		});
 	}
 }

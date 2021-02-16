@@ -5,6 +5,7 @@ import { IAdapthistEqualizeHistogramProvider } from '../../providers/AdapthistEq
 import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExamsRepository';
 import path from 'path';
 import { uploadConfig } from '../../../../config/upload';
+import { AppError } from '../../../../shared/errors/AppError';
 
 interface IHistogramEqualizationServiceDTO {
 	id: string;
@@ -27,18 +28,25 @@ export class HistogramEqualizationService {
 
 		const exam = await this.examsRepository.findById(id);
 
+		if (!exam.denoisedImgLocation) {
+			throw new AppError('no denoised image to process');
+		}
+
+		const equalizedImgLocation = `eq-${id}.png`;
+
 		if (method === 'adapthist') {
 			await this.adapthistEqualizeHistogramProvider.applyAdapthistHistogramEqualization({
-				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.processedImgLocation),
-				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, exam.processedImgLocation)
+				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.denoisedImgLocation),
+				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, equalizedImgLocation)
 			});
 		}
 
-		await this.storageProvider.save(exam.processedImgLocation);
+		await this.storageProvider.save(equalizedImgLocation);
 
 		await this.examsRepository.updateById(id, {
 			...exam,
-			histogramEqualization: method
+			histogramEqualization: method,
+			equalizedImgLocation
 		});
 	}
 }

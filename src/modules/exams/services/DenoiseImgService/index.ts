@@ -32,19 +32,26 @@ export class DenoiseImgService {
 			throw new AppError('invalid denoise method');
 		}
 
+		if (!exam.originalImgLocation) {
+			throw new AppError('no original image to process');
+		}
+
+		const denoisedImgLocation = `den-${id}.png`;
+
 		if (method === 'median') {
 			this.medianDenoiseProvider.applyMedianFilter({
 				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.originalImgLocation),
-				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, exam.processedImgLocation),
+				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, denoisedImgLocation),
 				size: size || 3
 			});
 		}
 
-		await this.storageProvider.save(exam.processedImgLocation);
+		await this.storageProvider.save(denoisedImgLocation);
 
 		await this.examsRepository.updateById(exam.id, {
 			...exam,
-			denoiseFilter: method
+			denoiseFilter: method,
+			denoisedImgLocation
 		});
 	}
 }

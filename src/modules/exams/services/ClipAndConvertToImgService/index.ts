@@ -24,18 +24,20 @@ export class ClipAndConvertToImgService {
 
 	async execute({ id, maxDicomValue }: ISegmentExamServiceDTO): Promise<void> {
 		const exam = await this.examsRepository.findById(id);
+		const originalImgLocation = `org-${id}.png`;
 
 		this.dicomClipAndConvertProvider.clipAndConvertToImg({
 			filePath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFileLocation),
-			outFilePath: path.resolve(uploadConfig.tmpUploadsPath, exam.originalImgLocation),
+			outFilePath: path.resolve(uploadConfig.tmpUploadsPath, originalImgLocation),
 			maxDicomValue
 		});
 
-		await this.storageProvider.save(exam.originalImgLocation);
+		await this.storageProvider.save(originalImgLocation);
 
 		await this.examsRepository.updateById(exam.id, {
 			...exam,
-			maxDicomValue
+			maxDicomValue,
+			originalImgLocation
 		});
 	}
 }

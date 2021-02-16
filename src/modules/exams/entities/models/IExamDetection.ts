@@ -7,6 +7,7 @@ export interface IExamDetection {
 	revisedClassificationId: string;
 	area: number;
 	aspectRatio: number;
+	perimeter: number;
 	centroidX: number;
 	centroidY: number;
 	equivalentDiameter: number;

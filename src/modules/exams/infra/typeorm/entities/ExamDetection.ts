@@ -15,8 +15,11 @@ export class ExamDetection implements IExamDetection {
 	@Column({ type: 'varchar' })
 	revisedClassificationId: string;
 
-	@Column({ type: 'float' })
+	@Column({ type: 'int' })
 	area: number;
+
+	@Column({ type: 'int' })
+	perimeter: number;
 
 	@Column({ type: 'float' })
 	aspectRatio: number;

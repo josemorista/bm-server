@@ -12,15 +12,19 @@ def execute(imgPath, orgImgPath):
 		'eccentricity',
 		'equivalent_diameter',
 		'extent',
-		'max_intensity',
 		'mean_intensity',
 		'orientation',
-		'perimeter'
+		'perimeter',
 		'bbox'
 		]);
 	data = pd.DataFrame(props);
-	data.rename(columns={'centroid-0': 'centroidX', 'centroid-1': 'centroidY'});
-	data['aspectRatio'] = (data['bbox'][2] - data['bbox'][0]) / (data['bbox'][3] - data['bbox'][1]);
+	data = data.rename(columns={
+		"centroid-0": "centroidX",
+		 "centroid-1": "centroidY", 
+		 "mean_intensity":"meanIntensity",
+		 "equivalent_diameter": "equivalentDiameter"
+		 });
+	data['aspectRatio'] = (data['bbox-2'] - data['bbox-0']) / (data['bbox-3'] - data['bbox-1']);
 	print(data.to_json(orient='records'));
 
 execute(argv[1], argv[2]);

@@ -36,14 +36,14 @@ export class ExamDetection implements IExamDetection {
 	@Column({ type: 'float' })
 	extent: number;
 
-	@Column({ type: 'float' })
-	maxIntensity: number;
+	/*@Column({ type: 'float' })
+	maxIntensity: number;*/
 
 	@Column({ type: 'float' })
 	meanIntensity: number;
 
-	@Column({ type: 'float' })
-	minIntensity: number;
+	/*@Column({ type: 'float' })
+	minIntensity: number;*/
 
 	@Column({ type: 'float' })
 	orientation: number;

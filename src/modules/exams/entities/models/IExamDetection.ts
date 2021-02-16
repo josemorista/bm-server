@@ -12,9 +12,9 @@ export interface IExamDetection {
 	centroidY: number;
 	equivalentDiameter: number;
 	extent: number;
-	maxIntensity: number;
+	//maxIntensity: number;
 	meanIntensity: number;
-	minIntensity: number;
+	//minIntensity: number;
 	orientation: number;
 	eccentricity: number;
 	rt: number | null;

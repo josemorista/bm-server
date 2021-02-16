@@ -16,6 +16,9 @@ export interface IExamDetection {
 	minIntensity: number;
 	orientation: number;
 	eccentricity: number;
+	rt: number | null;
+	qt: number | null;
+	sex: 'M' | 'F';
 	exam?: IExam;
 	createdAt: Date;
 	updatedAt: Date;

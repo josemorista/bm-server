@@ -20,8 +20,8 @@ export class createExamsTable1612721441061 implements MigrationInterface {
 			edgedImgLocation varchar,
 			originalImgLocation varchar,
 			dicomFileLocation varchar not null,
-			createdAt timestamp not null default current_timestamp,
-			updatedAt timestamp not null default current_timestamp,
+			createdAt timestamp with time zone not null default current_timestamp,
+			updatedAt timestamp with time zone not null default current_timestamp,
 			unique(id),
 			foreign key(patientId) references patients(id) on delete cascade
 		);`);

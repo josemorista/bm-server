@@ -10,8 +10,8 @@ export class createUsersTable1611165800840 implements MigrationInterface {
 			password varchar not null,
 			email varchar not null,
 			avatar varchar,
-			createdAt timestamp not null default current_timestamp,
-			updatedAt timestamp not null default current_timestamp,
+			createdAt timestamp with time zone not null default current_timestamp,
+			updatedAt timestamp with time zone not null default current_timestamp,
 			unique(email),
 			unique(id)
 		);

@@ -1,6 +1,6 @@
 export interface IExamDetectionClassificationOption {
 	id: string;
-	label: string;
+	name: string;
 	description: string;
 	createdAt: Date;
 	updatedAt: Date;

@@ -5,10 +5,10 @@ export interface IPatient {
 	name: string;
 	birthDate: Date | null;
 	sex: 'M' | 'F';
-	previousBoneLesions: boolean;
+	previousBoneLesions: boolean | null;
 	previousQt: boolean | null;
 	previousRt: boolean | null;
-	previousCancerDiagnosis: boolean;
+	previousCancerDiagnosis: boolean | null;
 	previousCancerDiagnosisType?: string;
 	observations: string;
 	ownerId: string;

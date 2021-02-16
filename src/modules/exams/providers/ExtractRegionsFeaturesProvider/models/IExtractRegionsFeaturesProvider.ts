@@ -7,6 +7,7 @@ export interface IExtractRegionsFeaturesDTO {
 
 export type IExtractRegionsFeaturesReturnDTO = Omit<IExamDetection,
 	'createdAt'
+	| 'id'
 	| 'updatedAt'
 	| 'examId'
 	| 'automaticClassificationId'

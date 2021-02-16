@@ -4,13 +4,16 @@ import { IExtractRegionsFeaturesProvider } from '../../providers/ExtractRegionsF
 import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExamsRepository';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IExamsDetectionsRepository } from '../../repositories/ExamsDetectionsRepository/models/IExamsDetectionsRepository';
+import { v4 as uuid } from 'uuid';
+import path from 'path';
+import { uploadConfig } from '../../../../config/upload';
 
-export interface IExtractDetectionsFromImgDTO {
+export interface IExtractDetectionsFromImgServiceDTO {
 	id: string;
 }
 
 @injectable()
-export class ExtractDetectionsFromImg {
+export class ExtractDetectionsFromImgService {
 
 	constructor(
 		@inject('ExamsRepository')
@@ -23,7 +26,7 @@ export class ExtractDetectionsFromImg {
 
 	}
 
-	async execute({ id }: IExtractDetectionsFromImgDTO): Promise<Array<IExamDetection>> {
+	async execute({ id }: IExtractDetectionsFromImgServiceDTO): Promise<Array<IExamDetection>> {
 		const exam = await this.examsRepository.findById(id);
 
 		if (!exam.equalizedImgLocation || !exam.edgedImgLocation) {
@@ -35,12 +38,13 @@ export class ExtractDetectionsFromImg {
 		}
 
 		const detectionFeatures = await this.extractRegionsFeaturesProvider.extractRegionsFeatures({
-			equalizedImgPath: exam.equalizedImgLocation,
-			imgPath: exam.edgedImgLocation
+			equalizedImgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.equalizedImgLocation),
+			imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.edgedImgLocation)
 		});
 
 		const detectionsPromises = detectionFeatures.map(async detection => {
 			return await this.examsDetectionsRepository.create({
+				id: uuid(),
 				...detection,
 				examId: id,
 				automaticClassificationId: null,

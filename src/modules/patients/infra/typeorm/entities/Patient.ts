@@ -12,7 +12,7 @@ export class Patient implements IPatient {
 	name: string;
 
 	@Column({ type: 'timestamp', name: 'birthdate', nullable: true })
-	birthDate: Date;
+	birthDate: Date | null;
 
 	@Column({ type: 'varchar' })
 	sex: 'M' | 'F';
@@ -20,11 +20,11 @@ export class Patient implements IPatient {
 	@Column({ type: 'varchar' })
 	observations: string;
 
-	@Column({ type: 'boolean', name: 'previousbonelesions' })
-	previousBoneLesions: boolean;
+	@Column({ type: 'boolean', name: 'previousbonelesions', nullable: true })
+	previousBoneLesions: boolean | null;
 
-	@Column({ type: 'boolean', name: 'previouscancerdiagnosis' })
-	previousCancerDiagnosis: boolean;
+	@Column({ type: 'boolean', name: 'previouscancerdiagnosis', nullable: true })
+	previousCancerDiagnosis: boolean | null;
 
 	@Column({ type: 'varchar', name: 'previouscancerdiagnosistype' })
 	previousCancerDiagnosisType?: string;
@@ -36,11 +36,11 @@ export class Patient implements IPatient {
 	@JoinColumn({ referencedColumnName: 'id', name: 'ownerid' })
 	owner?: IUser;
 
-	@Column({ type: 'boolean', name: 'previousqt' })
-	previousQt: boolean;
+	@Column({ type: 'boolean', name: 'previousqt', nullable: true })
+	previousQt: boolean | null;
 
-	@Column({ type: 'boolean', name: 'previousrt' })
-	previousRt: boolean;
+	@Column({ type: 'boolean', name: 'previousrt', nullable: true })
+	previousRt: boolean | null;
 
 	@CreateDateColumn({ name: 'createdat' })
 	createdAt: Date;

@@ -13,9 +13,9 @@ export class ExamDetectionClassification implements IExamDetectionClassification
 	@Column({ type: 'varchar' })
 	description: string;
 
-	@CreateDateColumn()
+	@CreateDateColumn({ name: 'createdat' })
 	createdAt: Date;
 
-	@UpdateDateColumn()
+	@UpdateDateColumn({ name: 'updatedat' })
 	updatedAt: Date;
 }

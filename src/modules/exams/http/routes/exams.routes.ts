@@ -7,12 +7,15 @@ import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExa
 import { CreateExamService } from '../../services/CreateExamService';
 import { examsPreProcessingRouter } from './examsPreProcessing.routes';
 import { classToPlain } from 'class-transformer';
+import { examsLearningRouter } from './examsLearning.routes';
 
 const examsRouter = Router();
 
 examsRouter.use(ensureAuthentication);
 
 examsRouter.use('/preProcessing', examsPreProcessingRouter);
+
+examsRouter.use('/learning', examsLearningRouter);
 
 examsRouter.get('/', async (request, response) => {
 	const { patientId } = request.query;

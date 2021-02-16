@@ -19,6 +19,12 @@ import { IOtsuSegmentationProvider } from '../../modules/exams/providers/OtsuSeg
 import { SkimageOtsuSegmentationProvider } from '../../modules/exams/providers/OtsuSegmentationProvider/implementations/SkimageOtsuSegmentationProvider';
 import { ISobelEdgeFilterProvider } from '../../modules/exams/providers/SobelEdgeFilterProvider/models/ISobelEdgeFilterProvider';
 import { SkimageSobelEdgeFilterProvider } from '../../modules/exams/providers/SobelEdgeFilterProvider/implementations/SkimageSobelEdgeFilterProvider';
+import { IExamsDetectionsRepository } from '../../modules/exams/repositories/ExamsDetectionsRepository/models/IExamsDetectionsRepository';
+import { ExamsDetectionsRepository } from '../../modules/exams/infra/typeorm/repositories/ExamsDetectionsRepository';
+import { IExamsDetectionsClassificationsRepository } from '../../modules/exams/repositories/ExamsDetectionsClassificationsRepository/IExamsDetectionsClassificationsRepository';
+import { ExamsDetectionsClassificationsRepository } from '../../modules/exams/infra/typeorm/repositories/ExamsDetectionsClassificationsRepository';
+import { IExtractRegionsFeaturesProvider } from '../../modules/exams/providers/ExtractRegionsFeaturesProvider/models/IExtractRegionsFeaturesProvider';
+import { SkimageExtractRegionsFeaturesProvider } from '../../modules/exams/providers/ExtractRegionsFeaturesProvider/implementations/SkimageExtractRegionsFeaturesProvider';
 
 // Providers
 container.register<IHashProvider>('HashProvider', BCryptHashProvider);
@@ -29,9 +35,11 @@ container.register<IMedianDenoiseProvider>('MedianDenoiseProvider', ScipyMedianD
 container.register<IAdapthistEqualizeHistogramProvider>('AdapthistEqualizeHistogramProvider', SkImageAdapthistEqualizeHistogramProvider);
 container.register<IOtsuSegmentationProvider>('OtsuSegmentationProvider', SkimageOtsuSegmentationProvider);
 container.register<ISobelEdgeFilterProvider>('SobelEdgeFilterProvider', SkimageSobelEdgeFilterProvider);
-
+container.register<IExtractRegionsFeaturesProvider>('ExtractRegionsFeaturesProvider', SkimageExtractRegionsFeaturesProvider);
 
 // Repositories
 container.register<IUsersRepository>('UsersRepository', UsersRepository);
 container.register<IPatientsRepository>('PatientsRepository', PatientsRepository);
 container.register<IExamsRepository>('ExamsRepository', ExamsRepository);
+container.register<IExamsDetectionsRepository>('ExamsDetectionsRepository', ExamsDetectionsRepository);
+container.register<IExamsDetectionsClassificationsRepository>('ExamsDetectionsClassificationsRepository', ExamsDetectionsClassificationsRepository);

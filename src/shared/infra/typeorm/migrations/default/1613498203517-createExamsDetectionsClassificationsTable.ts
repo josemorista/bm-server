@@ -7,8 +7,8 @@ export class createExamsDetectionsClassificationsTable1613498203517 implements M
 			id varchar not null primary key,
 			name varchar not null,
 			description varchar not null default '',
-			createdAt timestamp with time zone default current_timestamp,
-			updatedAt timestamp with time zone default current_timestamp,
+			createdAt timestamp default current_timestamp,
+			updatedAt timestamp default current_timestamp,
 			unique(id)
 		);`);
 	}

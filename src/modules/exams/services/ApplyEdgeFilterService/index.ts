@@ -6,6 +6,7 @@ import path from 'path';
 import { uploadConfig } from '../../../../config/upload';
 import { ISobelEdgeFilterProvider } from '../../providers/SobelEdgeFilterProvider/models/ISobelEdgeFilterProvider';
 import { AppError } from '../../../../shared/errors/AppError';
+import { IRobertsEdgeFilterProvider } from '../../providers/RobertsEdgeFilterProvider/models/IRobertsEdgeFilterProvider';
 
 interface IApplyEdgeFilterServiceDTO {
 	id: string;
@@ -21,7 +22,9 @@ export class ApplyEdgeFilterService {
 		@inject('StorageProvider')
 		private storageProvider: IStorageProvider,
 		@inject('SobelEdgeFilterProvider')
-		private sobelEdgeFilterProvider: ISobelEdgeFilterProvider
+		private sobelEdgeFilterProvider: ISobelEdgeFilterProvider,
+		@inject('RobertsEdgeFilterProvider')
+		private robertsEdgeFilterProvider: IRobertsEdgeFilterProvider
 	) { }
 
 	async execute({ method, id }: IApplyEdgeFilterServiceDTO): Promise<void> {
@@ -33,6 +36,13 @@ export class ApplyEdgeFilterService {
 		}
 
 		const edgedImgLocation = `edg-${id}.png`;
+
+		if (method === 'roberts') {
+			await this.robertsEdgeFilterProvider.applyRoberts({
+				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.segmentedImgLocation),
+				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, edgedImgLocation)
+			});
+		}
 
 		if (method === 'sobel') {
 			await this.sobelEdgeFilterProvider.applySobel({

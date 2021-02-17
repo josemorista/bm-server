@@ -25,6 +25,8 @@ import { IExamsDetectionsClassificationsRepository } from '../../modules/exams/r
 import { ExamsDetectionsClassificationsRepository } from '../../modules/exams/infra/typeorm/repositories/ExamsDetectionsClassificationsRepository';
 import { IExtractRegionsFeaturesProvider } from '../../modules/exams/providers/ExtractRegionsFeaturesProvider/models/IExtractRegionsFeaturesProvider';
 import { SkimageExtractRegionsFeaturesProvider } from '../../modules/exams/providers/ExtractRegionsFeaturesProvider/implementations/SkimageExtractRegionsFeaturesProvider';
+import { SkimageRobertsEdgeFilterProvider } from '../../modules/exams/providers/RobertsEdgeFilterProvider/implementations/SkimageRobertsEdgeFilterProvider';
+import { IRobertsEdgeFilterProvider } from '../../modules/exams/providers/RobertsEdgeFilterProvider/models/IRobertsEdgeFilterProvider';
 
 // Providers
 container.register<IHashProvider>('HashProvider', BCryptHashProvider);
@@ -35,6 +37,7 @@ container.register<IMedianDenoiseProvider>('MedianDenoiseProvider', ScipyMedianD
 container.register<IAdapthistEqualizeHistogramProvider>('AdapthistEqualizeHistogramProvider', SkImageAdapthistEqualizeHistogramProvider);
 container.register<IOtsuSegmentationProvider>('OtsuSegmentationProvider', SkimageOtsuSegmentationProvider);
 container.register<ISobelEdgeFilterProvider>('SobelEdgeFilterProvider', SkimageSobelEdgeFilterProvider);
+container.register<IRobertsEdgeFilterProvider>('RobertsEdgeFilterProvider', SkimageRobertsEdgeFilterProvider);
 container.register<IExtractRegionsFeaturesProvider>('ExtractRegionsFeaturesProvider', SkimageExtractRegionsFeaturesProvider);
 
 // Repositories

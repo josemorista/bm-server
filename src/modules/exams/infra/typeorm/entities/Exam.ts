@@ -43,6 +43,7 @@ export class Exam implements IExam {
 
 	@Expose({ name: 'denoisedImgLocationURL' })
 	denoisedImgLocationURL(): string | null {
+		if (!this.denoisedImgLocation) return null;
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.denoisedImgLocation}`;
 	}
 
@@ -51,6 +52,7 @@ export class Exam implements IExam {
 
 	@Expose({ name: 'equalizedImgLocationURL' })
 	equalizedImgLocationURL(): string | null {
+		if (!this.equalizedImgLocation) return null;
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.equalizedImgLocation}`;
 	}
 
@@ -59,6 +61,7 @@ export class Exam implements IExam {
 
 	@Expose({ name: 'segmentedImgLocationURL' })
 	segmentedImgLocationURL(): string | null {
+		if (!this.segmentedImgLocation) return null;
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.segmentedImgLocation}`;
 	}
 
@@ -67,6 +70,7 @@ export class Exam implements IExam {
 
 	@Expose({ name: 'edgedImgLocationURL' })
 	edgedImgLocationURL(): string | null {
+		if (!this.edgedImgLocation) return null;
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.edgedImgLocation}`;
 	}
 
@@ -74,7 +78,8 @@ export class Exam implements IExam {
 	originalImgLocation: string | null;
 
 	@Expose({ name: 'originalImgLocationURL' })
-	originalImgLocationURL(): string {
+	originalImgLocationURL(): string | null {
+		if (!this.originalImgLocation) return null;
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.originalImgLocation}`;
 	}
 

@@ -10,6 +10,8 @@ export class createUsersTable1611165800840 implements MigrationInterface {
 			password varchar not null,
 			email varchar not null,
 			avatar varchar,
+			job varchar,
+			relatedInstitution varchar,
 			createdAt timestamp not null default current_timestamp,
 			updatedAt timestamp not null default current_timestamp,
 			unique(email),

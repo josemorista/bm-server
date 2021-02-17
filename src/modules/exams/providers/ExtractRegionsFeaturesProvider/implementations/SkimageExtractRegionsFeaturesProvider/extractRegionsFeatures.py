@@ -3,7 +3,7 @@ from skimage import io, measure, img_as_float;
 import pandas as pd;
 from PIL import Image, ImageDraw;
 
-def execute(imgPath, orgImgPath, drawLabels=True):
+def execute(imgPath, orgImgPath):
 	
 	pilImage = Image.open(imgPath).convert('RGBA');
 	draw = ImageDraw.Draw(pilImage)
@@ -27,12 +27,12 @@ def execute(imgPath, orgImgPath, drawLabels=True):
 	# Export output as JSON
 	data = pd.DataFrame(props);
 
-	for index,row in data.iterrows():
+	for index, row in data.iterrows():
 		draw.rectangle(((row['bbox-1'], row['bbox-0']), (row['bbox-3'], row['bbox-2'])), outline='green');
 		draw.point((row['centroid-1'], row['centroid-0']), fill='red');
 		draw.text((row['centroid-1'], row['centroid-0']), f"({int(row['centroid-1'])}, {int(row['centroid-0'])})", size=3);
 	
-	pilImage.save('./out.png');
+	# pilImage.save('./out.png');
 
 	
 	data['aspectRatio'] = (data['bbox-3'] - data['bbox-1']) / (data['bbox-2'] - data['bbox-0']);

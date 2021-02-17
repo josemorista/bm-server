@@ -20,6 +20,10 @@ export class createExamsDetectionsTable1613498790043 implements MigrationInterfa
 			/* minIntensity float not null,*/
 			orientation float not null,
 			eccentricity float not null,
+			bboxX0 float not null,
+			bboxX1 float not null,
+			bboxY0 float not null,
+			bboxY1 float not null,
 			createdAt timestamp not null default current_timestamp, 
 			updatedAt timestamp not null default current_timestamp,
 			unique(id),

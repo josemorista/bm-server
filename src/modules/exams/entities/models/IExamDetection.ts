@@ -17,6 +17,10 @@ export interface IExamDetection {
 	//minIntensity: number;
 	orientation: number;
 	eccentricity: number;
+	bboxX0: number;
+	bboxX1: number;
+	bboxY0: number;
+	bboxY1: number;
 	exam?: IExam;
 	createdAt: Date;
 	updatedAt: Date;

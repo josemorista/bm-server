@@ -37,6 +37,8 @@ export class ExtractDetectionsFromImgService {
 			throw new AppError('patient not found');
 		}
 
+		await this.examsDetectionsRepository.deleteByExamId(exam.id);
+
 		const detectionFeatures = await this.extractRegionsFeaturesProvider.extractRegionsFeatures({
 			equalizedImgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.equalizedImgLocation),
 			imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.edgedImgLocation)

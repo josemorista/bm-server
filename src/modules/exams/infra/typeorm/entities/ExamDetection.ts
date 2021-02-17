@@ -51,6 +51,18 @@ export class ExamDetection implements IExamDetection {
 	@Column({ type: 'float' })
 	eccentricity: number;
 
+	@Column({ type: 'float', name: 'bboxx0' })
+	bboxX0: number;
+
+	@Column({ type: 'float', name: 'bboxx1' })
+	bboxX1: number;
+
+	@Column({ type: 'float', name: 'bboxy0' })
+	bboxY0: number;
+
+	@Column({ type: 'float', name: 'bboxy1' })
+	bboxY1: number;
+
 	@CreateDateColumn({ name: 'createdat' })
 	createdAt: Date;
 

@@ -15,4 +15,10 @@ export class ExamsDetectionsRepository implements IExamsDetectionsRepository {
 		await this.ormRepository.save(examDetection);
 		return examDetection;
 	}
+
+	async deleteByExamId(examId: string): Promise<void> {
+		await this.ormRepository.delete({
+			examId
+		});
+	}
 }

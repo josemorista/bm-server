@@ -4,4 +4,5 @@ export type ICreateExamDetectionDTO = Omit<IExamDetection, 'createdAt' | 'update
 
 export interface IExamsDetectionsRepository {
 	create(data: ICreateExamDetectionDTO): Promise<IExamDetection>;
+	deleteByExamId(examId: string): Promise<void>;
 }

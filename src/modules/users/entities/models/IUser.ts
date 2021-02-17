@@ -4,6 +4,8 @@ export interface IUser {
 	lastName: string;
 	email: string;
 	password: string;
+	job: string | null;
+	relatedInstitution: string | null;
 	avatar: string | null;
 	createdAt: Date;
 	updatedAt: Date;

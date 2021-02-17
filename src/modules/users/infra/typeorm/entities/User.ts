@@ -18,6 +18,12 @@ export class User implements IUser {
 	@Column({ type: 'varchar', name: 'lastname' })
 	lastName: string;
 
+	@Column({ type: 'varchar', nullable: true })
+	job: string | null;
+
+	@Column({ type: 'varchar', nullable: true, name: 'relatedinstitution' })
+	relatedInstitution: string | null;
+
 	@Exclude()
 	@Column({ type: 'varchar' })
 	password: string;

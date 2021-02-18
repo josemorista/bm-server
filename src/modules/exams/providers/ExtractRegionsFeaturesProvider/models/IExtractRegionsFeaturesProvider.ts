@@ -2,6 +2,7 @@ import { IExamDetection } from '../../../entities/models/IExamDetection';
 
 export interface IExtractRegionsFeaturesDTO {
 	imgPath: string;
+	outImgPath: string;
 	equalizedImgPath: string;
 }
 

@@ -7,6 +7,7 @@ import { IExamsDetectionsRepository } from '../../repositories/ExamsDetectionsRe
 import { v4 as uuid } from 'uuid';
 import path from 'path';
 import { uploadConfig } from '../../../../config/upload';
+import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
 
 export interface IExtractDetectionsFromImgServiceDTO {
 	id: string;
@@ -20,6 +21,8 @@ export class ExtractDetectionsFromImgService {
 		private examsRepository: IExamsRepository,
 		@inject('ExamsDetectionsRepository')
 		private examsDetectionsRepository: IExamsDetectionsRepository,
+		@inject('StorageProvider')
+		private storageProvider: IStorageProvider,
 		@inject('ExtractRegionsFeaturesProvider')
 		private extractRegionsFeaturesProvider: IExtractRegionsFeaturesProvider
 	) {
@@ -39,9 +42,12 @@ export class ExtractDetectionsFromImgService {
 
 		await this.examsDetectionsRepository.deleteByExamId(exam.id);
 
+		const resumeSegmentationImgLocation = `res-${exam.id}.png`;
+
 		const detectionFeatures = await this.extractRegionsFeaturesProvider.extractRegionsFeatures({
 			equalizedImgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.equalizedImgLocation),
-			imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.edgedImgLocation)
+			imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.edgedImgLocation),
+			outImgPath: path.resolve(uploadConfig.tmpUploadsPath, resumeSegmentationImgLocation)
 		});
 
 		const detectionsPromises = detectionFeatures.map(async detection => {
@@ -53,6 +59,13 @@ export class ExtractDetectionsFromImgService {
 				revisedClassificationId: null
 			});
 		});
+
+		await this.examsRepository.updateById(exam.id, {
+			...exam,
+			resumeSegmentationImgLocation
+		});
+
+		await this.storageProvider.save(resumeSegmentationImgLocation);
 
 		return await Promise.all(detectionsPromises);
 	}

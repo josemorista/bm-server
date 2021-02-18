@@ -101,6 +101,15 @@ export class Exam implements IExam {
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.originalImgLocation}`;
 	}
 
+	@Column({ type: 'varchar', name: 'resumesegmentationimglocation', nullable: true })
+	resumeSegmentationImgLocation: string | null;
+
+	@Expose({ name: 'resumeSegmentationImgLocationURL' })
+	resumeSegmentationImgLocationURL(): string | null {
+		if (!this.resumeSegmentationImgLocation) return null;
+		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.resumeSegmentationImgLocation}`;
+	}
+
 	@Column({ type: 'varchar', name: 'dicomfilelocation' })
 	dicomFileLocation: string;
 

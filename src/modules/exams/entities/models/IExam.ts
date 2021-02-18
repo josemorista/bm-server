@@ -19,6 +19,7 @@ export interface IExam {
 	originalImgLocation: string | null;
 	originalImgHistogramLocation: string | null;
 	equalizedImgHistogramLocation: string | null;
+	resumeSegmentationImgLocation: string | null;
 	dicomFileLocation: string;
 	createdAt: Date;
 	updatedAt: Date;

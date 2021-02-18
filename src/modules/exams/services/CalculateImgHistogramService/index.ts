@@ -10,6 +10,7 @@ interface ICalculateImgHistogramsServiceDTO {
 	bins?: number;
 	range?: Array<number>;
 	id: string;
+	calculateHistogramFrom?: 'original' | 'equalized'
 }
 
 @injectable()
@@ -25,14 +26,14 @@ export class CalculateImgHistogramService {
 	) {
 	}
 
-	async execute({ id, bins, range }: ICalculateImgHistogramsServiceDTO): Promise<void> {
+	async execute({ id, bins, range, calculateHistogramFrom }: ICalculateImgHistogramsServiceDTO): Promise<void> {
 		const exam = await this.examsRepository.findById(id);
 
 		if (!exam.originalImgLocation) {
 			throw new AppError('no original image location to process');
 		}
 
-		if (!exam.originalImgHistogramLocation) {
+		if (calculateHistogramFrom === 'original') {
 			const originalImgHistogramLocation = `orghist-${exam.id}.png`;
 			await this.calculateImgHistogramProvider.calculateImgHistogram({
 				bins: bins || 30,
@@ -47,7 +48,10 @@ export class CalculateImgHistogramService {
 			});
 		}
 
-		if (exam.equalizedImgLocation && !exam.equalizedImgHistogramLocation) {
+		if (calculateHistogramFrom === 'equalized') {
+			if (!exam.equalizedImgLocation) {
+				throw new AppError('no equalized image to process');
+			}
 			const equalizedImgHistogramLocation = `eqhist-${exam.id}.png`;
 			await this.calculateImgHistogramProvider.calculateImgHistogram({
 				bins: bins || 30,

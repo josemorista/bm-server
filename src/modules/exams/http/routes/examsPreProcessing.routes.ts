@@ -45,7 +45,8 @@ examsPreProcessingRouter.patch('/:id/applySegmentation', async (request, respons
 	const segmentImgService = container.resolve(SegmentImgService);
 	await segmentImgService.execute({
 		id,
-		method: request.body.method
+		method: request.body.method,
+		randomWalkerParams: request.body.randomWalkerParams
 	});
 	return response.sendStatus(204);
 });

@@ -29,18 +29,27 @@ import { SkimageRobertsEdgeFilterProvider } from '../../modules/exams/providers/
 import { IRobertsEdgeFilterProvider } from '../../modules/exams/providers/RobertsEdgeFilterProvider/models/IRobertsEdgeFilterProvider';
 import { ICalculateImgHistogramProvider } from '../../modules/exams/providers/CalculateImgHistogramProvider/models/ICalculateImgHistogramProvider';
 import { MatPlotLibCalculateImgHistogramProvider } from '../../modules/exams/providers/CalculateImgHistogramProvider/implementations/MatPlotLibCalculateImgHistogramProvider';
+import { IRandomWalkerSegmentationProvider } from '../../modules/exams/providers/RandomWalkerSegmentationProvider/models/IRandomWalkerSegmentationProvider';
+import { SkimageRandomWalkerSegmentationProvider } from '../../modules/exams/providers/RandomWalkerSegmentationProvider/implementations/SkimageRandomWalkerSegmentationProvider';
 
 // Providers
 container.register<IHashProvider>('HashProvider', BCryptHashProvider);
 container.register<IStorageProvider>('StorageProvider', DiskStorageProvider);
 
 container.register<IDicomClipAndConvertProvider>('DicomClipAndConvertProvider', PyDicomDicomClipAndConvertProvider);
+
 container.register<IMedianDenoiseProvider>('MedianDenoiseProvider', ScipyMedianDenoiseProvider);
+
 container.register<IAdapthistEqualizeHistogramProvider>('AdapthistEqualizeHistogramProvider', SkImageAdapthistEqualizeHistogramProvider);
+
 container.register<IOtsuSegmentationProvider>('OtsuSegmentationProvider', SkimageOtsuSegmentationProvider);
+container.register<IRandomWalkerSegmentationProvider>('RandomWalkerSegmentationProvider', SkimageRandomWalkerSegmentationProvider);
+
 container.register<ISobelEdgeFilterProvider>('SobelEdgeFilterProvider', SkimageSobelEdgeFilterProvider);
 container.register<IRobertsEdgeFilterProvider>('RobertsEdgeFilterProvider', SkimageRobertsEdgeFilterProvider);
+
 container.register<IExtractRegionsFeaturesProvider>('ExtractRegionsFeaturesProvider', SkimageExtractRegionsFeaturesProvider);
+
 container.register<ICalculateImgHistogramProvider>('CalculateImgHistogramProvider', MatPlotLibCalculateImgHistogramProvider);
 
 // Repositories

@@ -32,7 +32,7 @@ def execute(imgPath, orgImgPath):
 		draw.point((row['centroid-1'], row['centroid-0']), fill='red');
 		draw.text((row['centroid-1'], row['centroid-0']), f"({int(row['centroid-1'])}, {int(row['centroid-0'])})", size=3);
 	
-	# pilImage.save('./out.png');
+	pilImage.save('./out.png');
 
 	
 	data['aspectRatio'] = (data['bbox-3'] - data['bbox-1']) / (data['bbox-2'] - data['bbox-0']);

@@ -40,6 +40,8 @@ export class CreateExamService {
 			edgedImgLocation: null,
 			equalizedImgLocation: null,
 			segmentedImgLocation: null,
+			equalizedImgHistogramLocation: null,
+			originalImgHistogramLocation: null,
 			denoiseFilter: null,
 			segmentationMethod: null
 		});

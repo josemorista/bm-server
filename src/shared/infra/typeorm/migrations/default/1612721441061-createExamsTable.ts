@@ -18,6 +18,8 @@ export class createExamsTable1612721441061 implements MigrationInterface {
 			equalizedImgLocation varchar,
 			segmentedImgLocation varchar,
 			edgedImgLocation varchar,
+			originalImgHistogramLocation varchar,
+			equalizedImgHistogramLocation varchar,
 			originalImgLocation varchar,
 			dicomFileLocation varchar not null,
 			createdAt timestamp not null default current_timestamp,

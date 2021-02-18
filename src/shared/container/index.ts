@@ -27,6 +27,8 @@ import { IExtractRegionsFeaturesProvider } from '../../modules/exams/providers/E
 import { SkimageExtractRegionsFeaturesProvider } from '../../modules/exams/providers/ExtractRegionsFeaturesProvider/implementations/SkimageExtractRegionsFeaturesProvider';
 import { SkimageRobertsEdgeFilterProvider } from '../../modules/exams/providers/RobertsEdgeFilterProvider/implementations/SkimageRobertsEdgeFilterProvider';
 import { IRobertsEdgeFilterProvider } from '../../modules/exams/providers/RobertsEdgeFilterProvider/models/IRobertsEdgeFilterProvider';
+import { ICalculateImgHistogramProvider } from '../../modules/exams/providers/CalculateImgHistogramProvider/models/ICalculateImgHistogramProvider';
+import { MatPlotLibCalculateImgHistogramProvider } from '../../modules/exams/providers/CalculateImgHistogramProvider/implementations/MatPlotLibCalculateImgHistogramProvider';
 
 // Providers
 container.register<IHashProvider>('HashProvider', BCryptHashProvider);
@@ -39,6 +41,7 @@ container.register<IOtsuSegmentationProvider>('OtsuSegmentationProvider', Skimag
 container.register<ISobelEdgeFilterProvider>('SobelEdgeFilterProvider', SkimageSobelEdgeFilterProvider);
 container.register<IRobertsEdgeFilterProvider>('RobertsEdgeFilterProvider', SkimageRobertsEdgeFilterProvider);
 container.register<IExtractRegionsFeaturesProvider>('ExtractRegionsFeaturesProvider', SkimageExtractRegionsFeaturesProvider);
+container.register<ICalculateImgHistogramProvider>('CalculateImgHistogramProvider', MatPlotLibCalculateImgHistogramProvider);
 
 // Repositories
 container.register<IUsersRepository>('UsersRepository', UsersRepository);

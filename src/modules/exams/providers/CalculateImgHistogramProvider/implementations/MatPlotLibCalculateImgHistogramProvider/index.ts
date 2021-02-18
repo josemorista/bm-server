@@ -5,7 +5,7 @@ import { ICalculateImgHistogramDTO, ICalculateImgHistogramProvider } from '../..
 
 export class MatPlotLibCalculateImgHistogramProvider implements ICalculateImgHistogramProvider {
 	async calculateImgHistogram({ imgPath, outImgPath, bins, range }: ICalculateImgHistogramDTO): Promise<void> {
-		spawnSync('python3', [
+		const process = spawnSync('python3', [
 			path.resolve(__dirname, 'calculateImgHistogram.py'),
 			imgPath,
 			outImgPath,

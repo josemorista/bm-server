@@ -5,6 +5,7 @@ import { DenoiseImgService } from '../../services/DenoiseImgService';
 import { HistogramEqualizationService } from '../../services/HistogramEqualizationService';
 import { SegmentImgService } from '../../services/SegmentImgService';
 import { ApplyEdgeFilterService } from '../../services/ApplyEdgeFilterService';
+import { CalculateImgHistogramService } from '../../services/CalculateImgHistogramService';
 
 const examsPreProcessingRouter = Router();
 
@@ -55,6 +56,16 @@ examsPreProcessingRouter.patch('/:id/applyEdgeFilter', async (request, response)
 	await applyEdgeFilterService.execute({
 		id,
 		method: request.body.method
+	});
+	return response.sendStatus(204);
+});
+
+examsPreProcessingRouter.post('/:id/calculateHistograms', async (request, response) => {
+	const { id } = request.params;
+	const calculateImgHistogramsService = container.resolve(CalculateImgHistogramService);
+	await calculateImgHistogramsService.execute({
+		id,
+		...request.body
 	});
 	return response.sendStatus(204);
 });

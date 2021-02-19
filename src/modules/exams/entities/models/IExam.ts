@@ -7,9 +7,10 @@ export interface IExam {
 	patientId: string;
 	patient?: IPatient;
 	maxDicomValue: number;
+	pixelArea: number;
 	currentStep: number;
 	denoiseFilter: 'median' | null;
-	histogramEqualization: 'adapthist' | null;
+	histogramEqualization: 'adapthist' | 'none' | null;
 	edgeFilter: 'roberts' | 'sobel' | 'prewitt' | 'scharr' | null;
 	segmentationMethod: 'otsu' | 'randomWalker' | null;
 	denoisedImgLocation: string | null;

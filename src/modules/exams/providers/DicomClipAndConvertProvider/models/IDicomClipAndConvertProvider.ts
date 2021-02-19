@@ -5,6 +5,10 @@ export interface IDicomClipAndConvertToImgDTO {
 	maxDicomValue: number;
 }
 
+export interface IClipAndConvertToImgResponse {
+	patientId: string;
+	pixelArea: number;
+}
 export interface IDicomClipAndConvertProvider {
-	clipAndConvertToImg(data: IDicomClipAndConvertToImgDTO): Promise<void>;
+	clipAndConvertToImg(data: IDicomClipAndConvertToImgDTO): Promise<IClipAndConvertToImgResponse>;
 }

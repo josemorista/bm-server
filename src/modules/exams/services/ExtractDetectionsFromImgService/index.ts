@@ -32,7 +32,7 @@ export class ExtractDetectionsFromImgService {
 	async execute({ id }: IExtractDetectionsFromImgServiceDTO): Promise<Array<IExamDetection>> {
 		const exam = await this.examsRepository.findById(id);
 
-		if (!exam.equalizedImgLocation || !exam.edgedImgLocation) {
+		if (!exam.originalImgLocation || !exam.edgedImgLocation) {
 			throw new AppError('preProcessing steps not completed');
 		}
 
@@ -45,7 +45,7 @@ export class ExtractDetectionsFromImgService {
 		const resumeSegmentationImgLocation = `res-${exam.id}.png`;
 
 		const detectionFeatures = await this.extractRegionsFeaturesProvider.extractRegionsFeatures({
-			equalizedImgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.equalizedImgLocation),
+			equalizedImgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.originalImgLocation),
 			imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.edgedImgLocation),
 			outImgPath: path.resolve(uploadConfig.tmpUploadsPath, resumeSegmentationImgLocation)
 		});

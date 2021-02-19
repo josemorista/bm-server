@@ -3,6 +3,7 @@ import { IUser } from '../../../users/entities/models/IUser';
 export interface IPatient {
 	id: string;
 	name: string;
+	dicomPatientId: string | null;
 	birthDate: Date | null;
 	sex: 'M' | 'F';
 	previousBoneLesions: boolean | null;

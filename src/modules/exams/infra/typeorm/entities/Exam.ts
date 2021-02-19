@@ -17,6 +17,9 @@ export class Exam implements IExam {
 	@Column({ type: 'varchar', name: 'patientid' })
 	patientId: string;
 
+	@Column({ type: 'float', name: 'pixelarea' })
+	pixelArea: number;
+
 	@Column({ type: 'varchar' })
 	category: IExam['category']
 

@@ -7,6 +7,7 @@ export class createPatientsTable1611167114853 implements MigrationInterface {
 				id varchar not null primary key,
 				name varchar not null,
 				birthDate timestamp,
+				dicomPatientId varchar,
 				sex varchar not null,			
 				previousBoneLesions boolean,
 				previousQt boolean,

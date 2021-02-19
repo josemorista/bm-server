@@ -11,6 +11,9 @@ export class Patient implements IPatient {
 	@Column({ type: 'varchar' })
 	name: string;
 
+	@Column({ type: 'varchar', nullable: true, name: 'dicompatientid' })
+	dicomPatientId: string | null;
+
 	@Column({ type: 'timestamp', name: 'birthdate', nullable: true })
 	birthDate: Date | null;
 

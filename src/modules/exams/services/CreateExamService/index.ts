@@ -30,6 +30,7 @@ export class CreateExamService {
 			label,
 			category,
 			currentStep: 0,
+			pixelArea: 0,
 			patientId,
 			dicomFileLocation,
 			edgeFilter: null,

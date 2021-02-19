@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw;
 
 def execute(imgPath, orgImgPath, outImgPath):
 	
-	pilImage = Image.open(imgPath).convert('RGBA');
+	pilImage = Image.open(orgImgPath).convert('RGBA');
 	draw = ImageDraw.Draw(pilImage)
 
 	img = img_as_float(io.imread(imgPath, as_gray=True));

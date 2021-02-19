@@ -5,12 +5,13 @@ from matplotlib import pyplot as plt;
 
 def execute(imgPath, outFilePath, maxDicomValue):
 	ds = dicom.dcmread(imgPath);
-	#pixelArea = ds.PixelSpacing[0] * ds.PixelSpacing[1];
+	pixelArea = ds.PixelSpacing[0] * ds.PixelSpacing[1];
 	#rows = ds.Rows;
 	#cols = ds.Columns;
-	#patientId = ds.PatientID;
+	patientId = ds.PatientID;
 	pixelArray = ds.pixel_array.clip(0, maxDicomValue);
 	pixelArray = img_as_float(pixelArray / pixelArray.max());
+	print('{' + f"\"pixelArea\":{pixelArea}, \"patientId\": \"{patientId}\"" + '}');
 	plt.imsave(outFilePath, pixelArray, cmap='gray');
 
 execute(argv[1], argv[2], int(argv[3]));

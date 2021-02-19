@@ -4,6 +4,7 @@ import { uploadConfig } from '../../../../config/upload';
 import { inject, injectable } from 'tsyringe';
 import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
 import { IDicomClipAndConvertProvider } from '../../providers/DicomClipAndConvertProvider/models/IDicomClipAndConvertProvider';
+import { IPatientsRepository } from '../../../patients/repositories/PatientsRepository/models/IPatientsRepository';
 
 interface ISegmentExamServiceDTO {
 	id: string;
@@ -16,6 +17,8 @@ export class ClipAndConvertToImgService {
 	constructor(
 		@inject('ExamsRepository')
 		private examsRepository: IExamsRepository,
+		@inject('PatientsRepository')
+		private patientsRepository: IPatientsRepository,
 		@inject('StorageProvider')
 		private storageProvider: IStorageProvider,
 		@inject('DicomClipAndConvertProvider')
@@ -26,10 +29,14 @@ export class ClipAndConvertToImgService {
 		const exam = await this.examsRepository.findById(id);
 		const originalImgLocation = `org-${id}.png`;
 
-		this.dicomClipAndConvertProvider.clipAndConvertToImg({
+		const { patientId, pixelArea } = await this.dicomClipAndConvertProvider.clipAndConvertToImg({
 			filePath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFileLocation),
 			outFilePath: path.resolve(uploadConfig.tmpUploadsPath, originalImgLocation),
 			maxDicomValue
+		});
+
+		await this.patientsRepository.updatePatientById(exam.patientId, {
+			dicomPatientId: patientId
 		});
 
 		await this.storageProvider.save(originalImgLocation);
@@ -37,6 +44,7 @@ export class ClipAndConvertToImgService {
 		await this.examsRepository.updateById(exam.id, {
 			...exam,
 			maxDicomValue,
+			pixelArea,
 			originalImgLocation
 		});
 	}

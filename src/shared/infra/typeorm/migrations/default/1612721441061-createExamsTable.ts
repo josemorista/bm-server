@@ -8,6 +8,7 @@ export class createExamsTable1612721441061 implements MigrationInterface {
 			label varchar not null,
 			patientId varchar not null,
 			category varchar not null,
+			pixelArea float default 0,
 			maxDicomValue smallint not null,
 			currentStep smallint not null default 0,
 			denoiseFilter varchar,

@@ -6,6 +6,7 @@ import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExa
 import path from 'path';
 import { uploadConfig } from '../../../../config/upload';
 import { AppError } from '../../../../shared/errors/AppError';
+import fs from 'fs';
 
 interface IHistogramEqualizationServiceDTO {
 	id: string;
@@ -39,6 +40,11 @@ export class HistogramEqualizationService {
 				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.denoisedImgLocation),
 				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, equalizedImgLocation)
 			});
+		}
+
+		if (method === 'none') {
+			fs.promises.copyFile(path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.denoisedImgLocation),
+				path.resolve(uploadConfig.tmpUploadsPath, equalizedImgLocation));
 		}
 
 		await this.storageProvider.save(equalizedImgLocation);

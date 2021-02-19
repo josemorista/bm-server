@@ -43,7 +43,7 @@ export class HistogramEqualizationService {
 		}
 
 		if (method === 'none') {
-			fs.promises.copyFile(path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.denoisedImgLocation),
+			await fs.promises.copyFile(path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.denoisedImgLocation),
 				path.resolve(uploadConfig.tmpUploadsPath, equalizedImgLocation));
 		}
 

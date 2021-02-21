@@ -8,7 +8,6 @@ def execute(imgPath, outFilePath):
 	img = img_as_float(io.imread(imgPath, as_gray=True));
 	thresholds = threshold_multiotsu(img, 3);
 	regions = np.digitize(img, bins=thresholds);
-	#	bone = (regions == 1);
 	met = (regions == 2);
 	segmented = np.zeros(img.shape, dtype=np.float);
 	segmented[met] = img[met];

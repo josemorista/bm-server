@@ -11,7 +11,7 @@ export class SkimageExtractRegionsFeaturesProvider implements IExtractRegionsFea
 			equalizedImgPath,
 			outImgPath
 		]);
-		const response = JSON.parse(process.output[1].toString());
+		const response = JSON.parse(process.stdout.toString());
 		return response;
 	}
 }

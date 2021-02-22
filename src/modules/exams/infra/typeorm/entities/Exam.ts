@@ -23,24 +23,6 @@ export class Exam implements IExam {
 	@Column({ type: 'varchar' })
 	category: IExam['category']
 
-	@Column({ type: 'smallint', name: 'maxdicomvalue' })
-	maxDicomValue: number;
-
-	@Column({ type: 'smallint', name: 'currentstep' })
-	currentStep: number;
-
-	@Column({ type: 'varchar', name: 'denoisefilter', nullable: true })
-	denoiseFilter: IExam['denoiseFilter'];
-
-	@Column({ type: 'varchar', name: 'histogramequalization', nullable: true })
-	histogramEqualization: IExam['histogramEqualization'];
-
-	@Column({ type: 'varchar', name: 'edgefilter', nullable: true })
-	edgeFilter: IExam['edgeFilter'];
-
-	@Column({ type: 'varchar', name: 'segmentationmethod', nullable: true })
-	segmentationMethod: IExam['segmentationMethod'];
-
 	@Column({ type: 'varchar', name: 'denoisedimglocation', nullable: true })
 	denoisedImgLocation: IExam['denoisedImgLocation'];
 

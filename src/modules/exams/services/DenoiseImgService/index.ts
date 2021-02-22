@@ -3,13 +3,12 @@ import path from 'path';
 import { uploadConfig } from '../../../../config/upload';
 import { inject, injectable } from 'tsyringe';
 import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
-import { IExam } from '../../entities/models/IExam';
 import { IMedianDenoiseProvider } from '../../providers/MedianDenoiseProvider/models/IMedianDenoiseProvider';
 import { AppError } from '../../../../shared/errors/AppError';
 
 interface IDenoiseImgServiceDTO {
 	id: string;
-	method: Required<IExam['denoiseFilter']>,
+	method: 'median';
 	size?: number;
 }
 
@@ -50,7 +49,6 @@ export class DenoiseImgService {
 
 		await this.examsRepository.updateById(exam.id, {
 			...exam,
-			denoiseFilter: method,
 			denoisedImgLocation
 		});
 	}

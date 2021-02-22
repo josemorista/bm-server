@@ -29,13 +29,9 @@ export class CreateExamService {
 			id,
 			label,
 			category,
-			currentStep: 0,
 			pixelArea: 0,
 			patientId,
 			dicomFileLocation,
-			edgeFilter: null,
-			histogramEqualization: null,
-			maxDicomValue: 300,
 			originalImgLocation: null,
 			denoisedImgLocation: null,
 			edgedImgLocation: null,
@@ -43,9 +39,7 @@ export class CreateExamService {
 			segmentedImgLocation: null,
 			equalizedImgHistogramLocation: null,
 			originalImgHistogramLocation: null,
-			resumeSegmentationImgLocation: null,
-			denoiseFilter: null,
-			segmentationMethod: null
+			resumeSegmentationImgLocation: null
 		});
 
 		return exam;

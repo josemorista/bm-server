@@ -43,7 +43,6 @@ export class ClipAndConvertToImgService {
 
 		await this.examsRepository.updateById(exam.id, {
 			...exam,
-			maxDicomValue,
 			pixelArea,
 			originalImgLocation
 		});

@@ -1,19 +1,23 @@
 import { inject, injectable } from 'tsyringe';
 import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
-import { IExam } from '../../entities/models/IExam';
 import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExamsRepository';
 import path from 'path';
 import { uploadConfig } from '../../../../config/upload';
 import { IOtsuSegmentationProvider } from '../../providers/OtsuSegmentationProvider/models/IOtsuSegmentationProvider';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IRandomWalkerSegmentationProvider } from '../../providers/RandomWalkerSegmentationProvider/models/IRandomWalkerSegmentationProvider';
+import { ILocalOtsuSegmentationProvider } from '../../providers/LocalOtsuSegmentationProvider/models/ILocalOtsuSegmentationProvider';
 
 interface ISegmentImgServiceDTO {
 	id: string;
-	method: IExam['segmentationMethod'];
+	cumulative: boolean;
+	method: 'otsu' | 'randomWalker' | 'localOtsu';
 	randomWalkerParams?: {
 		markers: Array<number>;
 		beta?: number;
+	}
+	localOtsuParams?: {
+		diskSize: number;
 	}
 }
 
@@ -28,23 +32,44 @@ export class SegmentImgService {
 		@inject('OtsuSegmentationProvider')
 		private otsuSegmentationProvider: IOtsuSegmentationProvider,
 		@inject('RandomWalkerSegmentationProvider')
-		private randomWalkerSegmentationProvider: IRandomWalkerSegmentationProvider
+		private randomWalkerSegmentationProvider: IRandomWalkerSegmentationProvider,
+		@inject('LocalOtsuSegmentationProvider')
+		private localOtsuSegmentationProvider: ILocalOtsuSegmentationProvider
 	) { }
 
-	async execute({ method, id, randomWalkerParams }: ISegmentImgServiceDTO): Promise<void> {
+	async execute({ method, id, randomWalkerParams, localOtsuParams, cumulative }: ISegmentImgServiceDTO): Promise<void> {
 
 		const exam = await this.examsRepository.findById(id);
+		let srcPath = '';
 
-		if (!exam.equalizedImgLocation) {
-			throw new AppError('no equalized image to process');
+		if (exam.equalizedImgLocation) {
+			srcPath = path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.equalizedImgLocation);
+		}
+
+		if (cumulative) {
+			if (!exam.segmentedImgLocation) {
+				throw new AppError('no segmented img to process');
+			}
+			srcPath = path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.segmentedImgLocation);
 		}
 
 		const segmentedImgLocation = `seg-${id}.png`;
 
 		if (method === 'otsu') {
 			await this.otsuSegmentationProvider.applyOtsuSegmentation({
-				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.equalizedImgLocation),
+				imgPath: srcPath,
 				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation)
+			});
+		}
+
+		if (method === 'localOtsu') {
+			if (!localOtsuParams) {
+				throw new AppError('missing random walker params.');
+			}
+			await this.localOtsuSegmentationProvider.applyLocalOtsuSegmentation({
+				imgPath: srcPath,
+				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation),
+				diskSize: localOtsuParams.diskSize
 			});
 		}
 
@@ -53,9 +78,9 @@ export class SegmentImgService {
 				throw new AppError('missing random walker params.');
 			}
 			await this.randomWalkerSegmentationProvider.applyRandomWalker({
-				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.equalizedImgLocation),
+				imgPath: srcPath,
 				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation),
-				beta: randomWalkerParams.beta || 10,
+				beta: randomWalkerParams.beta || 30,
 				markers: randomWalkerParams.markers
 			});
 		}
@@ -64,7 +89,6 @@ export class SegmentImgService {
 
 		await this.examsRepository.updateById(id, {
 			...exam,
-			segmentationMethod: method,
 			segmentedImgLocation
 		});
 	}

@@ -10,9 +10,8 @@ import fs from 'fs';
 
 interface IHistogramEqualizationServiceDTO {
 	id: string;
-	method: IExam['histogramEqualization'];
+	method: 'adapthist' | 'none';
 }
-
 @injectable()
 export class HistogramEqualizationService {
 
@@ -51,7 +50,6 @@ export class HistogramEqualizationService {
 
 		await this.examsRepository.updateById(id, {
 			...exam,
-			histogramEqualization: method,
 			equalizedImgLocation
 		});
 	}

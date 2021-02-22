@@ -10,7 +10,7 @@ import { IRobertsEdgeFilterProvider } from '../../providers/RobertsEdgeFilterPro
 
 interface IApplyEdgeFilterServiceDTO {
 	id: string;
-	method: IExam['edgeFilter'];
+	method: 'sobel' | 'roberts';
 }
 
 @injectable()
@@ -55,7 +55,6 @@ export class ApplyEdgeFilterService {
 
 		await this.examsRepository.updateById(id, {
 			...exam,
-			edgeFilter: method,
 			edgedImgLocation
 		});
 	}

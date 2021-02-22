@@ -31,6 +31,8 @@ import { ICalculateImgHistogramProvider } from '../../modules/exams/providers/Ca
 import { MatPlotLibCalculateImgHistogramProvider } from '../../modules/exams/providers/CalculateImgHistogramProvider/implementations/MatPlotLibCalculateImgHistogramProvider';
 import { IRandomWalkerSegmentationProvider } from '../../modules/exams/providers/RandomWalkerSegmentationProvider/models/IRandomWalkerSegmentationProvider';
 import { SkimageRandomWalkerSegmentationProvider } from '../../modules/exams/providers/RandomWalkerSegmentationProvider/implementations/SkimageRandomWalkerSegmentationProvider';
+import { SkimageLocalOtsuSegmentationProvider } from '../../modules/exams/providers/LocalOtsuSegmentationProvider/implementations/SkimageLocalOtsuSegmentationProvider';
+import { ILocalOtsuSegmentationProvider } from '../../modules/exams/providers/LocalOtsuSegmentationProvider/models/ILocalOtsuSegmentationProvider';
 
 // Providers
 container.register<IHashProvider>('HashProvider', BCryptHashProvider);
@@ -43,6 +45,7 @@ container.register<IMedianDenoiseProvider>('MedianDenoiseProvider', ScipyMedianD
 container.register<IAdapthistEqualizeHistogramProvider>('AdapthistEqualizeHistogramProvider', SkImageAdapthistEqualizeHistogramProvider);
 
 container.register<IOtsuSegmentationProvider>('OtsuSegmentationProvider', SkimageOtsuSegmentationProvider);
+container.register<ILocalOtsuSegmentationProvider>('LocalOtsuSegmentationProvider', SkimageLocalOtsuSegmentationProvider);
 container.register<IRandomWalkerSegmentationProvider>('RandomWalkerSegmentationProvider', SkimageRandomWalkerSegmentationProvider);
 
 container.register<ISobelEdgeFilterProvider>('SobelEdgeFilterProvider', SkimageSobelEdgeFilterProvider);

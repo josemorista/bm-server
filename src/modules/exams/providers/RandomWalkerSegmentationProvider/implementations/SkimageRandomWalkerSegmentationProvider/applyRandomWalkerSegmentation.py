@@ -15,7 +15,6 @@ def execute(imgPath, outFilePath, boneMarker, metMarker, beta=10):
 
 	labels = random_walker(img, markers, beta=beta, mode='bf');
 	
-	#bone = (labels == 2);
 	met = (labels == 3);
 
 	segmented = np.zeros(img.shape, dtype=np.float);

@@ -52,14 +52,15 @@ examsPreProcessingRouter.patch('/:id/applyEdgeFilter', async (request, response)
 	return response.sendStatus(204);
 });
 
-examsPreProcessingRouter.post('/:id/calculateHistogram', async (request, response) => {
+examsPreProcessingRouter.get('/:id/calculateHistogram', async (request, response) => {
 	const { id } = request.params;
+	console.log('here');
 	const calculateImgHistogramsService = container.resolve(CalculateImgHistogramService);
 	const file = await calculateImgHistogramsService.execute({
 		id,
-		...request.body
+		calculateHistogramFrom: String(request.query.calculateHistogramFrom)
 	});
-	return response.sendFile(file);
+	return response.send('data:image/png;base64,' + file);
 });
 
 export { examsPreProcessingRouter };

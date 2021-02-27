@@ -4,11 +4,12 @@ import path from 'path';
 import { uploadConfig } from '../../../../config/upload';
 import { AppError } from '../../../../shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
+import fs from 'fs';
 interface ICalculateImgHistogramsServiceDTO {
 	bins?: number;
 	range?: Array<number>;
 	id: string;
-	calculateHistogramFrom: 'original' | 'denoised' | 'segmented'
+	calculateHistogramFrom: string;
 }
 
 @injectable()
@@ -37,24 +38,24 @@ export class CalculateImgHistogramService {
 			src = exam.denoisedImgLocation;
 		}
 
-		if (calculateHistogramFrom === 'segmented' && exam.denoisedImgLocation) {
-			src = exam.denoisedImgLocation;
+		if (calculateHistogramFrom === 'segmented' && exam.segmentedImgLocation) {
+			src = exam.segmentedImgLocation;
 		}
 
 		if (!src) {
 			throw new AppError('Image not found to process');
 		}
 
-		if (calculateHistogramFrom === 'original') {
-			await this.calculateImgHistogramProvider.calculateImgHistogram({
-				bins: bins || 30,
-				range: range || [0, 1],
-				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, src),
-				outImgPath
-			});
-		}
 
-		return outImgPath;
+		await this.calculateImgHistogramProvider.calculateImgHistogram({
+			bins: bins || 30,
+			range: range || [0, 1],
+			imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, src),
+			outImgPath
+		});
+
+
+		return (await fs.promises.readFile(outImgPath)).toString('base64');
 
 	}
 }

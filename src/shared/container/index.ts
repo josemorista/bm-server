@@ -1,7 +1,5 @@
 import { container } from 'tsyringe';
 import { ExamsRepository } from '../../modules/exams/infra/typeorm/repositories/ExamsRepository';
-import { IAdapthistEqualizeHistogramProvider } from '../../modules/exams/providers/AdapthistEqualizeHistogramProvider/models/IAdapthistEqualizeHistogramProvider';
-import { SkImageAdapthistEqualizeHistogramProvider } from '../../modules/exams/providers/AdapthistEqualizeHistogramProvider/implementations/SkImageAdapthistEqualizeHistogramProvider';
 import { PyDicomDicomClipAndConvertProvider } from '../../modules/exams/providers/DicomClipAndConvertProvider/implementations/PyDicomDicomClipAndConvertProvider';
 import { IDicomClipAndConvertProvider } from '../../modules/exams/providers/DicomClipAndConvertProvider/models/IDicomClipAndConvertProvider';
 import { ScipyMedianDenoiseProvider } from '../../modules/exams/providers/MedianDenoiseProvider/implementations/ScipyMedianDenoiseProvider/index.';
@@ -31,8 +29,7 @@ import { ICalculateImgHistogramProvider } from '../../modules/exams/providers/Ca
 import { MatPlotLibCalculateImgHistogramProvider } from '../../modules/exams/providers/CalculateImgHistogramProvider/implementations/MatPlotLibCalculateImgHistogramProvider';
 import { IRandomWalkerSegmentationProvider } from '../../modules/exams/providers/RandomWalkerSegmentationProvider/models/IRandomWalkerSegmentationProvider';
 import { SkimageRandomWalkerSegmentationProvider } from '../../modules/exams/providers/RandomWalkerSegmentationProvider/implementations/SkimageRandomWalkerSegmentationProvider';
-import { SkimageLocalOtsuSegmentationProvider } from '../../modules/exams/providers/LocalOtsuSegmentationProvider/implementations/SkimageLocalOtsuSegmentationProvider';
-import { ILocalOtsuSegmentationProvider } from '../../modules/exams/providers/LocalOtsuSegmentationProvider/models/ILocalOtsuSegmentationProvider';
+
 
 // Providers
 container.register<IHashProvider>('HashProvider', BCryptHashProvider);
@@ -42,10 +39,7 @@ container.register<IDicomClipAndConvertProvider>('DicomClipAndConvertProvider', 
 
 container.register<IMedianDenoiseProvider>('MedianDenoiseProvider', ScipyMedianDenoiseProvider);
 
-container.register<IAdapthistEqualizeHistogramProvider>('AdapthistEqualizeHistogramProvider', SkImageAdapthistEqualizeHistogramProvider);
-
 container.register<IOtsuSegmentationProvider>('OtsuSegmentationProvider', SkimageOtsuSegmentationProvider);
-container.register<ILocalOtsuSegmentationProvider>('LocalOtsuSegmentationProvider', SkimageLocalOtsuSegmentationProvider);
 container.register<IRandomWalkerSegmentationProvider>('RandomWalkerSegmentationProvider', SkimageRandomWalkerSegmentationProvider);
 
 container.register<ISobelEdgeFilterProvider>('SobelEdgeFilterProvider', SkimageSobelEdgeFilterProvider);

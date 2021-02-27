@@ -8,12 +8,10 @@ export interface IExam {
 	patient?: IPatient;
 	pixelArea: number;
 	denoisedImgLocation: string | null;
-	equalizedImgLocation: string | null;
 	segmentedImgLocation: string | null;
 	edgedImgLocation: string | null;
 	originalImgLocation: string | null;
 	originalImgHistogramLocation: string | null;
-	equalizedImgHistogramLocation: string | null;
 	resumeSegmentationImgLocation: string | null;
 	dicomFileLocation: string;
 	createdAt: Date;

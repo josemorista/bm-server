@@ -32,15 +32,6 @@ export class Exam implements IExam {
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.denoisedImgLocation}`;
 	}
 
-	@Column({ type: 'varchar', name: 'equalizedimglocation', nullable: true })
-	equalizedImgLocation: string | null;
-
-	@Expose({ name: 'equalizedImgLocationURL' })
-	equalizedImgLocationURL(): string | null {
-		if (!this.equalizedImgLocation) return null;
-		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.equalizedImgLocation}`;
-	}
-
 	@Column({ type: 'varchar', name: 'segmentedimglocation', nullable: true })
 	segmentedImgLocation: IExam['segmentedImgLocation'];
 
@@ -66,15 +57,6 @@ export class Exam implements IExam {
 	originalImgHistogramLocationURL(): string | null {
 		if (!this.originalImgHistogramLocation) return null;
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.originalImgHistogramLocation}`;
-	}
-
-	@Column({ type: 'varchar', name: 'equalizedimghistogramlocation', nullable: true })
-	equalizedImgHistogramLocation: IExam['equalizedImgHistogramLocation'];
-
-	@Expose({ name: 'equalizedImgHistogramLocationURL' })
-	equalizedImgHistogramLocationURL(): string | null {
-		if (!this.equalizedImgHistogramLocation) return null;
-		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.equalizedImgHistogramLocation}`;
 	}
 
 	@Column({ type: 'varchar', name: 'originalimglocation', nullable: true })

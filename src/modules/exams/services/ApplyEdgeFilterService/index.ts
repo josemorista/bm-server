@@ -1,6 +1,5 @@
 import { inject, injectable } from 'tsyringe';
 import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
-import { IExam } from '../../entities/models/IExam';
 import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExamsRepository';
 import path from 'path';
 import { uploadConfig } from '../../../../config/upload';

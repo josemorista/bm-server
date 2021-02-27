@@ -6,18 +6,14 @@ import { uploadConfig } from '../../../../config/upload';
 import { IOtsuSegmentationProvider } from '../../providers/OtsuSegmentationProvider/models/IOtsuSegmentationProvider';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IRandomWalkerSegmentationProvider } from '../../providers/RandomWalkerSegmentationProvider/models/IRandomWalkerSegmentationProvider';
-import { ILocalOtsuSegmentationProvider } from '../../providers/LocalOtsuSegmentationProvider/models/ILocalOtsuSegmentationProvider';
 
 interface ISegmentImgServiceDTO {
 	id: string;
 	cumulative: boolean;
-	method: 'otsu' | 'randomWalker' | 'localOtsu';
+	method: 'otsu' | 'randomWalker' | 'k-means';
 	randomWalkerParams?: {
 		markers: Array<number>;
 		beta?: number;
-	}
-	localOtsuParams?: {
-		diskSize: number;
 	}
 }
 
@@ -32,18 +28,16 @@ export class SegmentImgService {
 		@inject('OtsuSegmentationProvider')
 		private otsuSegmentationProvider: IOtsuSegmentationProvider,
 		@inject('RandomWalkerSegmentationProvider')
-		private randomWalkerSegmentationProvider: IRandomWalkerSegmentationProvider,
-		@inject('LocalOtsuSegmentationProvider')
-		private localOtsuSegmentationProvider: ILocalOtsuSegmentationProvider
+		private randomWalkerSegmentationProvider: IRandomWalkerSegmentationProvider
 	) { }
 
-	async execute({ method, id, randomWalkerParams, localOtsuParams, cumulative }: ISegmentImgServiceDTO): Promise<void> {
+	async execute({ method, id, randomWalkerParams, cumulative }: ISegmentImgServiceDTO): Promise<void> {
 
 		const exam = await this.examsRepository.findById(id);
 		let srcPath = '';
 
-		if (exam.equalizedImgLocation) {
-			srcPath = path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.equalizedImgLocation);
+		if (exam.denoisedImgLocation) {
+			srcPath = path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.denoisedImgLocation);
 		}
 
 		if (cumulative) {
@@ -59,17 +53,6 @@ export class SegmentImgService {
 			await this.otsuSegmentationProvider.applyOtsuSegmentation({
 				imgPath: srcPath,
 				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation)
-			});
-		}
-
-		if (method === 'localOtsu') {
-			if (!localOtsuParams) {
-				throw new AppError('missing random walker params.');
-			}
-			await this.localOtsuSegmentationProvider.applyLocalOtsuSegmentation({
-				imgPath: srcPath,
-				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation),
-				diskSize: localOtsuParams.diskSize
 			});
 		}
 

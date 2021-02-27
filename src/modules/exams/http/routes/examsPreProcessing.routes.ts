@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { ClipAndConvertToImgService } from '../../services/ClipAndConvertToImgService';
 import { container } from 'tsyringe';
 import { DenoiseImgService } from '../../services/DenoiseImgService';
-import { HistogramEqualizationService } from '../../services/HistogramEqualizationService';
 import { SegmentImgService } from '../../services/SegmentImgService';
 import { ApplyEdgeFilterService } from '../../services/ApplyEdgeFilterService';
 import { CalculateImgHistogramService } from '../../services/CalculateImgHistogramService';
@@ -30,15 +29,6 @@ examsPreProcessingRouter.patch('/:id/applyDenoiseFilter', async (request, respon
 	return response.sendStatus(204);
 });
 
-examsPreProcessingRouter.patch('/:id/applyHistogramEqualization', async (request, response) => {
-	const { id } = request.params;
-	const histogramEqualizationService = container.resolve(HistogramEqualizationService);
-	await histogramEqualizationService.execute({
-		id,
-		method: request.body.method
-	});
-	return response.sendStatus(204);
-});
 
 examsPreProcessingRouter.patch('/:id/applySegmentation', async (request, response) => {
 	const { id } = request.params;
@@ -47,8 +37,7 @@ examsPreProcessingRouter.patch('/:id/applySegmentation', async (request, respons
 		id,
 		cumulative: request.body.cumulative,
 		method: request.body.method,
-		randomWalkerParams: request.body.randomWalkerParams,
-		localOtsuParams: request.body.localOtsuParams
+		randomWalkerParams: request.body.randomWalkerParams
 	});
 	return response.sendStatus(204);
 });
@@ -63,14 +52,14 @@ examsPreProcessingRouter.patch('/:id/applyEdgeFilter', async (request, response)
 	return response.sendStatus(204);
 });
 
-examsPreProcessingRouter.post('/:id/calculateHistograms', async (request, response) => {
+examsPreProcessingRouter.post('/:id/calculateHistogram', async (request, response) => {
 	const { id } = request.params;
 	const calculateImgHistogramsService = container.resolve(CalculateImgHistogramService);
-	await calculateImgHistogramsService.execute({
+	const file = await calculateImgHistogramsService.execute({
 		id,
 		...request.body
 	});
-	return response.sendStatus(204);
+	return response.sendFile(file);
 });
 
 export { examsPreProcessingRouter };

@@ -1,16 +1,14 @@
-import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
 import { ICalculateImgHistogramProvider } from '../../providers/CalculateImgHistogramProvider/models/ICalculateImgHistogramProvider';
 import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExamsRepository';
 import path from 'path';
 import { uploadConfig } from '../../../../config/upload';
 import { AppError } from '../../../../shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
-
 interface ICalculateImgHistogramsServiceDTO {
 	bins?: number;
 	range?: Array<number>;
 	id: string;
-	calculateHistogramFrom?: 'original' | 'equalized'
+	calculateHistogramFrom: 'original' | 'denoised' | 'segmented'
 }
 
 @injectable()
@@ -19,51 +17,44 @@ export class CalculateImgHistogramService {
 	constructor(
 		@inject('ExamsRepository')
 		private examsRepository: IExamsRepository,
-		@inject('StorageProvider')
-		private storageProvider: IStorageProvider,
 		@inject('CalculateImgHistogramProvider')
 		private calculateImgHistogramProvider: ICalculateImgHistogramProvider
 	) {
 	}
 
-	async execute({ id, bins, range, calculateHistogramFrom }: ICalculateImgHistogramsServiceDTO): Promise<void> {
+	async execute({ id, bins, range, calculateHistogramFrom }: ICalculateImgHistogramsServiceDTO): Promise<string> {
 		const exam = await this.examsRepository.findById(id);
 
-		if (!exam.originalImgLocation) {
-			throw new AppError('no original image location to process');
+		const outImgPath = path.resolve(uploadConfig.tmpUploadsPath, `hist-${exam.id}.png`);
+
+		let src = null;
+
+		if (calculateHistogramFrom === 'original' && exam.originalImgLocation) {
+			src = exam.originalImgLocation;
+		}
+
+		if (calculateHistogramFrom === 'denoised' && exam.denoisedImgLocation) {
+			src = exam.denoisedImgLocation;
+		}
+
+		if (calculateHistogramFrom === 'segmented' && exam.denoisedImgLocation) {
+			src = exam.denoisedImgLocation;
+		}
+
+		if (!src) {
+			throw new AppError('Image not found to process');
 		}
 
 		if (calculateHistogramFrom === 'original') {
-			const originalImgHistogramLocation = `orghist-${exam.id}.png`;
 			await this.calculateImgHistogramProvider.calculateImgHistogram({
 				bins: bins || 30,
 				range: range || [0, 1],
-				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.originalImgLocation),
-				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, originalImgHistogramLocation)
-			});
-			await this.storageProvider.save(originalImgHistogramLocation);
-			await this.examsRepository.updateById(id, {
-				...exam,
-				originalImgHistogramLocation
+				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, src),
+				outImgPath
 			});
 		}
 
-		if (calculateHistogramFrom === 'equalized') {
-			if (!exam.equalizedImgLocation) {
-				throw new AppError('no equalized image to process');
-			}
-			const equalizedImgHistogramLocation = `eqhist-${exam.id}.png`;
-			await this.calculateImgHistogramProvider.calculateImgHistogram({
-				bins: bins || 30,
-				range: range || [0, 1],
-				imgPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.equalizedImgLocation),
-				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, equalizedImgHistogramLocation)
-			});
-			await this.storageProvider.save(equalizedImgHistogramLocation);
-			await this.examsRepository.updateById(id, {
-				...exam,
-				equalizedImgHistogramLocation
-			});
-		}
+		return outImgPath;
+
 	}
 }

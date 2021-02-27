@@ -64,22 +64,15 @@ export class ExtractDetectionsFromImgService {
 			...exam,
 			resumeSegmentationImgLocation,
 			originalImgLocation: null,
-			originalImgHistogramLocation: null,
 			segmentedImgLocation: null,
-			equalizedImgHistogramLocation: null,
 			edgedImgLocation: null,
-			denoisedImgLocation: null,
-			equalizedImgLocation: null
+			denoisedImgLocation: null
 		});
 
 		await this.storageProvider.remove(exam.originalImgLocation);
-		await this.storageProvider.remove(exam.originalImgHistogramLocation || '');
-		await this.storageProvider.remove(exam.equalizedImgHistogramLocation || '');
 		await this.storageProvider.remove(exam.edgedImgLocation);
 		await this.storageProvider.remove(exam.denoisedImgLocation || '');
 		await this.storageProvider.remove(exam.segmentedImgLocation || '');
-		await this.storageProvider.remove(exam.equalizedImgLocation || '');
-
 
 		await this.storageProvider.save(resumeSegmentationImgLocation);
 

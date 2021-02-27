@@ -11,7 +11,6 @@ export interface IExam {
 	segmentedImgLocation: string | null;
 	edgedImgLocation: string | null;
 	originalImgLocation: string | null;
-	originalImgHistogramLocation: string | null;
 	resumeSegmentationImgLocation: string | null;
 	dicomFileLocation: string;
 	createdAt: Date;

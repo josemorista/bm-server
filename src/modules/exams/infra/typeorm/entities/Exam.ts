@@ -50,15 +50,6 @@ export class Exam implements IExam {
 		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.edgedImgLocation}`;
 	}
 
-	@Column({ type: 'varchar', name: 'originalimghistogramlocation', nullable: true })
-	originalImgHistogramLocation: IExam['originalImgHistogramLocation'];
-
-	@Expose({ name: 'originalImgHistogramLocationURL' })
-	originalImgHistogramLocationURL(): string | null {
-		if (!this.originalImgHistogramLocation) return null;
-		return `${uploadConfig.diskStorageProviderConfig.publicUrl}/${this.originalImgHistogramLocation}`;
-	}
-
 	@Column({ type: 'varchar', name: 'originalimglocation', nullable: true })
 	originalImgLocation: string | null;
 

@@ -8,7 +8,6 @@ import { IPatientsRepository } from '../../../patients/repositories/PatientsRepo
 
 interface ISegmentExamServiceDTO {
 	id: string;
-	maxDicomValue: number;
 }
 
 @injectable()
@@ -25,14 +24,14 @@ export class ClipAndConvertToImgService {
 		private dicomClipAndConvertProvider: IDicomClipAndConvertProvider
 	) { }
 
-	async execute({ id, maxDicomValue }: ISegmentExamServiceDTO): Promise<void> {
+	async execute({ id }: ISegmentExamServiceDTO): Promise<void> {
 		const exam = await this.examsRepository.findById(id);
 		const originalImgLocation = `org-${id}.png`;
 
 		const { patientId, pixelArea } = await this.dicomClipAndConvertProvider.clipAndConvertToImg({
 			filePath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFileLocation),
 			outFilePath: path.resolve(uploadConfig.tmpUploadsPath, originalImgLocation),
-			maxDicomValue
+			maxDicomValue: 200
 		});
 
 		await this.patientsRepository.updatePatientById(exam.patientId, {

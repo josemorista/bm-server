@@ -29,6 +29,8 @@ import { ICalculateImgHistogramProvider } from '../../modules/exams/providers/Ca
 import { MatPlotLibCalculateImgHistogramProvider } from '../../modules/exams/providers/CalculateImgHistogramProvider/implementations/MatPlotLibCalculateImgHistogramProvider';
 import { IRandomWalkerSegmentationProvider } from '../../modules/exams/providers/RandomWalkerSegmentationProvider/models/IRandomWalkerSegmentationProvider';
 import { SkimageRandomWalkerSegmentationProvider } from '../../modules/exams/providers/RandomWalkerSegmentationProvider/implementations/SkimageRandomWalkerSegmentationProvider';
+import { IKMeansSegmentationProvider } from '../../modules/exams/providers/KMeansSegmentationProvider/models/IKMeansSegmentationProvider';
+import { OpenCvKMeansSegmentationProvider } from '../../modules/exams/providers/KMeansSegmentationProvider/implementations/OpenCvKMeansSegmentationProvider/index.';
 
 
 // Providers
@@ -41,6 +43,7 @@ container.register<IMedianDenoiseProvider>('MedianDenoiseProvider', ScipyMedianD
 
 container.register<IOtsuSegmentationProvider>('OtsuSegmentationProvider', SkimageOtsuSegmentationProvider);
 container.register<IRandomWalkerSegmentationProvider>('RandomWalkerSegmentationProvider', SkimageRandomWalkerSegmentationProvider);
+container.register<IKMeansSegmentationProvider>('KMeansSegmentationProvider', OpenCvKMeansSegmentationProvider);
 
 container.register<ISobelEdgeFilterProvider>('SobelEdgeFilterProvider', SkimageSobelEdgeFilterProvider);
 container.register<IRobertsEdgeFilterProvider>('RobertsEdgeFilterProvider', SkimageRobertsEdgeFilterProvider);

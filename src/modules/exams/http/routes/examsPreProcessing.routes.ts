@@ -12,8 +12,7 @@ examsPreProcessingRouter.post('/:id/clipAndConvertToImage', async (request, resp
 	const clipAndConvertToImgService = container.resolve(ClipAndConvertToImgService);
 	const { id } = request.params;
 	await clipAndConvertToImgService.execute({
-		id,
-		maxDicomValue: request.body.maxDicomValue
+		id
 	});
 	return response.sendStatus(204);
 });
@@ -37,7 +36,8 @@ examsPreProcessingRouter.patch('/:id/applySegmentation', async (request, respons
 		id,
 		cumulative: request.body.cumulative,
 		method: request.body.method,
-		randomWalkerParams: request.body.randomWalkerParams
+		randomWalkerParams: request.body.randomWalkerParams,
+		kMeansParams: request.body.kMeansParams
 	});
 	return response.sendStatus(204);
 });

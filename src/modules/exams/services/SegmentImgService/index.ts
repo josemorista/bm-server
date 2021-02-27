@@ -6,14 +6,18 @@ import { uploadConfig } from '../../../../config/upload';
 import { IOtsuSegmentationProvider } from '../../providers/OtsuSegmentationProvider/models/IOtsuSegmentationProvider';
 import { AppError } from '../../../../shared/errors/AppError';
 import { IRandomWalkerSegmentationProvider } from '../../providers/RandomWalkerSegmentationProvider/models/IRandomWalkerSegmentationProvider';
+import { IKMeansSegmentationProvider } from '../../providers/KMeansSegmentationProvider/models/IKMeansSegmentationProvider';
 
 interface ISegmentImgServiceDTO {
 	id: string;
 	cumulative: boolean;
-	method: 'otsu' | 'randomWalker' | 'k-means';
+	method: 'otsu' | 'randomWalker' | 'kMeans';
 	randomWalkerParams?: {
 		markers: Array<number>;
 		beta?: number;
+	};
+	kMeansParams?: {
+		clusters: number
 	}
 }
 
@@ -28,10 +32,12 @@ export class SegmentImgService {
 		@inject('OtsuSegmentationProvider')
 		private otsuSegmentationProvider: IOtsuSegmentationProvider,
 		@inject('RandomWalkerSegmentationProvider')
-		private randomWalkerSegmentationProvider: IRandomWalkerSegmentationProvider
+		private randomWalkerSegmentationProvider: IRandomWalkerSegmentationProvider,
+		@inject('KMeansSegmentationProvider')
+		private kMeansSegmentationProvider: IKMeansSegmentationProvider
 	) { }
 
-	async execute({ method, id, randomWalkerParams, cumulative }: ISegmentImgServiceDTO): Promise<void> {
+	async execute({ method, id, randomWalkerParams, cumulative, kMeansParams }: ISegmentImgServiceDTO): Promise<void> {
 
 		const exam = await this.examsRepository.findById(id);
 		let srcPath = '';
@@ -52,6 +58,21 @@ export class SegmentImgService {
 		if (method === 'otsu') {
 			await this.otsuSegmentationProvider.applyOtsuSegmentation({
 				imgPath: srcPath,
+				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation)
+			});
+		}
+
+		if (method === 'kMeans') {
+			if (!kMeansParams) {
+				throw new AppError('missing KMeans params');
+			}
+			await this.kMeansSegmentationProvider.applyKMeansSegmentation({
+				imgPath: srcPath,
+				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation),
+				clusters: kMeansParams.clusters
+			});
+			await this.otsuSegmentationProvider.applyOtsuSegmentation({
+				imgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation),
 				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation)
 			});
 		}

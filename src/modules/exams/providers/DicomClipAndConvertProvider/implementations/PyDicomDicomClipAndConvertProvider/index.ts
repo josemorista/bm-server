@@ -10,7 +10,6 @@ export class PyDicomDicomClipAndConvertProvider implements IDicomClipAndConvertP
 			outFilePath,
 			String(maxDicomValue)
 		]);
-		console.log(process.stdout.toString());
 		return JSON.parse(process.stdout.toString());
 	}
 }

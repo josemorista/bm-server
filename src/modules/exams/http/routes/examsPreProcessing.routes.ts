@@ -54,7 +54,6 @@ examsPreProcessingRouter.patch('/:id/applyEdgeFilter', async (request, response)
 
 examsPreProcessingRouter.get('/:id/calculateHistogram', async (request, response) => {
 	const { id } = request.params;
-	console.log('here');
 	const calculateImgHistogramsService = container.resolve(CalculateImgHistogramService);
 	const file = await calculateImgHistogramsService.execute({
 		id,

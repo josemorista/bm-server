@@ -2,6 +2,8 @@ import { container } from 'tsyringe';
 
 import { MatPlotLibCalculateImgHistogramProvider } from '../../../modules/exams/providers/CalculateImgHistogramProvider/implementations/MatPlotLibCalculateImgHistogramProvider';
 import { ICalculateImgHistogramProvider } from '../../../modules/exams/providers/CalculateImgHistogramProvider/models/ICalculateImgHistogramProvider';
+import { SkLearnDecisionTreeClassifierProvider } from '../../../modules/exams/providers/DecisionTreeClassifierProvider/implementations/SkLearnDecisionTreeClassifierProvider';
+import { IDecisionTreeClassifierProvider } from '../../../modules/exams/providers/DecisionTreeClassifierProvider/models/IDecisionTreeClassifierProvider';
 import { PyDicomDicomClipAndConvertProvider } from '../../../modules/exams/providers/DicomClipAndConvertProvider/implementations/PyDicomDicomClipAndConvertProvider';
 import { IDicomClipAndConvertProvider } from '../../../modules/exams/providers/DicomClipAndConvertProvider/models/IDicomClipAndConvertProvider';
 import { SkimageExtractRegionsFeaturesProvider } from '../../../modules/exams/providers/ExtractRegionsFeaturesProvider/implementations/SkimageExtractRegionsFeaturesProvider';
@@ -41,3 +43,5 @@ container.register<IRobertsEdgeFilterProvider>('RobertsEdgeFilterProvider', Skim
 container.register<IExtractRegionsFeaturesProvider>('ExtractRegionsFeaturesProvider', SkimageExtractRegionsFeaturesProvider);
 
 container.register<ICalculateImgHistogramProvider>('CalculateImgHistogramProvider', MatPlotLibCalculateImgHistogramProvider);
+
+container.register<IDecisionTreeClassifierProvider>('DecisionTreeClassifierProvider', SkLearnDecisionTreeClassifierProvider);

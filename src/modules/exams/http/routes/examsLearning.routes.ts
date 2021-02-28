@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { container } from 'tsyringe';
 import { IExamsDetectionsRepository } from '../../repositories/ExamsDetectionsRepository/models/IExamsDetectionsRepository';
+import { ClassifyDetectionsService } from '../../services/ClassifyDetectionsService';
 import { ExtractDetectionsFromImgService } from '../../services/ExtractDetectionsFromImgService';
 
 const examsLearningRouter = Router();
@@ -20,8 +21,13 @@ examsLearningRouter.delete('/:id/detections/:detectionId', async (request, respo
 	return response.sendStatus(204);
 });
 
-examsLearningRouter.post('/:id/classify/:detectionId', async (request, response) => {
-	//const classifyDetectionService = container.resolve(ClassifyDetectionService);
+examsLearningRouter.post('/:id/classify', async (request, response) => {
+	const { id } = request.params;
+	const classifyDetectionService = container.resolve(ClassifyDetectionsService);
+	response.json(await classifyDetectionService.execute({
+		examId: id,
+		method: 'dt'
+	}));
 });
 
 export { examsLearningRouter };

@@ -15,7 +15,7 @@ interface IClassifyDetectionsServiceDTO {
 export class ClassifyDetectionsService {
 
 	constructor(
-		@inject('ExamsDetections')
+		@inject('ExamsRepository')
 		private examsRepository: IExamsRepository,
 		@inject('ExamsDetectionsRepository')
 		private examsDetectionsRepository: IExamsDetectionsRepository,
@@ -50,7 +50,16 @@ export class ClassifyDetectionsService {
 
 			const result = await this.decisionTreeClassifierProvider.classify({
 				attributes: {
-					...detection,
+					area: detection.area,
+					aspectRatio: detection.aspectRatio,
+					centroidX: detection.centroidX,
+					centroidY: detection.centroidY,
+					eccentricity: detection.eccentricity,
+					equivalentDiameter: detection.equivalentDiameter,
+					extent: detection.extent,
+					meanIntensity: detection.meanIntensity,
+					orientation: detection.orientation,
+					perimeter: detection.perimeter,
 					previousBoneLesions: exam.patient.previousBoneLesions,
 					previousCancerDiagnosis: exam.patient.previousCancerDiagnosis,
 					previousQt: exam.patient.previousQt,

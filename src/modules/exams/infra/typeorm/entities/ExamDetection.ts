@@ -1,5 +1,9 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { IExam } from '../../../entities/models/IExam';
 import { IExamDetection } from '../../../entities/models/IExamDetection';
+import { IExamDetectionClassification } from '../../../entities/models/IExamDetectionClassification';
+import { Exam } from './Exam';
+import { ExamDetectionClassification } from './ExamDetectionClassification';
 
 @Entity('examsdetections')
 export class ExamDetection implements IExamDetection {
@@ -9,11 +13,23 @@ export class ExamDetection implements IExamDetection {
 	@Column({ type: 'varchar', name: 'examid' })
 	examId: string;
 
+	@ManyToOne(() => Exam, exam => exam.id)
+	@JoinColumn({ name: 'examid', referencedColumnName: 'id' })
+	exam: IExam;
+
 	@Column({ type: 'varchar', nullable: true, name: 'automaticclassificationid' })
 	automaticClassificationId: string | null;
 
+	@ManyToOne(() => ExamDetectionClassification, automaticClassification => automaticClassification.id)
+	@JoinColumn({ name: 'automaticclassificationid', referencedColumnName: 'id' })
+	automaticClassification: IExamDetectionClassification;
+
 	@Column({ type: 'varchar', nullable: true, name: 'revisedclassificationid' })
 	revisedClassificationId: string | null;
+
+	@ManyToOne(() => ExamDetectionClassification, automaticClassification => automaticClassification.id)
+	@JoinColumn({ name: 'revisedclassificationid', referencedColumnName: 'id' })
+	revisedClassification: IExamDetectionClassification;
 
 	@Column({ type: 'float' })
 	area: number;

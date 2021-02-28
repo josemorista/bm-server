@@ -1,6 +1,6 @@
 import { getRepository, Repository } from 'typeorm';
 import { IExamDetectionClassification } from '../../../entities/models/IExamDetectionClassification';
-import { IExamsDetectionsClassificationsRepository } from '../../../repositories/ExamsDetectionsClassificationsRepository/IExamsDetectionsClassificationsRepository';
+import { IExamsDetectionsClassificationsRepository } from '../../../repositories/ExamsDetectionsClassificationsRepository/models/IExamsDetectionsClassificationsRepository';
 import { ExamDetectionClassification } from '../entities/ExamDetectionClassification';
 
 export class ExamsDetectionsClassificationsRepository implements IExamsDetectionsClassificationsRepository {

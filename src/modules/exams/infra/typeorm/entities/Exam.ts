@@ -1,9 +1,11 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { IPatient } from '../../../../patients/entities/models/IPatient';
 import { Patient } from '../../../../patients/infra/typeorm/entities/Patient';
 import { IExam } from '../../../entities/models/IExam';
 import { Expose } from 'class-transformer';
 import { uploadConfig } from '../../../../../config/upload';
+import { IExamDetection } from '../../../entities/models/IExamDetection';
+import { ExamDetection } from './ExamDetection';
 
 @Entity('exams')
 export class Exam implements IExam {
@@ -81,4 +83,6 @@ export class Exam implements IExam {
 	@JoinColumn({ name: 'patientid', referencedColumnName: 'id' })
 	patient: IPatient;
 
+	@OneToMany(() => ExamDetection, examDetection => examDetection.exam)
+	examDetections: Array<IExamDetection>;
 }

@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { IExamDetectionClassification } from '../../../entities/models/IExamDetectionClassification';
 
 

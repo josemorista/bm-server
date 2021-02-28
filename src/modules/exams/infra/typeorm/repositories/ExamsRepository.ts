@@ -19,7 +19,12 @@ export class ExamsRepository implements IExamsRepository {
 
 	async findById(id: string): Promise<IExam> {
 		const exam = await this.ormRepository.findOne(id, {
-			relations: ['patient']
+			relations: [
+				'patient',
+				'examDetections',
+				'examDetections.automaticClassification',
+				'examDetections.revisedClassification'
+			]
 		});
 		if (!exam) {
 			throw new AppError('exam does not exits');

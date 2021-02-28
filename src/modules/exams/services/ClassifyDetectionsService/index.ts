@@ -51,15 +51,15 @@ export class ClassifyDetectionsService {
 			const result = await this.decisionTreeClassifierProvider.classify({
 				attributes: {
 					area: detection.area,
+					perimeter: detection.perimeter,
 					aspectRatio: detection.aspectRatio,
 					centroidX: detection.centroidX,
 					centroidY: detection.centroidY,
-					eccentricity: detection.eccentricity,
 					equivalentDiameter: detection.equivalentDiameter,
 					extent: detection.extent,
 					meanIntensity: detection.meanIntensity,
 					orientation: detection.orientation,
-					perimeter: detection.perimeter,
+					eccentricity: detection.eccentricity,
 					previousBoneLesions: exam.patient.previousBoneLesions,
 					previousCancerDiagnosis: exam.patient.previousCancerDiagnosis,
 					previousQt: exam.patient.previousQt,

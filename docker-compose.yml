@@ -23,8 +23,10 @@ services:
       - postgres-network
     ports: 
       - 3333:3333
+    volumes:
+      - uploads-data:~/apps/bm-server/uploads
 volumes:
   postgres-data:
-
+  uploads-data:
 networks: 
   postgres-network:

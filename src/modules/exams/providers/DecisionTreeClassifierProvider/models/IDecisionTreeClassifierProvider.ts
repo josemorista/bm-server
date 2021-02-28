@@ -7,6 +7,7 @@ export interface IDTClassifyDTO {
 		| 'centroidY' | 'eccentricity' | 'equivalentDiameter'
 		| 'meanIntensity' | 'perimeter' | 'orientation' | 'extent'> &
 	Pick<IPatient, 'previousBoneLesions' | 'previousCancerDiagnosis' | 'previousQt' | 'previousRt'>;
+	targetValues: Array<string>;
 }
 
 export interface IDecisionTreeClassifierProvider {

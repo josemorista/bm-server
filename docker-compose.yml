@@ -24,7 +24,7 @@ services:
     ports: 
       - 3333:3333
     volumes:
-      - uploads-data:~/apps/bm-server/uploads
+      - uploads-data:/var/apps/bm-server/uploads
 volumes:
   postgres-data:
   uploads-data:

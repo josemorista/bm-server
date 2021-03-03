@@ -16,6 +16,9 @@ services:
   api:
     container_name: bm-api
     image: bm-api
+		environment: 
+		  - NODE_ENV=production 
+			- apiUrl=https://api.bm-diag.org
     build: .
     depends_on: 
       - postgres

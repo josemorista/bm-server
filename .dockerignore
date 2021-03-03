@@ -2,7 +2,7 @@ node_modules
 .vscode
 scripts
 .env
-ormconfig.json
+ormconfig.sample.json
 .git
 uploads
 tmp

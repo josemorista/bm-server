@@ -38,12 +38,6 @@ RUN mkdir -p tmp
 
 RUN mkdir -p ./uploads
 
-RUN rm ormconfig.json
-
-RUN sed 's/src/dist/g' ormconfig.sample.json | sed 's/.ts/.js/g' | sed 's/localhost/postgres/g' &> ormconfig.json
-
-ENV NODE_ENV=production apiUrl=https://api.bm-diag.org
-
 EXPOSE 3333
 
 CMD [ "pm2-runtime", "start", "process.json" ]

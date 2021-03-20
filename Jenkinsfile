@@ -2,7 +2,7 @@ pipeline {
     agent any
 
 		environment {
-			host = 'ec2-54-174-106-74.compute-1.amazonaws.com'
+			host = 'ec2-34-203-244-243.compute-1.amazonaws.com'
 			artifact = 'bmsartifact.tgz'
 			directory = '/home/ubuntu/bmserver'
 		}

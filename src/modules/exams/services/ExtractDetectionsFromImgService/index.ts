@@ -50,11 +50,11 @@ export class ExtractDetectionsFromImgService {
 			outImgPath: path.resolve(uploadConfig.tmpUploadsPath, resumeSegmentationImgLocation)
 		});
 
-		const detectionsPromises = detectionFeatures.map(async detection => {
-			return await this.examsDetectionsRepository.create({
+		const detectionsPromises = detectionFeatures.map(detection => {
+			return this.examsDetectionsRepository.create({
 				id: uuid(),
 				...detection,
-				examId: id,
+				examId: exam.id,
 				automaticClassificationId: null,
 				revisedClassificationId: null
 			});

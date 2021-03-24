@@ -2,7 +2,7 @@ from sys import argv;
 import numpy as np;
 import cv2;
 
-def execute(imgPath, outFilePath, clusters):
+def execute(imgPath, outFilePath, clusters, thresholdCluster=6):
 	img = cv2.imread(imgPath);
 	Z = img.reshape((-1,3));
 
@@ -16,10 +16,15 @@ def execute(imgPath, outFilePath, clusters):
 	ret,label,center=cv2.kmeans(Z,K,None,criteria,10,cv2.KMEANS_RANDOM_CENTERS)
 
 	# Now convert back into uint8, and make original image
-	center = np.uint8(center)
-	res = center[label.flatten()]
-	res2 = res.reshape((img.shape));
+	center = np.uint8(center);
+	labels = label.flatten();
+	res = center[labels];
+	
 
-	cv2.imwrite(outFilePath, res2);
+	res[labels <= thresholdCluster] = [0,0,0];
+	
+	res = res.reshape((img.shape));
+	
+	cv2.imwrite(outFilePath, res);
 
-execute(argv[1], argv[2], int(argv[3]));
+execute(argv[1], argv[2], int(argv[3]), int(argv[4]));

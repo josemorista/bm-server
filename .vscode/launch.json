@@ -9,13 +9,10 @@
 			"request": "attach",
 			"protocol": "inspector",
 			"name": "debug",
-			"skipFiles": [
-				"<node_internals>/**"
-			],
-			"program": "${workspaceFolder}/index.js",
-			"outFiles": [
-				"${workspaceFolder}/**/*.js"
-			]
+			"port": 9229,
+			"address": "localhost",
+			"localRoot": "${workspaceFolder}",
+			"remoteRoot": "/var/apps/bm-server",
 		}
 	]
 }

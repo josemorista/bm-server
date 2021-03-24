@@ -17,8 +17,8 @@ services:
     container_name: bm-api
     image: bm-api
     environment: 
-      - NODE_ENV=production 
-      - apiUrl=https://api.bm-diag.org
+      - NODE_ENV=development 
+      - apiUrl=http://localhost:3333
     build: .
     depends_on: 
       - postgres
@@ -26,10 +26,10 @@ services:
       - postgres-network
     ports: 
       - 3333:3333
+      - 9229:9229
     volumes:
-      - uploads-data:/var/apps/bm-server/uploads
+      - .:/var/apps/bm-server
 volumes:
   postgres-data:
-  uploads-data:
 networks: 
   postgres-network:

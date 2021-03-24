@@ -17,7 +17,8 @@ interface ISegmentImgServiceDTO {
 		beta?: number;
 	};
 	kMeansParams?: {
-		clusters: number
+		clusters: number;
+		thresholdCluster: number;
 	}
 }
 
@@ -69,11 +70,8 @@ export class SegmentImgService {
 			await this.kMeansSegmentationProvider.applyKMeansSegmentation({
 				imgPath: srcPath,
 				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation),
-				clusters: kMeansParams.clusters
-			});
-			await this.otsuSegmentationProvider.applyOtsuSegmentation({
-				imgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation),
-				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation)
+				clusters: kMeansParams.clusters,
+				thresholdCluster: kMeansParams.thresholdCluster
 			});
 		}
 

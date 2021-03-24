@@ -3,6 +3,7 @@ export interface IApplyKMeansSegmentationDTO {
 	imgPath: string;
 	outImgPath: string;
 	clusters: number;
+	thresholdCluster: number;
 }
 
 export interface IKMeansSegmentationProvider {

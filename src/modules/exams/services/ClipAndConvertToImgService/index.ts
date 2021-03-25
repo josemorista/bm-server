@@ -41,7 +41,6 @@ export class ClipAndConvertToImgService {
 		await this.storageProvider.save(originalImgLocation);
 
 		await this.examsRepository.updateById(exam.id, {
-			...exam,
 			pixelArea,
 			originalImgLocation
 		});

@@ -41,7 +41,6 @@ export class ExtractDetectionsFromImgService {
 		}
 
 		await this.examsDetectionsRepository.deleteByExamId(exam.id);
-
 		const resumeSegmentationImgLocation = `res-${exam.id}.png`;
 
 		const detectionFeatures = await this.extractRegionsFeaturesProvider.extractRegionsFeatures({
@@ -50,18 +49,15 @@ export class ExtractDetectionsFromImgService {
 			outImgPath: path.resolve(uploadConfig.tmpUploadsPath, resumeSegmentationImgLocation)
 		});
 
-		const detectionsPromises = detectionFeatures.map(detection => {
-			return this.examsDetectionsRepository.create({
-				id: uuid(),
-				...detection,
-				examId: exam.id,
-				automaticClassificationId: null,
-				revisedClassificationId: null
-			});
-		});
+		const detectionsPromises = detectionFeatures.map(detection => this.examsDetectionsRepository.create({
+			id: uuid(),
+			...detection,
+			examId: exam.id,
+			automaticClassificationId: null,
+			revisedClassificationId: null
+		}));
 
 		await this.examsRepository.updateById(exam.id, {
-			...exam,
 			resumeSegmentationImgLocation,
 			originalImgLocation: null,
 			segmentedImgLocation: null,
@@ -73,7 +69,6 @@ export class ExtractDetectionsFromImgService {
 		await this.storageProvider.remove(exam.edgedImgLocation);
 		await this.storageProvider.remove(exam.denoisedImgLocation || '');
 		await this.storageProvider.remove(exam.segmentedImgLocation || '');
-
 		await this.storageProvider.save(resumeSegmentationImgLocation);
 
 		return await Promise.all(detectionsPromises);

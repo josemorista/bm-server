@@ -41,11 +41,6 @@ export class ExamsRepository implements IExamsRepository {
 	}
 
 	async updateById(id: string, data: IUpdateExamDTO): Promise<void> {
-		const exam = await this.findById(id);
-		await this.ormRepository.save({
-			...exam,
-			...data,
-			id: exam.id
-		});
+		await this.ormRepository.update({ id }, data);
 	}
 }

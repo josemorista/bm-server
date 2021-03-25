@@ -55,11 +55,12 @@ export class SegmentImgService {
 		}
 
 		const segmentedImgLocation = `seg-${id}.png`;
+		const outPath = path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation);
 
 		if (method === 'otsu') {
 			await this.otsuSegmentationProvider.applyOtsuSegmentation({
 				imgPath: srcPath,
-				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation)
+				outImgPath: outPath
 			});
 		}
 
@@ -69,10 +70,14 @@ export class SegmentImgService {
 			}
 			await this.kMeansSegmentationProvider.applyKMeansSegmentation({
 				imgPath: srcPath,
-				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation),
+				outImgPath: outPath,
 				clusters: kMeansParams.clusters,
 				thresholdCluster: kMeansParams.thresholdCluster
 			});
+			/*await this.otsuSegmentationProvider.applyOtsuSegmentation({
+				imgPath: srcPath,
+				outImgPath: outPath
+			});*/
 		}
 
 		if (method === 'randomWalker') {
@@ -81,7 +86,7 @@ export class SegmentImgService {
 			}
 			await this.randomWalkerSegmentationProvider.applyRandomWalker({
 				imgPath: srcPath,
-				outImgPath: path.resolve(uploadConfig.tmpUploadsPath, segmentedImgLocation),
+				outImgPath: outPath,
 				beta: randomWalkerParams.beta || 30,
 				markers: randomWalkerParams.markers
 			});
@@ -90,7 +95,6 @@ export class SegmentImgService {
 		await this.storageProvider.save(segmentedImgLocation);
 
 		await this.examsRepository.updateById(id, {
-			...exam,
 			segmentedImgLocation
 		});
 	}

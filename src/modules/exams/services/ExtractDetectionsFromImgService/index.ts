@@ -59,14 +59,10 @@ export class ExtractDetectionsFromImgService {
 
 		await this.examsRepository.updateById(exam.id, {
 			resumeSegmentationImgLocation,
-			originalImgLocation: null,
 			segmentedImgLocation: null,
-			edgedImgLocation: null,
 			denoisedImgLocation: null
 		});
 
-		await this.storageProvider.remove(exam.originalImgLocation);
-		await this.storageProvider.remove(exam.edgedImgLocation);
 		await this.storageProvider.remove(exam.denoisedImgLocation || '');
 		await this.storageProvider.remove(exam.segmentedImgLocation || '');
 		await this.storageProvider.save(resumeSegmentationImgLocation);

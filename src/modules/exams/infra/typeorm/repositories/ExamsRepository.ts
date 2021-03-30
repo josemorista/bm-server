@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { createQueryBuilder, getRepository, Repository } from 'typeorm';
 import { AppError } from '../../../../../shared/errors/AppError';
 import { IExam } from '../../../entities/models/IExam';
 import { ICreateExamDTO, IExamsRepository, IUpdateExamDTO } from '../../../repositories/ExamsRepository/models/IExamsRepository';

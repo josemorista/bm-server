@@ -70,15 +70,9 @@ export class SegmentImgService {
 			}
 			await this.kMeansSegmentationProvider.applyKMeansSegmentation({
 				imgPath: srcPath,
-				outImgPath: srcPath,
+				outImgPath: outPath,
 				clusters: kMeansParams.clusters,
 				thresholdCluster: kMeansParams.thresholdCluster
-			});
-			await this.kMeansSegmentationProvider.applyKMeansSegmentation({
-				imgPath: srcPath,
-				outImgPath: outPath,
-				clusters: 3,
-				thresholdCluster: -1
 			});
 		}
 

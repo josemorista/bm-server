@@ -23,7 +23,10 @@ export class Exam implements IExam {
 	pixelArea: number;
 
 	@Column({ type: 'varchar' })
-	category: IExam['category']
+	category: IExam['category'];
+
+	@Column({ type: 'varchar', name: 'currentstep' })
+	currentStep: IExam['currentStep'];
 
 	@Column({ type: 'varchar', name: 'denoisedimglocation', nullable: true })
 	denoisedImgLocation: IExam['denoisedImgLocation'];

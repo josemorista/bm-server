@@ -5,7 +5,9 @@ import { IDecisionTreeClassifierProvider, IDTClassifyDTO } from '../../models/ID
 import { AppError } from '../../../../../../shared/errors/AppError';
 
 export class SkLearnDecisionTreeClassifierProvider implements IDecisionTreeClassifierProvider {
+
 	async classify({ attributes }: IDTClassifyDTO): Promise<string> {
+		console.log(JSON.stringify(attributes));
 		const process = spawnSync('python3', [
 			path.resolve(__dirname, 'applyDT.py'),
 			path.resolve(__dirname, 'dt.sav'),

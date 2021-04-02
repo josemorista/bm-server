@@ -6,8 +6,7 @@ export interface IDTClassifyDTO {
 		'area' | 'aspectRatio' | 'centroidX'
 		| 'centroidY' | 'eccentricity' | 'equivalentDiameter'
 		| 'meanIntensity' | 'perimeter' | 'orientation' | 'extent'> &
-	Pick<IPatient, 'previousBoneLesions' | 'previousCancerDiagnosis' | 'previousQt' | 'previousRt'>;
-	targetValues: Array<string>;
+	Pick<IPatient, 'previousBoneLesions' | 'previousCancerDiagnosis' | 'previousQt' | 'previousRt'>
 }
 
 export interface IDecisionTreeClassifierProvider {

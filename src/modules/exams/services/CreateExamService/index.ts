@@ -30,7 +30,8 @@ export class CreateExamService {
 			label,
 			category,
 			patientId,
-			dicomFileLocation
+			dicomFileLocation,
+			currentStep: 'initial'
 		});
 
 		return exam;

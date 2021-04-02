@@ -42,7 +42,8 @@ export class ClipAndConvertToImgService {
 
 		await this.examsRepository.updateById(exam.id, {
 			pixelArea,
-			originalImgLocation
+			originalImgLocation,
+			currentStep: 'convertAndClip'
 		});
 	}
 }

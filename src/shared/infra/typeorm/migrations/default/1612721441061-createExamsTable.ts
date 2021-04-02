@@ -3,10 +3,12 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 export class createExamsTable1612721441061 implements MigrationInterface {
 
 	public async up(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.query('create type exams_currentStepEnum as enum(\'initial\',\'convertAndClip\', \'denoise\', \'segment\', \'edging\', \'resume\', \'classify\')');
 		await queryRunner.query(`create table if not exists exams(
 			id varchar primary key not null,
 			label varchar not null,
 			patientId varchar not null,
+			currentStep exams_currentStepEnum,
 			category varchar not null,
 			pixelArea float default 0,
 			denoisedImgLocation varchar,

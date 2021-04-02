@@ -20,6 +20,8 @@ RUN apt install nodejs -yq
 
 RUN pip3 install numpy
 
+RUN pip3 install sklearn
+
 RUN pip3 install scikit-image
 
 RUN pip3 install opencv-python
@@ -36,9 +38,9 @@ RUN npm install pm2 -g
 
 RUN npm install
 
-RUN npm run build
+# RUN npm run build
 
-RUN rm -rf ./src
+#RUN rm -rf ./src
 
 RUN mkdir -p tmp
 

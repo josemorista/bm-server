@@ -70,14 +70,16 @@ export class SegmentImgService {
 			}
 			await this.kMeansSegmentationProvider.applyKMeansSegmentation({
 				imgPath: srcPath,
-				outImgPath: outPath,
+				outImgPath: srcPath,
 				clusters: kMeansParams.clusters,
 				thresholdCluster: kMeansParams.thresholdCluster
 			});
-			/*await this.otsuSegmentationProvider.applyOtsuSegmentation({
+			await this.kMeansSegmentationProvider.applyKMeansSegmentation({
 				imgPath: srcPath,
-				outImgPath: outPath
-			});*/
+				outImgPath: outPath,
+				clusters: 3,
+				thresholdCluster: -1
+			});
 		}
 
 		if (method === 'randomWalker') {
@@ -95,7 +97,8 @@ export class SegmentImgService {
 		await this.storageProvider.save(segmentedImgLocation);
 
 		await this.examsRepository.updateById(id, {
-			segmentedImgLocation
+			segmentedImgLocation,
+			currentStep: 'segment'
 		});
 	}
 }

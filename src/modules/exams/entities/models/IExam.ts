@@ -5,6 +5,7 @@ export interface IExam {
 	id: string;
 	label: string;
 	category: 'ant' | 'post' | 'cra';
+	currentStep: 'initial' | 'convertAndClip' | 'denoise' | 'segment' | 'edging' | 'resume' | 'classify';
 	patientId: string;
 	patient?: IPatient;
 	pixelArea: number;

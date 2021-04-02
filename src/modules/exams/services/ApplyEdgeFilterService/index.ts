@@ -53,7 +53,8 @@ export class ApplyEdgeFilterService {
 		await this.storageProvider.save(edgedImgLocation);
 
 		await this.examsRepository.updateById(id, {
-			edgedImgLocation
+			edgedImgLocation,
+			currentStep: 'edging'
 		});
 	}
 }

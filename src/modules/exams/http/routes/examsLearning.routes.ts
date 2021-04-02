@@ -21,6 +21,16 @@ examsLearningRouter.delete('/:id/detections/:detectionId', async (request, respo
 	return response.sendStatus(204);
 });
 
+examsLearningRouter.patch('/:id/detections/:detectionId', async (request, response) => {
+	const { detectionId } = request.params;
+	const examsDetectionsRepository: IExamsDetectionsRepository = container.resolve('ExamsDetectionsRepository');
+	await examsDetectionsRepository.updateRevisedClassificationId({
+		id: detectionId,
+		revisedClassificationId: request.body.revisedClassificationId
+	});
+	return response.sendStatus(204);
+});
+
 examsLearningRouter.post('/:id/classify', async (request, response) => {
 	const { id } = request.params;
 	const classifyDetectionService = container.resolve(ClassifyDetectionsService);

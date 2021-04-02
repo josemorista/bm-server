@@ -1,6 +1,6 @@
 import { getRepository, Repository } from 'typeorm';
 import { IExamDetection } from '../../../entities/models/IExamDetection';
-import { ICreateExamDetectionDTO, IExamsDetectionsRepository, IUpdateAutomaticClassificationDTO } from '../../../repositories/ExamsDetectionsRepository/models/IExamsDetectionsRepository';
+import { ICreateExamDetectionDTO, IExamsDetectionsRepository, IUpdateRevisedClassificationDTO, IUpdateAutomaticClassificationDTO } from '../../../repositories/ExamsDetectionsRepository/models/IExamsDetectionsRepository';
 import { ExamDetection } from '../entities/ExamDetection';
 
 export class ExamsDetectionsRepository implements IExamsDetectionsRepository {
@@ -39,6 +39,12 @@ export class ExamsDetectionsRepository implements IExamsDetectionsRepository {
 	async updateAutomaticClassificationId({ id, automaticClassificationId }: IUpdateAutomaticClassificationDTO): Promise<void> {
 		await this.ormRepository.update(id, {
 			automaticClassificationId
+		});
+	}
+
+	async updateRevisedClassificationId({ id, revisedClassificationId }: IUpdateRevisedClassificationDTO): Promise<void> {
+		await this.ormRepository.update(id, {
+			revisedClassificationId
 		});
 	}
 }

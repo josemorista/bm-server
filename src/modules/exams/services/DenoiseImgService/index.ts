@@ -48,7 +48,8 @@ export class DenoiseImgService {
 		await this.storageProvider.save(denoisedImgLocation);
 
 		await this.examsRepository.updateById(exam.id, {
-			denoisedImgLocation
+			denoisedImgLocation,
+			currentStep: 'denoise'
 		});
 	}
 }

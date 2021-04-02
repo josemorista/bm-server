@@ -1,6 +1,6 @@
 import { IExam } from '../../../entities/models/IExam';
 
-export type ICreateExamDTO = Pick<IExam, 'id' | 'category' | 'dicomFileLocation' | 'label' | 'patientId'>
+export type ICreateExamDTO = Pick<IExam, 'id' | 'category' | 'dicomFileLocation' | 'label' | 'patientId' | 'currentStep'>
 
 export type IUpdateExamDTO = Partial<IExam>;
 export interface IExamsRepository {

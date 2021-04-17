@@ -13,11 +13,11 @@ userSessionsRouter.post('/', async (request, response) => {
 	return response.json(await createSessionService.execute(request.body));
 });
 
-userSessionsRouter.post('/verify', async (request, response) => {
+userSessionsRouter.post('/verify-token', async (request, response) => {
 	const verifySessionTokenService = new VerifySessionTokenService();
 	const token = String(request.body.token);
 	return response.json({
-		valid: await verifySessionTokenService.execute(token)
+		isValid: await verifySessionTokenService.execute(token)
 	});
 });
 

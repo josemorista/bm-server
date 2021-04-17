@@ -4,7 +4,7 @@
 			"name": "bm-server",
 			"script": "npm",
 			"args": "run start",
-			"exec_mode": "cluster",
+			"exec_mode": "fork",
 			"instances": 1,
 			"merge_logs": true,
 			"log_date_format": "YYYY-MM-DD HH:mm Z",

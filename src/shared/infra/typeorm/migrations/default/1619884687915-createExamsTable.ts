@@ -15,7 +15,7 @@ export class createExamsTable1619884687915 implements MigrationInterface {
 			originalImageLocation varchar,
 			resultImageLocation varchar,
 			edgedResultImageLocation varchar,
-			overlayImageLocation varchar;
+			overlayImageLocation varchar,
 			createdAt timestamp not null default current_timestamp,
 			updatedAt timestamp not null default current_timestamp,
 			unique(id),

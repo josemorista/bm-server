@@ -6,12 +6,12 @@ import { IStorageProvider } from '../../../../shared/providers/StorageProvider/m
 import { IPatientsRepository } from '../../../patients/repositories/PatientsRepository/models/IPatientsRepository';
 import { IRandomForestSegmentationProvider } from '../../providers/RandomForestSegmentationProvider/models/IRandomForestSegmentationProvider';
 
-interface ISegmentExamServiceDTO {
+interface IApplySegmentationModelServiceDTO {
 	id: string;
 }
 
 @injectable()
-export class ClipAndConvertToImgService {
+export class ApplySegmentationModelService {
 
 	constructor(
 		@inject('ExamsRepository')
@@ -24,7 +24,7 @@ export class ClipAndConvertToImgService {
 		private randomForestSegmentationProvider: IRandomForestSegmentationProvider
 	) { }
 
-	async execute({ id }: ISegmentExamServiceDTO): Promise<void> {
+	async execute({ id }: IApplySegmentationModelServiceDTO): Promise<void> {
 		const exam = await this.examsRepository.findById(id);
 
 		const { dicomPatientId, pixelArea, originalImagePath, resultImagePath } = await this.randomForestSegmentationProvider.applyModel({

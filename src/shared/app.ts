@@ -8,6 +8,7 @@ import { uploadConfig } from '../config/upload';
 import { errorHandler } from './http/middlewares/errorHandler';
 import './infra/typeorm/databases';
 import './container';
+import { examsRouter } from '../modules/exams/http/routes/exams.routes';
 
 const app = express();
 app.use(cors());
@@ -24,6 +25,7 @@ app.use('/uploads', express.static(uploadConfig.diskStorageProviderConfig.destin
 
 app.use('/users', usersRouter);
 app.use('/patients', patientsRouter);
+app.use('/exams', examsRouter);
 
 app.use(errorHandler);
 

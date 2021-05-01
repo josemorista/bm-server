@@ -29,16 +29,16 @@ export class Exam implements IExam {
 	dicomFileLocation: string;
 
 	@Column({ type: 'varchar', name: 'originalimagelocation', nullable: true })
-	originalImageLocation: string;
+	originalImageLocation: string | null;
 
 	@Column({ type: 'varchar', name: 'resultimagelocation', nullable: true })
-	resultImageLocation: string;
+	resultImageLocation: string | null;
 
 	@Column({ type: 'varchar', name: 'edgedresultimagelocation', nullable: true })
-	edgedResultImageLocation: string;
+	edgedResultImageLocation: string | null;
 
 	@Column({ type: 'varchar', name: 'overlayimagelocation', nullable: true })
-	overlayImageLocation: string;
+	overlayImageLocation: string | null;
 
 
 	@Expose({

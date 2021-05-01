@@ -34,6 +34,8 @@ export class User implements IUser {
 	@Column({ type: 'varchar', nullable: true })
 	avatar: string | null;
 
+	avatarURL: string | null;
+
 	@Expose({ name: 'avatarUrl' })
 	getAvatarUrl(): string | null {
 		if (!this.avatar) return null;

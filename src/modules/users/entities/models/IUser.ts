@@ -7,6 +7,7 @@ export interface IUser {
 	job: string | null;
 	relatedInstitution: string | null;
 	avatar: string | null;
+	avatarURL: string | null;
 	createdAt: Date;
 	updatedAt: Date;
 }

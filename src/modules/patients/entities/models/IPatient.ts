@@ -4,16 +4,15 @@ export interface IPatient {
 	id: string;
 	name: string;
 	dicomPatientId: string | null;
-	birthDate: Date | null;
+
+	birthDate: Date | string | null;
 	sex: 'M' | 'F';
-	previousBoneLesions: boolean | null;
-	previousQt: boolean | null;
-	previousRt: boolean | null;
-	previousCancerDiagnosis: boolean | null;
-	previousCancerDiagnosisType?: string;
-	observations: string;
+
+	description: string;
+
 	ownerId: string;
 	owner?: IUser;
-	createdAt: Date;
-	updatedAt: Date;
+
+	createdAt: Date | string;
+	updatedAt: Date | string;
 }

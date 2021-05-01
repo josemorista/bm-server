@@ -21,16 +21,7 @@ export class Patient implements IPatient {
 	sex: 'M' | 'F';
 
 	@Column({ type: 'varchar' })
-	observations: string;
-
-	@Column({ type: 'boolean', name: 'previousbonelesions', nullable: true })
-	previousBoneLesions: boolean | null;
-
-	@Column({ type: 'boolean', name: 'previouscancerdiagnosis', nullable: true })
-	previousCancerDiagnosis: boolean | null;
-
-	@Column({ type: 'varchar', name: 'previouscancerdiagnosistype' })
-	previousCancerDiagnosisType?: string;
+	description: string;
 
 	@Column({ type: 'varchar', name: 'ownerid' })
 	ownerId: string;
@@ -38,12 +29,6 @@ export class Patient implements IPatient {
 	@ManyToOne(() => User)
 	@JoinColumn({ referencedColumnName: 'id', name: 'ownerid' })
 	owner?: IUser;
-
-	@Column({ type: 'boolean', name: 'previousqt', nullable: true })
-	previousQt: boolean | null;
-
-	@Column({ type: 'boolean', name: 'previousrt', nullable: true })
-	previousRt: boolean | null;
 
 	@CreateDateColumn({ name: 'createdat' })
 	createdAt: Date;

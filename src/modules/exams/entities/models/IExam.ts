@@ -10,9 +10,14 @@ export interface IExam {
 	patientId: string;
 	patient?: IPatient;
 
-	pixelArea: number;
+	pixelArea: number | null;
 
 	dicomFileLocation: string;
+
+	originalImageLocation: string | null;
+	resultImageLocation: string | null;
+	edgedResultImageLocation: string | null;
+	overlayImageLocation: string | null;
 
 	createdAt: Date | string;
 	updatedAt: Date | string;

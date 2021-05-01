@@ -2,9 +2,7 @@ import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn } fro
 import { IUser } from '../../../entities/models/IUser';
 import { Exclude, Expose } from 'class-transformer';
 
-import { uploadConfig } from '../../../../../config/upload';
-import path from 'path';
-import { env } from '../../../../../shared/env';
+import { getStorageAttributeFromDiskOrS3 } from '../../../../../shared/utils/getStorageAttributeFromDiskOrS3';
 
 @Entity('users')
 export class User implements IUser {
@@ -38,9 +36,7 @@ export class User implements IUser {
 
 	@Expose({ name: 'avatarUrl' })
 	getAvatarUrl(): string | null {
-		if (!this.avatar) return null;
-		if (env.storageEngine === 'disk') return path.join(uploadConfig.diskStorageProviderConfig.publicUrl, this.avatar);
-		return null;
+		return getStorageAttributeFromDiskOrS3(this.avatar);
 	}
 
 	@CreateDateColumn({ name: 'createdat' })

@@ -1,7 +1,6 @@
 import { container } from 'tsyringe';
-
-import { PyDicomDicomClipAndConvertProvider } from '../../../modules/exams/providers/DicomClipAndConvertProvider/implementations/PyDicomDicomClipAndConvertProvider';
-import { IDicomClipAndConvertProvider } from '../../../modules/exams/providers/DicomClipAndConvertProvider/models/IDicomClipAndConvertProvider';
+import { PyRandomForestSegmentationProvider } from '../../../modules/exams/providers/RandomForestSegmentationProvider/implementations/PyRandomForestSegmentationProvider';
+import { IRandomForestSegmentationProvider } from '../../../modules/exams/providers/RandomForestSegmentationProvider/models/IRandomForestSegmentationProvider';
 
 import { BCryptHashProvider } from '../../../modules/users/providers/HashProvider/implementations/BCryptHashProvider';
 import { IHashProvider } from '../../../modules/users/providers/HashProvider/models/IHashProvider';
@@ -12,4 +11,4 @@ import { IStorageProvider } from '../../providers/StorageProvider/models/IStorag
 container.register<IHashProvider>('HashProvider', BCryptHashProvider);
 container.register<IStorageProvider>('StorageProvider', DiskStorageProvider);
 
-container.register<IDicomClipAndConvertProvider>('DicomClipAndConvertProvider', PyDicomDicomClipAndConvertProvider);
+container.register<IRandomForestSegmentationProvider>('RandomForestSegmentationProvider', PyRandomForestSegmentationProvider);

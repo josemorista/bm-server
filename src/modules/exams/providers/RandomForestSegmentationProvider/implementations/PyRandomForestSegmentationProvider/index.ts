@@ -5,10 +5,11 @@ import { spawnSync } from 'child_process';
 export class PyRandomForestSegmentationProvider implements IRandomForestSegmentationProvider {
 	async applyModel({ dcmPath, outDirectoryPath, proba }: IRandomForestApplyModelDTO): Promise<IRandomForestSegmentationProviderResponseDTO> {
 		const process = spawnSync('python3', [
-			path.resolve(__dirname, 'clipAndConvert.py'),
+			path.resolve(__dirname, 'applyModel.py'),
 			dcmPath,
 			outDirectoryPath,
-			String(proba)
+			String(proba),
+			path.resolve(__dirname, 'rfModel')
 		]);
 		return JSON.parse(process.stdout.toString());
 	}

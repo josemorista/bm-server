@@ -11,16 +11,18 @@ from skimage.filters.rank import entropy
 from skimage.morphology import disk
 from scipy import ndimage as nd
 from matplotlib import pyplot as plt
+import re;
 
 file = argv[1];
 outFolderPath = argv[2];
-filename = file.split('.dcm')[0];
+pattern = '.*\/([\w-]+)(.dcm)';
+filename = re.findall(pattern, file)[0][0];
 
 di = dicom.dcmread(file);
 
 diData = di.pixel_array;
 patientId = di.PatientID;
-pixelArea = di.PixelSpacing[0] * di.PixelSpacing[1];;
+pixelArea = di.PixelSpacing[0] * di.PixelSpacing[1];
 
 if hasattr(di, 'RescaleSlope') and hasattr(di, 'RescaleIntercept'):
 	slope = float(di.RescaleSlope);
@@ -109,12 +111,12 @@ variance_img = nd.generic_filter(img, np.var, size=3)
 variance_img1 = variance_img.reshape(-1)
 df['varianceS3'] = variance_img1  #Add column to original dataframe
 
-loaded_model = pickle.load(open("./rfModel", 'rb'))
+loaded_model = pickle.load(open(argv[4], 'rb'))
 result = loaded_model.predict_proba(df)
 
 segmented = np.zeros(img.shape);
 
-probThreshold = Number(argv[3]);
+probThreshold = float(argv[3]);
 
 for i in range(0, 1024):
 	for j in range(0, 256):
@@ -125,7 +127,4 @@ for i in range(0, 1024):
 plt.imshow(segmented, cmap='gray')
 plt.imsave(f"{outFolderPath}/seg-{filename}.png", segmented, cmap='gray')
 
-print(
-	'{' + f"\"pixelArea\":{pixelArea},
-	 \"dicomPatientId\": \"{patientId}\", \"originalImagePath\": \"{outFolderPath}/org-{filename}.png\", 
-	 \"resultImagePath\":\"{outFolderPath}/seg-{filename}.png\"" + '}');
+print('{' + f"\"pixelArea\":{pixelArea},\"dicomPatientId\": \"{patientId}\", \"originalImagePath\": \"org-{filename}.png\", \"resultImagePath\":\"seg-{filename}.png\"" + '}');

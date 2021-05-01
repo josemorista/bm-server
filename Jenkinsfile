@@ -2,7 +2,8 @@ pipeline {
     agent any
 
 		environment {
-			host = 'ec2-34-203-244-243.compute-1.amazonaws.com'
+			sshuser = 'ubuntu'
+			host = '52.4.58.13'
 			artifact = 'bmsartifact.tgz'
 			directory = '/home/ubuntu/bmserver'
 		}
@@ -16,7 +17,7 @@ pipeline {
                 npm install
 								npm run build
 								tar czf $artifact node_modules package.json dist process.json
-								scp ./$artifact ubuntu@$host:/tmp/$artifact
+								scp ./$artifact $sshuser@$host:/tmp/$artifact
 								rm -rf ./*
 							"""
             }
@@ -25,7 +26,7 @@ pipeline {
 				stage('Publish') {
 					steps {
 						sh """
-							ssh ubuntu@$host << EOF 
+							ssh $sshuser@$host << EOF 
 							mkdir -p $directory
 							rm -rf $directory/dist
 							rm -rf $directory/tmp

@@ -1,7 +1,7 @@
 import { IUser } from '../../entities/models/IUser';
 
 
-export type ICreateUserDTO = Omit<IUser, 'createdAt' | 'updatedAt'>;
+export type ICreateUserDTO = Omit<IUser, 'createdAt' | 'updatedAt' | 'avatarURL'>;
 
 export interface IUsersRepository {
 	create(data: ICreateUserDTO): Promise<IUser>;

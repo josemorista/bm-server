@@ -4,7 +4,6 @@ import 'express-async-errors';
 import cors from 'cors';
 import { usersRouter } from '../modules/users/http/routes/users.routes';
 import { patientsRouter } from '../modules/patients/http/routes/patients.routes';
-import { examsRouter } from '../modules/exams/http/routes/exams.routes';
 import { uploadConfig } from '../config/upload';
 import { errorHandler } from './http/middlewares/errorHandler';
 import './infra/typeorm/databases';
@@ -25,7 +24,6 @@ app.use('/uploads', express.static(uploadConfig.diskStorageProviderConfig.destin
 
 app.use('/users', usersRouter);
 app.use('/patients', patientsRouter);
-app.use('/exams', examsRouter);
 
 app.use(errorHandler);
 

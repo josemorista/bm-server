@@ -9,6 +9,7 @@ interface ICreateExamServiceDTO {
 	filename: string;
 	patientId: string;
 	category: IExam['category'];
+	date: Date | string;
 }
 
 @injectable()
@@ -20,7 +21,7 @@ export class CreateExamService {
 		@inject('StorageProvider')
 		private storageProvider: IStorageProvider) { }
 
-	async execute({ filename, label, patientId, category }: ICreateExamServiceDTO): Promise<IExam> {
+	async execute({ filename, label, patientId, category, date }: ICreateExamServiceDTO): Promise<IExam> {
 		const id = uuid();
 
 		const dicomFileLocation = await this.storageProvider.save(filename, id);
@@ -31,7 +32,7 @@ export class CreateExamService {
 			category,
 			patientId,
 			dicomFileLocation,
-			currentStep: 'initial'
+			date
 		});
 
 		return exam;

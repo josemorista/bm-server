@@ -38,9 +38,9 @@ RUN npm install pm2 -g
 
 RUN npm install
 
-# RUN npm run build
+RUN npm run build
 
-#RUN rm -rf ./src
+RUN rm -rf ./src
 
 RUN mkdir -p tmp
 
@@ -48,6 +48,6 @@ RUN mkdir -p ./uploads
 
 EXPOSE 3333
 
-CMD ["npm", "run", "dev:server"]
+# CMD ["npm", "run", "dev:server"]
 
-#CMD [ "pm2-runtime", "start", "process.json" ]
+CMD [ "pm2-runtime", "start", "process.json" ]

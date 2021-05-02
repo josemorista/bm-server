@@ -30,7 +30,11 @@ export class PatientsRepository implements IPatientsRepository {
 	}
 
 	async findByOwner(ownerId: string): Promise<Array<IPatient>> {
-		return (await this.ormRepository.find({ where: { ownerId } }));
+		return (await this.ormRepository.find({
+			where: { ownerId }, order: {
+				createdAt: 'DESC'
+			}
+		}));
 	}
 
 	async findByNameAndOwner({ name, ownerId }: IFindByNameAndOwnerDTO): Promise<IPatient | undefined> {

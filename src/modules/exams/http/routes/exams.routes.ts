@@ -1,4 +1,4 @@
-import { response, Router } from 'express';
+import { Router } from 'express';
 import { container } from 'tsyringe';
 import { AppError } from '../../../../shared/errors/AppError';
 import { upload } from '../../../../shared/http/middlewares/upload';
@@ -8,7 +8,7 @@ import { CreateExamService } from '../../services/CreateExamService';
 
 const examsRouter = Router();
 
-examsRouter.get('/', async (request, rseponse) => {
+examsRouter.get('/', async (request, response) => {
 	const examsRepository = container.resolve<IExamsRepository>('ExamsRepository');
 	const { patientId } = request.query;
 	if (!patientId) {

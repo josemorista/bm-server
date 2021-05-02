@@ -33,6 +33,9 @@ export class ExamsRepository implements IExamsRepository {
 		return await this.ormRepository.find({
 			where: {
 				patientId
+			},
+			order: {
+				date: 'DESC'
 			}
 		});
 	}

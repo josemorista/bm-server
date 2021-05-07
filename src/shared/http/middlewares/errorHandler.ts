@@ -6,12 +6,12 @@ const errorHandler = async (error: Error, request: Request, response: Response, 
 
 	if (error instanceof AppError) {
 		return response.status(error.status).json({
-			message: error.message
+			error: error.message
 		});
 	}
 
 	return response.status(500).json({
-		message: error.message || 'Internal server error'
+		error: error.message || 'Internal server error'
 	});
 };
 

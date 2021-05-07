@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { IExam } from '../../entities/models/IExam';
 import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
 import { inject, injectable } from 'tsyringe';
+import fs from 'fs';
 
 interface ICreateExamServiceDTO {
 	label: string;
@@ -26,15 +27,21 @@ export class CreateExamService {
 
 		const dicomFileLocation = await this.storageProvider.save(filename, id);
 
-		const exam = await this.examsRepository.create({
-			id,
-			label,
-			category,
-			patientId,
-			dicomFileLocation,
-			date
-		});
+		try {
+			const exam = await this.examsRepository.create({
+				id,
+				label,
+				category,
+				patientId,
+				dicomFileLocation,
+				date
+			});
 
-		return exam;
+			return exam;
+		} catch (error) {
+			this.storageProvider.remove(dicomFileLocation);
+			throw error;
+		}
+
 	}
 }

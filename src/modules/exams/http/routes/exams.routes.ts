@@ -42,7 +42,9 @@ examsRouter.post('/:examId/segmentation', async (request, response) => {
 	const { examId } = request.params;
 	await applySegmentationModelService.execute(
 		{
-			id: examId
+			id: examId,
+			algorithm: 'randomForest',
+			randomForestParams: request.body.randomForestParams
 		}
 	);
 	return response.sendStatus(204);

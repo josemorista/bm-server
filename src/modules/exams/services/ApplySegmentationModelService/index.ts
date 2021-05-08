@@ -5,9 +5,15 @@ import { inject, injectable } from 'tsyringe';
 import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
 import { IPatientsRepository } from '../../../patients/repositories/PatientsRepository/models/IPatientsRepository';
 import { IRandomForestSegmentationProvider } from '../../providers/RandomForestSegmentationProvider/models/IRandomForestSegmentationProvider';
+import { ISegmentedExamsRepository } from '../../repositories/SegmentedExamsRepository/models/ISegmentedExamsRepository';
+import { ISegmentedExam } from '../../entities/models/ISegmentedExam';
 
 interface IApplySegmentationModelServiceDTO {
 	id: string;
+	algorithm: ISegmentedExam['algorithm'];
+	randomForestParams?: {
+		threshold: number;
+	}
 }
 
 @injectable()
@@ -18,19 +24,31 @@ export class ApplySegmentationModelService {
 		private examsRepository: IExamsRepository,
 		@inject('PatientsRepository')
 		private patientsRepository: IPatientsRepository,
+		@inject('SegmentedExamsRepository')
+		private segmentedExamsRepository: ISegmentedExamsRepository,
 		@inject('StorageProvider')
 		private storageProvider: IStorageProvider,
 		@inject('RandomForestSegmentationProvider')
 		private randomForestSegmentationProvider: IRandomForestSegmentationProvider
 	) { }
 
-	async execute({ id }: IApplySegmentationModelServiceDTO): Promise<void> {
+	async execute({ id, algorithm, randomForestParams }: IApplySegmentationModelServiceDTO): Promise<void> {
 		const exam = await this.examsRepository.findById(id);
+
+		const alreadySegmented = await this.segmentedExamsRepository.findByExamIdAndAlgorithm({
+			examId: id,
+			algorithm
+		});
+
+		if (alreadySegmented) {
+			if (alreadySegmented.algorithm === 'randomForest' && randomForestParams?.threshold === alreadySegmented.threshold) return;
+			if (alreadySegmented.algorithm === 'SVM') return;
+		}
 
 		const { dicomPatientId, pixelArea, originalImagePath, resultImagePath } = await this.randomForestSegmentationProvider.applyModel({
 			dcmPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFileLocation),
 			outDirectoryPath: uploadConfig.tmpUploadsPath,
-			proba: 0.4
+			proba: randomForestParams?.threshold || 0.4
 		});
 
 		await this.patientsRepository.updatePatientById(exam.patientId, {

@@ -3,7 +3,6 @@ import { v4 as uuid } from 'uuid';
 import { IExam } from '../../entities/models/IExam';
 import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
 import { inject, injectable } from 'tsyringe';
-import fs from 'fs';
 
 interface ICreateExamServiceDTO {
 	label: string;
@@ -20,7 +19,8 @@ export class CreateExamService {
 		@inject('ExamsRepository')
 		private examsRepository: IExamsRepository,
 		@inject('StorageProvider')
-		private storageProvider: IStorageProvider) { }
+		private storageProvider: IStorageProvider
+	) { }
 
 	async execute({ filename, label, patientId, category, date }: ICreateExamServiceDTO): Promise<IExam> {
 		const id = uuid();

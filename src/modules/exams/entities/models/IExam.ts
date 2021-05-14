@@ -19,6 +19,11 @@ export interface IExam {
 	edgedResultImageLocation: string | null;
 	overlayImageLocation: string | null;
 
+	originalImageUrl?: string | null;
+	resultImageUrl?: string | null;
+	edgedResultImageUrl?: string | null;
+	overlayImageUrl?: string | null;
+
 	createdAt: Date | string;
 	updatedAt: Date | string;
 }

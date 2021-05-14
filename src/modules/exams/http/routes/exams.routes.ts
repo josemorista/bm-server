@@ -1,3 +1,4 @@
+import { classToClass } from 'class-transformer';
 import { Router } from 'express';
 import { container } from 'tsyringe';
 import { AppError } from '../../../../shared/errors/AppError';
@@ -22,7 +23,7 @@ examsRouter.get('/:examId', async (request, response) => {
 	const { examId } = request.params;
 	const exam = await examsRepository.findById(examId);
 	if (exam && exam.patient?.ownerId === request.user.id) {
-		return response.json(exam);
+		return response.json(classToClass(exam));
 	}
 	throw new AppError('Unauthorized', 401);
 });

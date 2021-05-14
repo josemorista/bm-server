@@ -42,23 +42,23 @@ export class Exam implements IExam {
 
 
 	@Expose({
-		name: 'originalImageURL'
+		name: 'originalImageUrç'
 	})
-	getOriginalImageURL(): string | null {
+	getOriginalImageUrl(): string | null {
 		return getStorageAttributeFromDiskOrS3(this.originalImageLocation);
 	}
 
 	@Expose({
-		name: 'resultImageURL'
+		name: 'resultImageUrl'
 	})
-	getResultImageURL(): string | null {
+	getResultImageUrl(): string | null {
 		return getStorageAttributeFromDiskOrS3(this.resultImageLocation);
 	}
 
 	@Expose({
-		name: 'edgedResultImageURL'
+		name: 'edgedResultImageUrl'
 	})
-	getEdgedResultImageURLL(): string | null {
+	getEdgedResultImageUrl(): string | null {
 		return getStorageAttributeFromDiskOrS3(this.edgedResultImageLocation);
 	}
 

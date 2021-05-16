@@ -12,6 +12,12 @@ export class PatientsRepository implements IPatientsRepository {
 		this.ormRepository = getRepository(Patient);
 	}
 
+	async deleteById(id: string): Promise<void> {
+		await this.ormRepository.delete({
+			id
+		});
+	}
+
 	async create(data: ICreatePatientDTO): Promise<IPatient> {
 		const patient = await this.ormRepository.create(data);
 		await this.ormRepository.save(patient);

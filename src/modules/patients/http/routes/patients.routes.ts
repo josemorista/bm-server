@@ -4,6 +4,7 @@ import { ensureAuthentication } from '../../../users/http/middlewares/ensureAuth
 import { IPatientsRepository } from '../../repositories/PatientsRepository/models/IPatientsRepository';
 import { classToPlain } from 'class-transformer';
 import { CreatePatientService } from '../../services/CreatePatientService';
+import { DeletePatientService } from '../../services/DeletePatientService';
 
 const patientsRouter = Router();
 
@@ -28,6 +29,16 @@ patientsRouter.put('/:id', async (request, response) => {
 patientsRouter.get('/:id', async (request, response) => {
 	const patientsRepository: IPatientsRepository = container.resolve('PatientsRepository');
 	return response.json(classToPlain(await patientsRepository.findById(String(request.params.id))));
+});
+
+patientsRouter.delete('/:id', async (request, response) => {
+	const { user } = request;
+	const deletePatientService = container.resolve(DeletePatientService);
+	await deletePatientService.execute({
+		patientId: request.params.id,
+		requestUserId: user.id
+	});
+	return response.sendStatus(204);
 });
 
 export { patientsRouter };

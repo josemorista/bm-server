@@ -12,4 +12,5 @@ export interface IPatientsRepository {
 	findById(id: string): Promise<IPatient>;
 	findByOwner(ownerId: string): Promise<Array<IPatient>>;
 	findByNameAndOwner(data: IFindByNameAndOwnerDTO): Promise<IPatient | undefined>;
+	deleteById(id: string): Promise<void>;
 }

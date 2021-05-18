@@ -18,6 +18,7 @@ pip3 install pydicom
 pip3 install pandas
 pip3 install scipy
 pip3 install matplotlib
+pip3 install sklearn
 
 apt install -y nginx
 systemctl enable nginx

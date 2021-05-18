@@ -42,7 +42,7 @@ export class Exam implements IExam {
 
 
 	@Expose({
-		name: 'originalImageUrç'
+		name: 'originalImageUrl'
 	})
 	getOriginalImageUrl(): string | null {
 		return getStorageAttributeFromDiskOrS3(this.originalImageLocation);

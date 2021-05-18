@@ -18,10 +18,10 @@ export class SegmentedExam implements ISegmentedExam {
 	@Column({ type: 'float' })
 	threshold: number;
 
-	@CreateDateColumn()
+	@CreateDateColumn({ name: 'createdat' })
 	createdAt: string | Date;
 
-	@UpdateDateColumn()
+	@UpdateDateColumn({ name: 'updatedat' })
 	updatedAt: string | Date;
 
 }

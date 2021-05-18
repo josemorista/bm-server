@@ -3,11 +3,13 @@ import { Router } from 'express';
 import { container } from 'tsyringe';
 import { AppError } from '../../../../shared/errors/AppError';
 import { upload } from '../../../../shared/http/middlewares/upload';
+import { ensureAuthentication } from '../../../users/http/middlewares/ensureAuthentication';
 import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExamsRepository';
 import { ApplySegmentationModelService } from '../../services/ApplySegmentationModelService';
 import { CreateExamService } from '../../services/CreateExamService';
 
 const examsRouter = Router();
+examsRouter.use(ensureAuthentication);
 
 examsRouter.get('/', async (request, response) => {
 	const examsRepository = container.resolve<IExamsRepository>('ExamsRepository');

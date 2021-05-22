@@ -60,6 +60,10 @@ export class ApplySegmentationModelService {
 			dicomPatientId
 		});
 
+		const affectedPixels = await this.pixelCounterProvider.countNotNullPixels(
+			path.resolve(uploadConfig.tmpUploadsPath, resultImagePath)
+		);
+
 		await this.examsRepository.updateById(exam.id, {
 			pixelArea,
 			originalImageLocation: await this.storageProvider.save(originalImagePath),
@@ -67,15 +71,11 @@ export class ApplySegmentationModelService {
 			edgedResultImageLocation: await this.storageProvider.save(edgeImagePath)
 		});
 
-		const affectedPixels = await this.pixelCounterProvider.countNotNullPixels(
-			path.resolve(uploadConfig.tmpUploadsPath, resultImagePath),
-		);
-
 		await this.segmentedExamsRepository.deleteByExamId(exam.id);
 
 		return (await this.segmentedExamsRepository.create({
 			examId: exam.id,
-			affectedArea: affectedPixels * pixelArea,
+			affectedArea: Math.round(affectedPixels * pixelArea),
 			algorithm,
 			threshold
 		}));

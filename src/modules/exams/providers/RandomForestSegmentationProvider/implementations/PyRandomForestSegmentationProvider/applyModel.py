@@ -118,8 +118,8 @@ segmented = np.zeros(img.shape);
 
 probThreshold = float(argv[3]);
 
-for i in range(0, 1024):
-	for j in range(0, 256):
+for i in range(0, img.shape[0]):
+	for j in range(0, img.shape[1]):
 		if (result[i+j + (i*255)][1] > probThreshold):
 			segmented[i][j] = 1;
 

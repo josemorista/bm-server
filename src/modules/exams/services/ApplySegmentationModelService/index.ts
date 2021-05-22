@@ -8,6 +8,7 @@ import { IRandomForestSegmentationProvider } from '../../providers/RandomForestS
 import { ISegmentedExamsRepository } from '../../repositories/SegmentedExamsRepository/models/ISegmentedExamsRepository';
 import { ISegmentedExam } from '../../entities/models/ISegmentedExam';
 import { IPixelCounterProvider } from '../../providers/PixelCounterProvider/models/IPixelCounterProvider';
+import { IGenerateOverlayImageProvider } from '../../providers/GenerateOverlayImageProvider/models/IGenerateOverlayImageProvider';
 
 interface IApplySegmentationModelServiceDTO {
 	id: string;
@@ -32,7 +33,9 @@ export class ApplySegmentationModelService {
 		@inject('RandomForestSegmentationProvider')
 		private randomForestSegmentationProvider: IRandomForestSegmentationProvider,
 		@inject('PixelCounterProvider')
-		private pixelCounterProvider: IPixelCounterProvider
+		private pixelCounterProvider: IPixelCounterProvider,
+		@inject('GenerateOverlayImageProvider')
+		private generateImageOverlayProvider: IGenerateOverlayImageProvider
 	) { }
 
 	async execute({ id, algorithm, randomForestParams }: IApplySegmentationModelServiceDTO): Promise<ISegmentedExam> {
@@ -56,6 +59,12 @@ export class ApplySegmentationModelService {
 				proba: threshold
 			});
 
+		const overlayImagePath = await this.generateImageOverlayProvider.apply({
+			originalImagePath: path.resolve(uploadConfig.tmpUploadsPath, originalImagePath),
+			edgeImagePath: path.resolve(uploadConfig.tmpUploadsPath, edgeImagePath),
+			outDirPath: uploadConfig.tmpUploadsPath
+		});
+
 		await this.patientsRepository.updatePatientById(exam.patientId, {
 			dicomPatientId
 		});
@@ -68,7 +77,8 @@ export class ApplySegmentationModelService {
 			pixelArea,
 			originalImageLocation: await this.storageProvider.save(originalImagePath),
 			resultImageLocation: await this.storageProvider.save(resultImagePath),
-			edgedResultImageLocation: await this.storageProvider.save(edgeImagePath)
+			edgedResultImageLocation: await this.storageProvider.save(edgeImagePath),
+			overlayImageLocation: await this.storageProvider.save(overlayImagePath)
 		});
 
 		await this.segmentedExamsRepository.deleteByExamId(exam.id);

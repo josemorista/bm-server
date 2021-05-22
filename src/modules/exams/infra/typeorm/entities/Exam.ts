@@ -62,6 +62,13 @@ export class Exam implements IExam {
 		return getStorageAttributeFromDiskOrS3(this.edgedResultImageLocation);
 	}
 
+	@Expose({
+		name: 'overlayImageUrl'
+	})
+	getOverlayImageUrl(): string | null {
+		return getStorageAttributeFromDiskOrS3(this.overlayImageLocation);
+	}
+
 	@CreateDateColumn({ name: 'createdat' })
 	createdAt: Date;
 

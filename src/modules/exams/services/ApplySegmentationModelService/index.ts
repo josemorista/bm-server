@@ -7,6 +7,7 @@ import { IPatientsRepository } from '../../../patients/repositories/PatientsRepo
 import { IRandomForestSegmentationProvider } from '../../providers/RandomForestSegmentationProvider/models/IRandomForestSegmentationProvider';
 import { ISegmentedExamsRepository } from '../../repositories/SegmentedExamsRepository/models/ISegmentedExamsRepository';
 import { ISegmentedExam } from '../../entities/models/ISegmentedExam';
+import { IPixelCounterProvider } from '../../providers/PixelCounterProvider/models/IPixelCounterProvider';
 
 interface IApplySegmentationModelServiceDTO {
 	id: string;
@@ -29,10 +30,12 @@ export class ApplySegmentationModelService {
 		@inject('StorageProvider')
 		private storageProvider: IStorageProvider,
 		@inject('RandomForestSegmentationProvider')
-		private randomForestSegmentationProvider: IRandomForestSegmentationProvider
+		private randomForestSegmentationProvider: IRandomForestSegmentationProvider,
+		@inject('PixelCounterProvider')
+		private pixelCounterProvider: IPixelCounterProvider
 	) { }
 
-	async execute({ id, algorithm, randomForestParams }: IApplySegmentationModelServiceDTO): Promise<void> {
+	async execute({ id, algorithm, randomForestParams }: IApplySegmentationModelServiceDTO): Promise<ISegmentedExam> {
 		const exam = await this.examsRepository.findById(id);
 
 		const alreadySegmented = await this.segmentedExamsRepository.findByExamIdAndAlgorithm({
@@ -41,15 +44,16 @@ export class ApplySegmentationModelService {
 		});
 
 		if (alreadySegmented) {
-			if (alreadySegmented.algorithm === 'randomForest' && randomForestParams?.threshold === alreadySegmented.threshold) return;
-			if (alreadySegmented.algorithm === 'SVM') return;
+			if (alreadySegmented.algorithm === 'randomForest' && randomForestParams?.threshold === alreadySegmented.threshold) return alreadySegmented;
+			if (alreadySegmented.algorithm === 'SVM') return alreadySegmented;
 		}
 
+		const threshold = randomForestParams?.threshold || 0.4;
 		const { dicomPatientId, pixelArea, originalImagePath, resultImagePath, edgeImagePath } = await this.randomForestSegmentationProvider
 			.applyModel({
 				dcmPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFileLocation),
 				outDirectoryPath: uploadConfig.tmpUploadsPath,
-				proba: randomForestParams?.threshold || 0.4
+				proba: threshold
 			});
 
 		await this.patientsRepository.updatePatientById(exam.patientId, {
@@ -62,5 +66,17 @@ export class ApplySegmentationModelService {
 			resultImageLocation: await this.storageProvider.save(resultImagePath),
 			edgedResultImageLocation: await this.storageProvider.save(edgeImagePath)
 		});
+
+		const affectedPixels = await this.pixelCounterProvider.countNotNullPixels(resultImagePath);
+
+		await this.segmentedExamsRepository.deleteByExamId(exam.id);
+
+		return (await this.segmentedExamsRepository.create({
+			examId: exam.id,
+			affectedArea: affectedPixels * pixelArea,
+			algorithm,
+			threshold
+		}));
+
 	}
 }

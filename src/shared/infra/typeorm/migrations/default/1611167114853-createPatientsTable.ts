@@ -3,13 +3,13 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 export class createPatientsTable1611167114853 implements MigrationInterface {
 
 	public async up(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.query('create type sex as enum (\'M\', \'F\');');
+		await queryRunner.query('create type gender as enum (\'M\', \'F\');');
 		await queryRunner.query(`create table if not exists patients(
 				id varchar not null primary key,
 				name varchar not null,
 				birthDate timestamp,
 				dicomPatientId varchar,
-				sex sex not null,
+				gender gender not null,
 				description varchar not null default '',
 				ownerId varchar not null,
 				createdAt timestamp not null default current_timestamp,
@@ -22,7 +22,7 @@ export class createPatientsTable1611167114853 implements MigrationInterface {
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.query('drop table patients');
-		await queryRunner.query('drop type sex');
+		await queryRunner.query('drop type gender');
 	}
 
 }

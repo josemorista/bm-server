@@ -18,7 +18,7 @@ export class Patient implements IPatient {
 	birthDate: Date | null;
 
 	@Column({ type: 'varchar' })
-	sex: 'M' | 'F';
+	gender: 'M' | 'F';
 
 	@Column({ type: 'varchar' })
 	description: string;

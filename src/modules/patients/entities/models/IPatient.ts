@@ -6,7 +6,7 @@ export interface IPatient {
 	dicomPatientId: string | null;
 
 	birthDate: Date | string | null;
-	sex: 'M' | 'F';
+	gender: 'M' | 'F';
 
 	description: string;
 

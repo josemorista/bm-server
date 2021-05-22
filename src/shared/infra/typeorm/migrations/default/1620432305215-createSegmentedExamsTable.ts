@@ -8,6 +8,7 @@ export class createSegmentedExamsTable1620432305215 implements MigrationInterfac
 				examId varchar not null primary key,
 				threshold float,
 				algorithm segmentationAlgorithms,
+				affectedArea int not null,
 				createdAt timestamp not null default current_timestamp,
 				updatedAt timestamp not null default current_timestamp,
 				unique(examId),

@@ -67,7 +67,9 @@ export class ApplySegmentationModelService {
 			edgedResultImageLocation: await this.storageProvider.save(edgeImagePath)
 		});
 
-		const affectedPixels = await this.pixelCounterProvider.countNotNullPixels(resultImagePath);
+		const affectedPixels = await this.pixelCounterProvider.countNotNullPixels(
+			path.resolve(uploadConfig.tmpUploadsPath, resultImagePath),
+		);
 
 		await this.segmentedExamsRepository.deleteByExamId(exam.id);
 

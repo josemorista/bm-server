@@ -45,11 +45,12 @@ export class ApplySegmentationModelService {
 			if (alreadySegmented.algorithm === 'SVM') return;
 		}
 
-		const { dicomPatientId, pixelArea, originalImagePath, resultImagePath } = await this.randomForestSegmentationProvider.applyModel({
-			dcmPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFileLocation),
-			outDirectoryPath: uploadConfig.tmpUploadsPath,
-			proba: randomForestParams?.threshold || 0.4
-		});
+		const { dicomPatientId, pixelArea, originalImagePath, resultImagePath, edgeImagePath } = await this.randomForestSegmentationProvider
+			.applyModel({
+				dcmPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFileLocation),
+				outDirectoryPath: uploadConfig.tmpUploadsPath,
+				proba: randomForestParams?.threshold || 0.4
+			});
 
 		await this.patientsRepository.updatePatientById(exam.patientId, {
 			dicomPatientId
@@ -58,7 +59,8 @@ export class ApplySegmentationModelService {
 		await this.examsRepository.updateById(exam.id, {
 			pixelArea,
 			originalImageLocation: await this.storageProvider.save(originalImagePath),
-			resultImageLocation: await this.storageProvider.save(resultImagePath)
+			resultImageLocation: await this.storageProvider.save(resultImagePath),
+			edgedResultImageLocation: await this.storageProvider.save(edgeImagePath)
 		});
 	}
 }

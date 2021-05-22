@@ -18,6 +18,9 @@ export class SegmentedExam implements ISegmentedExam {
 	@Column({ type: 'float' })
 	threshold: number;
 
+	@Column({ name: 'affectedpixels', type: 'int' })
+	affectedPixels: number;
+
 	@CreateDateColumn({ name: 'createdat' })
 	createdAt: string | Date;
 

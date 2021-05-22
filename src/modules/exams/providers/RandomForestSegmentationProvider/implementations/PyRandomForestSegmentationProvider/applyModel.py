@@ -69,6 +69,8 @@ df['cannyEdge'] = edges1 #Add column to original dataframe
 
 #ROBERTS EDGE
 edge_roberts = roberts(img)
+plt.imshow(segmented, cmap='gray')
+plt.imsave(f"{outFolderPath}/edg-{filename}.png", edge_roberts, cmap='gray')
 edge_roberts1 = edge_roberts.reshape(-1)
 df['roberts'] = edge_roberts1
 
@@ -127,4 +129,4 @@ for i in range(0, 1024):
 plt.imshow(segmented, cmap='gray')
 plt.imsave(f"{outFolderPath}/seg-{filename}.png", segmented, cmap='gray')
 
-print('{' + f"\"pixelArea\":{pixelArea},\"dicomPatientId\": \"{patientId}\", \"originalImagePath\": \"org-{filename}.png\", \"resultImagePath\":\"seg-{filename}.png\"" + '}');
+print('{' + f"\"pixelArea\":{pixelArea},\"dicomPatientId\": \"{patientId}\", \"originalImagePath\": \"org-{filename}.png\", \"resultImagePath\":\"seg-{filename}.png\", \"edgeImagePath\":\"edg-{filename}.png\""" + '}');

@@ -2,8 +2,8 @@ pipeline {
     agent any
 
 		environment {
-			sshuser = 'ubuntu'
-			host = '52.4.58.13'
+			sshuser = credentials('bm-deploy-ssh-user')
+			host = credentials('bm-deploy-ssh-host')
 			artifact = 'bmsartifact.tgz'
 			directory = '/home/ubuntu/bmserver'
 		}

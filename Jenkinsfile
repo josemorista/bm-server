@@ -14,10 +14,10 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-								sh('echo $ormconfig &> ./ormconfig.json')
+								sh('cp $ormconfig ./ormconfig.json')
                 sh('npm install')
 								sh('npm run build')
-								sh('tar czf $artifact node_modules package.json dist process.json')
+								sh('tar czf $artifact node_modules package.json dist process.json ormconfig.json')
 								sh('scp ./$artifact $sshuser@$host:/tmp/$artifact')
 								sh('rm -rf ./*')
             }
@@ -25,7 +25,7 @@ pipeline {
 
 				stage('Publish') {
 					steps {
-						sh ('''ssh $sshuser@$host << EOF 
+						sh '''ssh $sshuser@$host << EOF 
 							mkdir -p $directory
 							rm -rf $directory/dist
 							rm -rf $directory/tmp
@@ -40,7 +40,7 @@ pipeline {
 							mkdir -p ./uploads
 							pm2 delete process.json &> /dev/null
 							pm2 start process.json
-EOF''')
+EOF'''
 					}
 				}
     }

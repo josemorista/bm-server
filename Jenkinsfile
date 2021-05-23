@@ -6,6 +6,7 @@ pipeline {
 			host = credentials('bm-deploy-ssh-host')
 			artifact = 'bmsartifact.tgz'
 			directory = '/home/ubuntu/bmserver'
+			ormconfig = credentials('ormconfig.json')
 		}
 
     tools {nodejs "nodejs"}
@@ -13,20 +14,18 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-							sh """
-                npm install
-								npm run build
-								tar czf $artifact node_modules package.json dist process.json
-								scp ./$artifact $sshuser@$host:/tmp/$artifact
-								rm -rf ./*
-							"""
+								sh('echo $ormconfig &> ./ormconfig.json')
+                sh('npm install')
+								sh('npm run build')
+								sh('tar czf $artifact node_modules package.json dist process.json')
+								sh('scp ./$artifact $sshuser@$host:/tmp/$artifact')
+								sh('rm -rf ./*')
             }
         }
 
 				stage('Publish') {
 					steps {
-						sh """
-							ssh $sshuser@$host << EOF 
+						sh ('ssh $sshuser@$host << EOF 
 							mkdir -p $directory
 							rm -rf $directory/dist
 							rm -rf $directory/tmp
@@ -41,7 +40,7 @@ pipeline {
 							mkdir -p ./uploads
 							pm2 delete process.json &> /dev/null
 							pm2 start process.json
-EOF"""
+EOF')
 					}
 				}
     }

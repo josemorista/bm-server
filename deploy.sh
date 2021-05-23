@@ -10,6 +10,7 @@ apt install curl -yq
 curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
 apt update
 apt install nodejs -y
+npm install -g pm2
 
 pip3 install numpy
 pip3 install scikit-image

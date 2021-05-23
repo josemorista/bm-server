@@ -25,7 +25,7 @@ pipeline {
 
 				stage('Publish') {
 					steps {
-						sh ('ssh $sshuser@$host << EOF 
+						sh ('''ssh $sshuser@$host << EOF 
 							mkdir -p $directory
 							rm -rf $directory/dist
 							rm -rf $directory/tmp
@@ -40,7 +40,7 @@ pipeline {
 							mkdir -p ./uploads
 							pm2 delete process.json &> /dev/null
 							pm2 start process.json
-EOF')
+EOF''')
 					}
 				}
     }

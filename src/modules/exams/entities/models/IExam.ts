@@ -1,4 +1,5 @@
 import { IPatient } from '../../../patients/entities/models/IPatient';
+import { ISegmentedExam } from './ISegmentedExam';
 
 export interface IExam {
 	id: string;
@@ -23,6 +24,8 @@ export interface IExam {
 	resultImageUrl?: string | null;
 	edgedResultImageUrl?: string | null;
 	overlayImageUrl?: string | null;
+
+	segmentedExam?: ISegmentedExam;
 
 	createdAt: Date | string;
 	updatedAt: Date | string;

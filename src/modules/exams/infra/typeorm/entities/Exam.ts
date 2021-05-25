@@ -1,9 +1,10 @@
 import { Expose } from 'class-transformer';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { getStorageAttributeFromDiskOrS3 } from '../../../../../shared/utils/getStorageAttributeFromDiskOrS3';
 import { IPatient } from '../../../../patients/entities/models/IPatient';
 import { Patient } from '../../../../patients/infra/typeorm/entities/Patient';
 import { IExam } from '../../../entities/models/IExam';
+import { SegmentedExam } from './SegmentedExam';
 
 @Entity('exams')
 export class Exam implements IExam {
@@ -40,6 +41,8 @@ export class Exam implements IExam {
 	@Column({ type: 'varchar', name: 'overlayimagelocation', nullable: true })
 	overlayImageLocation: string | null;
 
+	@OneToOne(() => SegmentedExam, segmentedExam => segmentedExam.exam)
+	segmentedExam: SegmentedExam;
 
 	@Expose({
 		name: 'originalImageUrl'

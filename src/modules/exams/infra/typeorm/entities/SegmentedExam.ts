@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { ISegmentedExam } from '../../../entities/models/ISegmentedExam';
+import { Exam } from './Exam';
 
 @Entity('segmentedexams')
 export class SegmentedExam implements ISegmentedExam {
@@ -14,6 +15,10 @@ export class SegmentedExam implements ISegmentedExam {
 		]
 	})
 	algorithm: 'randomForest' | 'SVM';
+
+	@OneToOne(() => Exam)
+	@JoinColumn({ name: 'examid' })
+	exam?: Exam;
 
 	@Column({ type: 'float' })
 	threshold: number;

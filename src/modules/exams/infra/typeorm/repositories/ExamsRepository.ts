@@ -20,7 +20,8 @@ export class ExamsRepository implements IExamsRepository {
 	async findById(id: string): Promise<IExam> {
 		const exam = await this.ormRepository.findOne(id, {
 			relations: [
-				'patient'
+				'patient',
+				'segmentedExam'
 			]
 		});
 		if (!exam) {

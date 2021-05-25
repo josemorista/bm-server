@@ -73,6 +73,10 @@ export class ApplySegmentationModelService {
 			path.resolve(uploadConfig.tmpUploadsPath, resultImagePath)
 		);
 
+		const classifiedArea = await this.pixelCounterProvider.countNotNullPixels(
+			path.resolve(uploadConfig.tmpUploadsPath, originalImagePath)
+		);
+
 		await this.examsRepository.updateById(exam.id, {
 			pixelArea,
 			originalImageLocation: await this.storageProvider.save(originalImagePath),
@@ -85,7 +89,8 @@ export class ApplySegmentationModelService {
 
 		return (await this.segmentedExamsRepository.create({
 			examId: exam.id,
-			affectedArea: Math.round(affectedPixels * pixelArea),
+			affectedArea: Number((affectedPixels * pixelArea).toFixed(2)),
+			classifiedArea: Number((classifiedArea * pixelArea).toFixed(2)),
 			algorithm,
 			threshold
 		}));

@@ -6,7 +6,7 @@ export const upload = multer({
 	storage: diskStorage({
 		destination: uploadConfig.tmpUploadsPath,
 		filename: (request, file, callback) => {
-			const filename = `${crypto.randomBytes(10).toString('hex')}-${file.originalname}`;
+			const filename = `${crypto.randomBytes(10).toString('hex')}.dcm`;
 			return callback(null, filename);
 		},
 	}),

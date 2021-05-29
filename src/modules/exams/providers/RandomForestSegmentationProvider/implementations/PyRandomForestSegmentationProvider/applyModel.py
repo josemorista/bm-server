@@ -46,11 +46,11 @@ num = 1  #To count numbers up in order to give Gabor features a lable in the dat
 kernels = []
 for theta in range(2):   #Define number of thetas
 	theta = theta / 4. * np.pi
-	for sigma in (1, 3):  #Sigma with 1 and 3
+	for sigma in (1, 3, 5):  #Sigma with 1, 3 and 5
 		for lamda in np.arange(0, np.pi, np.pi / 4):   #Range of wavelengths
 			for gamma in (0.05, 0.5):   #Gamma values of 0.05 and 0.5
 					gabor_label = 'gabor' + str(num)  #Label Gabor columns as Gabor1, Gabor2, etc.
-					ksize=9
+					ksize=5
 					kernel = cv2.getGaborKernel((ksize, ksize), sigma, theta, lamda, gamma, 0, ktype=cv2.CV_32F)    
 					kernels.append(kernel)
 					#Now filter the image and add values to a new column 
@@ -63,7 +63,7 @@ for theta in range(2):   #Define number of thetas
 #Gerate OTHER FEATURES and add them to the data frame
 							
 #CANNY EDGE
-edges = cv2.Canny(img, 100,200)   #Image, min and max values
+edges = cv2.Canny(img, 0,200)   #Image, min and max values
 edges1 = edges.reshape(-1)
 df['cannyEdge'] = edges1 #Add column to original dataframe
 
@@ -91,15 +91,25 @@ df['prewitt'] = edge_prewitt1
 entrophy_img = entropy(img, disk(3))
 df['entrophy'] = entrophy_img.reshape(-1)
 
+#GAUSSIAN with sigma=1
+gaussian_img = nd.gaussian_filter(img, sigma=1)
+gaussian_img1 = gaussian_img.reshape(-1)
+df['gaussianS1'] = gaussian_img1
+
 #GAUSSIAN with sigma=3
 gaussian_img = nd.gaussian_filter(img, sigma=3)
 gaussian_img1 = gaussian_img.reshape(-1)
 df['gaussianS3'] = gaussian_img1
 
+#GAUSSIAN with sigma=5
+gaussian_img = nd.gaussian_filter(img, sigma=5)
+gaussian_img1 = gaussian_img.reshape(-1)
+df['gaussianS5'] = gaussian_img1
+
 #GAUSSIAN with sigma=7
-gaussian_img2 = nd.gaussian_filter(img, sigma=7)
-gaussian_img3 = gaussian_img2.reshape(-1)
-df['gaussianS7'] = gaussian_img3
+gaussian_img = nd.gaussian_filter(img, sigma=7)
+gaussian_img1 = gaussian_img.reshape(-1)
+df['gaussianS7'] = gaussian_img1
 
 #MEDIAN with sigma=3
 median_img = nd.median_filter(img, size=3)

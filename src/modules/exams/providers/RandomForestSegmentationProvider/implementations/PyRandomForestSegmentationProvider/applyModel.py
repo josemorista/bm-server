@@ -125,10 +125,10 @@ for i in range(0, img.shape[0]):
 
 
 edge_result = sobel(segmented)
-plt.imshow(edge_result, cmap='gray')
+#plt.imshow(edge_result, cmap='gray')
 plt.imsave(f"{outFolderPath}/edg-{filename}.png", edge_result, cmap='gray')
 
-plt.imshow(segmented, cmap='gray')
+#plt.imshow(segmented, cmap='gray')
 plt.imsave(f"{outFolderPath}/seg-{filename}.png", segmented, cmap='gray')
 
 print('{' + f"\"pixelArea\":{pixelArea},\"dicomPatientId\": \"{patientId}\", \"originalImagePath\": \"org-{filename}.png\", \"resultImagePath\":\"seg-{filename}.png\", \"edgeImagePath\":\"edg-{filename}.png\"" + '}');

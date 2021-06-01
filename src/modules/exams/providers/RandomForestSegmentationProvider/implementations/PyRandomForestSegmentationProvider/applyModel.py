@@ -130,7 +130,7 @@ probThreshold = float(argv[3]);
 
 for i in range(0, img.shape[0]):
 	for j in range(0, img.shape[1]):
-		if (result[i+j + (i*255)][1] > probThreshold):
+		if (result[i+j + (i*(img.shape[1]-1))][1] > probThreshold):
 			segmented[i][j] = 1;
 
 

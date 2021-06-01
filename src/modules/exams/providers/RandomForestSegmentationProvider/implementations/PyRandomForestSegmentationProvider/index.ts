@@ -11,6 +11,7 @@ export class PyRandomForestSegmentationProvider implements IRandomForestSegmenta
 			String(proba),
 			path.resolve(__dirname, 'rfModel.model')
 		]);
+		console.log(process.output.toString());
 		return JSON.parse(process.stdout.toString());
 	}
 }

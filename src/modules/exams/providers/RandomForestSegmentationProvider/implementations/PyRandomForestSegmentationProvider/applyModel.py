@@ -49,17 +49,18 @@ for theta in range(2):   #Define number of thetas
 	for sigma in (1, 3, 5):  #Sigma with 1, 3 and 5
 		for lamda in np.arange(0, np.pi, np.pi / 4):   #Range of wavelengths
 			for gamma in (0.05, 0.5):   #Gamma values of 0.05 and 0.5
-					gabor_label = 'gabor' + str(num)  #Label Gabor columns as Gabor1, Gabor2, etc.
-					ksize=5
-					kernel = cv2.getGaborKernel((ksize, ksize), sigma, theta, lamda, gamma, 0, ktype=cv2.CV_32F)    
-					kernels.append(kernel)
-					#Now filter the image and add values to a new column 
-					fimg = cv2.filter2D(img2, cv2.CV_8UC3, kernel)
-					filtered_img = fimg.reshape(-1)
-					df[gabor_label] = filtered_img  #Labels columns as Gabor1, Gabor2, etc.
+					if num not in (14, 12, 1, 2, 20, 19, 18, 9, 10, 11, 26, 22, 13, 25, 17, 33, 34, 42 , 41, 21):
+						gabor_label = 'gabor' + str(num)  #Label Gabor columns as Gabor1, Gabor2, etc.
+						ksize=5
+						kernel = cv2.getGaborKernel((ksize, ksize), sigma, theta, lamda, gamma, 0, ktype=cv2.CV_32F)    
+						kernels.append(kernel)
+						#Now filter the image and add values to a new column 
+						fimg = cv2.filter2D(img2, cv2.CV_8UC3, kernel)
+						filtered_img = fimg.reshape(-1)
+						df[gabor_label] = filtered_img  #Labels columns as Gabor1, Gabor2, etc.
 					num += 1  #Increment for gabor column label
-					
-########################################
+
+
 #Gerate OTHER FEATURES and add them to the data frame
 							
 #CANNY EDGE
@@ -77,19 +78,9 @@ edge_sobel = sobel(img)
 edge_sobel1 = edge_sobel.reshape(-1)
 df['sobel'] = edge_sobel1
 
-#SCHARR
-edge_scharr = scharr(img)
-edge_scharr1 = edge_scharr.reshape(-1)
-df['scharr'] = edge_scharr1
-
-#PREWITT
-edge_prewitt = prewitt(img)
-edge_prewitt1 = edge_prewitt.reshape(-1)
-df['prewitt'] = edge_prewitt1
-
-#ENTROPHY with sigma=3
+#ENTROPY with sigma=3
 entrophy_img = entropy(img, disk(3))
-df['entrophy'] = entrophy_img.reshape(-1)
+df['entropy'] = entrophy_img.reshape(-1)
 
 #GAUSSIAN with sigma=1
 gaussian_img = nd.gaussian_filter(img, sigma=1)
@@ -115,6 +106,11 @@ df['gaussianS7'] = gaussian_img1
 median_img = nd.median_filter(img, size=3)
 median_img1 = median_img.reshape(-1)
 df['medianS3'] = median_img1
+
+#MEDIAN with sigma=5
+median_img = nd.median_filter(img, size=5)
+median_img1 = median_img.reshape(-1)
+df['medianS5'] = median_img1
 
 #VARIANCE with size=3
 variance_img = nd.generic_filter(img, np.var, size=3)

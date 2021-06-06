@@ -1,5 +1,6 @@
 import { IExamsRepository } from '../../repositories/ExamsRepository/models/IExamsRepository';
 import path from 'path';
+import fs from 'fs';
 import { uploadConfig } from '../../../../config/upload';
 import { inject, injectable } from 'tsyringe';
 import { IStorageProvider } from '../../../../shared/providers/StorageProvider/models/IStorageProvider';
@@ -9,11 +10,17 @@ import { ISegmentedExamsRepository } from '../../repositories/SegmentedExamsRepo
 import { ISegmentedExam } from '../../entities/models/ISegmentedExam';
 import { IPixelCounterProvider } from '../../providers/PixelCounterProvider/models/IPixelCounterProvider';
 import { IGenerateOverlayImageProvider } from '../../providers/GenerateOverlayImageProvider/models/IGenerateOverlayImageProvider';
+import { IMlpSegmentationProvider } from '../../providers/MlpSegmentationProvider /models/IMlpSegmentationProvider';
+import { IGenerateAttributesVectorProvider } from '../../providers/GenerateAttributesVectorProvider/models';
+import { AppError } from '../../../../shared/errors/AppError';
 
 interface IApplySegmentationModelServiceDTO {
 	id: string;
 	algorithm: ISegmentedExam['algorithm'];
 	randomForestParams?: {
+		threshold: number;
+	},
+	mlpParams?: {
 		threshold: number;
 	}
 }
@@ -30,15 +37,19 @@ export class ApplySegmentationModelService {
 		private segmentedExamsRepository: ISegmentedExamsRepository,
 		@inject('StorageProvider')
 		private storageProvider: IStorageProvider,
+		@inject('GenerateAttributesVectorProvider')
+		private generateAttributesVector: IGenerateAttributesVectorProvider,
 		@inject('RandomForestSegmentationProvider')
 		private randomForestSegmentationProvider: IRandomForestSegmentationProvider,
+		@inject('MlpSegmentationProvider')
+		private mlpSegmentationProvider: IMlpSegmentationProvider,
 		@inject('PixelCounterProvider')
 		private pixelCounterProvider: IPixelCounterProvider,
 		@inject('GenerateOverlayImageProvider')
 		private generateImageOverlayProvider: IGenerateOverlayImageProvider
 	) { }
 
-	async execute({ id, algorithm, randomForestParams }: IApplySegmentationModelServiceDTO): Promise<ISegmentedExam> {
+	async execute({ id, algorithm, randomForestParams, mlpParams }: IApplySegmentationModelServiceDTO): Promise<ISegmentedExam> {
 		const exam = await this.examsRepository.findById(id);
 
 		const alreadySegmented = await this.segmentedExamsRepository.findByExamIdAndAlgorithm({
@@ -48,16 +59,43 @@ export class ApplySegmentationModelService {
 
 		if (alreadySegmented) {
 			if (alreadySegmented.algorithm === 'randomForest' && randomForestParams?.threshold === alreadySegmented.threshold) return alreadySegmented;
+			if (alreadySegmented.algorithm === 'MLP' && mlpParams?.threshold === alreadySegmented.threshold) return alreadySegmented;
 			if (alreadySegmented.algorithm === 'SVM') return alreadySegmented;
 		}
 
-		const threshold = randomForestParams?.threshold || 0.4;
-		const { dicomPatientId, pixelArea, originalImagePath, resultImagePath, edgeImagePath } = await this.randomForestSegmentationProvider
-			.applyModel({
+		const threshold = randomForestParams?.threshold ?? mlpParams?.threshold ?? 0.4;
+
+		const { dicomPatientId, pixelArea, originalImagePath, attributesCsvPath, rows, cols } = await this.generateAttributesVector
+			.generate({
 				dcmPath: path.resolve(uploadConfig.diskStorageProviderConfig.destination, exam.dicomFileLocation),
-				outDirectoryPath: uploadConfig.tmpUploadsPath,
-				proba: threshold
+				outDirectoryPath: uploadConfig.tmpUploadsPath
 			});
+
+		let segmented: { edgeImagePath: string, resultImagePath: string } | undefined = undefined;
+
+		if (algorithm === 'MLP') {
+			segmented = await this.mlpSegmentationProvider.applyModel({
+				csvPath: path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath),
+				outDirectoryPath: uploadConfig.tmpUploadsPath,
+				proba: threshold,
+				shape: [rows, cols]
+			});
+		}
+
+		if (algorithm === 'randomForest') {
+			segmented = await this.randomForestSegmentationProvider.applyModel({
+				csvPath: path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath),
+				outDirectoryPath: uploadConfig.tmpUploadsPath,
+				proba: threshold,
+				shape: [rows, cols]
+			});
+		}
+
+		if (!segmented) {
+			throw new AppError('Invalid request');
+		}
+
+		const { edgeImagePath, resultImagePath } = segmented;
 
 		const overlayImagePath = await this.generateImageOverlayProvider.apply({
 			originalImagePath: path.resolve(uploadConfig.tmpUploadsPath, originalImagePath),
@@ -86,6 +124,8 @@ export class ApplySegmentationModelService {
 		});
 
 		await this.segmentedExamsRepository.deleteByExamId(exam.id);
+
+		await fs.promises.unlink(path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath));
 
 		return (await this.segmentedExamsRepository.create({
 			examId: exam.id,

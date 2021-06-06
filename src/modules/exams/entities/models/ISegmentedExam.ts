@@ -1,6 +1,6 @@
 export interface ISegmentedExam {
 	examId: string;
-	algorithm: 'randomForest' | 'SVM';
+	algorithm: 'randomForest' | 'SVM' | 'MLP';
 	threshold: number;
 	affectedArea: number;
 	classifiedArea: number;

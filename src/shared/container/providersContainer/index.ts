@@ -11,10 +11,16 @@ import { NumpyPixelCounterProvider } from '../../../modules/exams/providers/Pixe
 import { IPixelCounterProvider } from '../../../modules/exams/providers/PixelCounterProvider/models/IPixelCounterProvider';
 import { IGenerateOverlayImageProvider } from '../../../modules/exams/providers/GenerateOverlayImageProvider/models/IGenerateOverlayImageProvider';
 import { SkimageGenerateOverlayImageProvider } from '../../../modules/exams/providers/GenerateOverlayImageProvider/implementations/SkimageGenerateOverlayImageProvider';
+import { IGenerateAttributesVectorProvider } from '../../../modules/exams/providers/GenerateAttributesVectorProvider/models';
+import { PyGenerateAttributesVectorProvider } from '../../../modules/exams/providers/GenerateAttributesVectorProvider/implementations/PyGenerateAttributesVectorProvider';
+import { PyMlpSegmentationProvider } from '../../../modules/exams/providers/MlpSegmentationProvider /implementations/PyMlpSegmentationProvider';
+import { IMlpSegmentationProvider } from '../../../modules/exams/providers/MlpSegmentationProvider /models/IMlpSegmentationProvider';
 
 
 container.registerSingleton<IHashProvider>('HashProvider', BCryptHashProvider);
 container.registerSingleton<IStorageProvider>('StorageProvider', DiskStorageProvider);
 container.registerSingleton<IRandomForestSegmentationProvider>('RandomForestSegmentationProvider', PyRandomForestSegmentationProvider);
+container.registerSingleton<IMlpSegmentationProvider>('MlpSegmentationProvider', PyMlpSegmentationProvider);
 container.registerSingleton<IPixelCounterProvider>('PixelCounterProvider', NumpyPixelCounterProvider);
 container.registerSingleton<IGenerateOverlayImageProvider>('GenerateOverlayImageProvider', SkimageGenerateOverlayImageProvider);
+container.registerSingleton<IGenerateAttributesVectorProvider>('GenerateAttributesVectorProvider', PyGenerateAttributesVectorProvider);

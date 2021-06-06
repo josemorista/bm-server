@@ -1,16 +1,14 @@
 
 export interface IRandomForestApplyModelDTO {
-	dcmPath: string;
+	csvPath: string;
 	outDirectoryPath: string;
 	proba: number;
+	shape: [number, number];
 }
 
 export interface IRandomForestSegmentationProviderResponseDTO {
-	originalImagePath: string;
 	resultImagePath: string;
 	edgeImagePath: string;
-	pixelArea: number;
-	dicomPatientId: string;
 }
 
 export interface IRandomForestSegmentationProvider {

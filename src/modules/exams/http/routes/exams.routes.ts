@@ -46,8 +46,9 @@ examsRouter.post('/:examId/segmentation', async (request, response) => {
 	return response.json(await applySegmentationModelService.execute(
 		{
 			id: examId,
-			algorithm: 'randomForest',
-			randomForestParams: request.body.randomForestParams
+			algorithm: request.body.algorithm,
+			randomForestParams: request.body.randomForestParams,
+			mlpParams: request.body.mlpParams
 		}
 	));
 });

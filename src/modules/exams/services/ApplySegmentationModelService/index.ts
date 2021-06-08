@@ -13,14 +13,12 @@ import { IGenerateOverlayImageProvider } from '../../providers/GenerateOverlayIm
 import { IMlpSegmentationProvider } from '../../providers/MlpSegmentationProvider /models/IMlpSegmentationProvider';
 import { IGenerateAttributesVectorProvider } from '../../providers/GenerateAttributesVectorProvider/models';
 import { AppError } from '../../../../shared/errors/AppError';
+import { INaiveBayesSegmentationProvider } from '../../providers/NaiveBayesSegmentationProvider/models/INaiveBayesSegmentationProvider';
 
 interface IApplySegmentationModelServiceDTO {
 	id: string;
 	algorithm: ISegmentedExam['algorithm'];
-	randomForestParams?: {
-		threshold: number;
-	},
-	mlpParams?: {
+	params?: {
 		threshold: number;
 	}
 }
@@ -43,13 +41,15 @@ export class ApplySegmentationModelService {
 		private randomForestSegmentationProvider: IRandomForestSegmentationProvider,
 		@inject('MlpSegmentationProvider')
 		private mlpSegmentationProvider: IMlpSegmentationProvider,
+		@inject('NaiveBayesSegmentationProvider')
+		private naiveBayesSegmentationProvider: INaiveBayesSegmentationProvider,
 		@inject('PixelCounterProvider')
 		private pixelCounterProvider: IPixelCounterProvider,
 		@inject('GenerateOverlayImageProvider')
 		private generateImageOverlayProvider: IGenerateOverlayImageProvider
 	) { }
 
-	async execute({ id, algorithm, randomForestParams, mlpParams }: IApplySegmentationModelServiceDTO): Promise<ISegmentedExam> {
+	async execute({ id, algorithm, params }: IApplySegmentationModelServiceDTO): Promise<ISegmentedExam> {
 		const exam = await this.examsRepository.findById(id);
 
 		const alreadySegmented = await this.segmentedExamsRepository.findByExamIdAndAlgorithm({
@@ -58,12 +58,11 @@ export class ApplySegmentationModelService {
 		});
 
 		if (alreadySegmented) {
-			if (alreadySegmented.algorithm === 'randomForest' && randomForestParams?.threshold === alreadySegmented.threshold) return alreadySegmented;
-			if (alreadySegmented.algorithm === 'MLP' && mlpParams?.threshold === alreadySegmented.threshold) return alreadySegmented;
+			if (['randomForest', 'MLP', 'naiveBayes'].includes(alreadySegmented.algorithm) && params?.threshold === alreadySegmented.threshold) return alreadySegmented;
 			if (alreadySegmented.algorithm === 'SVM') return alreadySegmented;
 		}
 
-		const threshold = randomForestParams?.threshold ?? mlpParams?.threshold ?? 0.4;
+		const threshold = params?.threshold ?? 0.4;
 
 		const { dicomPatientId, pixelArea, originalImagePath, attributesCsvPath, rows, cols } = await this.generateAttributesVector
 			.generate({
@@ -73,23 +72,31 @@ export class ApplySegmentationModelService {
 
 		let segmented: { edgeImagePath: string, resultImagePath: string } | undefined = undefined;
 
-		if (algorithm === 'MLP') {
-			segmented = await this.mlpSegmentationProvider.applyModel({
-				csvPath: path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath),
-				outDirectoryPath: uploadConfig.tmpUploadsPath,
-				proba: threshold,
-				shape: [rows, cols]
-			});
-		}
+		segmented = await (option => {
+			const options = {
+				'MLP': this.mlpSegmentationProvider.applyModel({
+					csvPath: path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath),
+					outDirectoryPath: uploadConfig.tmpUploadsPath,
+					proba: threshold,
+					shape: [rows, cols]
+				}),
+				'randomForest': this.randomForestSegmentationProvider.applyModel({
+					csvPath: path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath),
+					outDirectoryPath: uploadConfig.tmpUploadsPath,
+					proba: threshold,
+					shape: [rows, cols]
+				}),
+				'SVM': undefined,
+				'naiveBayes': this.naiveBayesSegmentationProvider.applyModel({
+					csvPath: path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath),
+					outDirectoryPath: uploadConfig.tmpUploadsPath,
+					proba: threshold,
+					shape: [rows, cols]
+				}),
+			};
+			return options[option];
+		})(algorithm);
 
-		if (algorithm === 'randomForest') {
-			segmented = await this.randomForestSegmentationProvider.applyModel({
-				csvPath: path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath),
-				outDirectoryPath: uploadConfig.tmpUploadsPath,
-				proba: threshold,
-				shape: [rows, cols]
-			});
-		}
 
 		if (!segmented) {
 			throw new AppError('Invalid request');

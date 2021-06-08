@@ -12,10 +12,11 @@ export class SegmentedExam implements ISegmentedExam {
 		type: 'enum', enum: [
 			'randomForest',
 			'SVM',
-			'MLP'
+			'MLP',
+			'naiveBayes'
 		]
 	})
-	algorithm: 'randomForest' | 'SVM' | 'MLP';
+	algorithm: 'randomForest' | 'SVM' | 'MLP' | 'naiveBayes';
 
 	@OneToOne(() => Exam)
 	@JoinColumn({ name: 'examid' })

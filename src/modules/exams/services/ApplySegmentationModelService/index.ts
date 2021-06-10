@@ -72,31 +72,35 @@ export class ApplySegmentationModelService {
 
 		let segmented: { edgeImagePath: string, resultImagePath: string } | undefined = undefined;
 
-		segmented = await (option => {
-			const options = {
-				'MLP': this.mlpSegmentationProvider.applyModel({
+		switch (algorithm) {
+			case 'MLP': {
+				segmented = await this.mlpSegmentationProvider.applyModel({
 					csvPath: path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath),
 					outDirectoryPath: uploadConfig.tmpUploadsPath,
 					proba: threshold,
 					shape: [rows, cols]
-				}),
-				'randomForest': this.randomForestSegmentationProvider.applyModel({
+				});
+				break;
+			}
+			case 'randomForest': {
+				segmented = await this.randomForestSegmentationProvider.applyModel({
 					csvPath: path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath),
 					outDirectoryPath: uploadConfig.tmpUploadsPath,
 					proba: threshold,
 					shape: [rows, cols]
-				}),
-				'SVM': undefined,
-				'naiveBayes': this.naiveBayesSegmentationProvider.applyModel({
+				});
+				break;
+			}
+			case 'naiveBayes': {
+				this.naiveBayesSegmentationProvider.applyModel({
 					csvPath: path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath),
 					outDirectoryPath: uploadConfig.tmpUploadsPath,
 					proba: threshold,
 					shape: [rows, cols]
-				}),
-			};
-			return options[option];
-		})(algorithm);
-
+				});
+				break;
+			}
+		}
 
 		if (!segmented) {
 			throw new AppError('Invalid request');

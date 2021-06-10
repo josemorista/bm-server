@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 export class createSegmentedExamsTable1620432305215 implements MigrationInterface {
 
 	public async up(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.query('create type segmentationAlgorithms as enum(\'randomForest\', \'SVM\', \'MLP\');');
+		await queryRunner.query('create type segmentationAlgorithms as enum(\'randomForest\', \'SVM\', \'MLP\', \'naiveBayes\');');
 		await queryRunner.query(`create table if not exists segmentedExams (
 				examId varchar not null primary key,
 				threshold float,

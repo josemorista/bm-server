@@ -21,6 +21,8 @@ import { IMailProvider } from '../../providers/MailProvider/models/IMailProvider
 import { EtherialMailProvider } from '../../providers/MailProvider/implementations/EtherialMailProvider';
 import { ITemplateEngineProvider } from '../../providers/TemplateEngineProvider/models/ITemplateEngineProvider';
 import { HandleBarsTemplateEngineProvider } from '../../providers/TemplateEngineProvider/implementations/HandleBarsTemplateEngineProvider';
+import { IDateProvider } from '../../providers/DateProvider/models/IDateProvider';
+import { DayJsDateProvider } from '../../providers/DateProvider/implementations/DayjsDateProvider';
 
 
 container.registerSingleton<IHashProvider>('HashProvider', BCryptHashProvider);
@@ -33,3 +35,4 @@ container.registerSingleton<IGenerateOverlayImageProvider>('GenerateOverlayImage
 container.registerSingleton<IGenerateAttributesVectorProvider>('GenerateAttributesVectorProvider', PyGenerateAttributesVectorProvider);
 container.registerSingleton<IMailProvider>('MailProvider', EtherialMailProvider);
 container.registerSingleton<ITemplateEngineProvider>('TemplateEngineProvider', HandleBarsTemplateEngineProvider);
+container.registerSingleton<IDateProvider>('DateProvider', DayJsDateProvider);

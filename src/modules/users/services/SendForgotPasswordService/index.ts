@@ -28,11 +28,13 @@ export class SendForgotPasswordService {
 		private templateEngineProvider: ITemplateEngineProvider
 	) { }
 
-	async execute({ email }: ISendForgotPasswordServiceDTO) {
+	async execute({ email }: ISendForgotPasswordServiceDTO): Promise<void> {
 		const user = await this.usersRepository.findByEmail(email);
 		if (!user) {
 			throw new AppError('User not found');
 		}
+
+		await this.usersTokensRepository.deleteAllFromUserId(user.id);
 
 		const token = `${user.id}-${uuid()}`;
 

@@ -21,4 +21,10 @@ export class UsersTokensRepository implements IUsersTokenRepository {
 		return await this.repository.findOne(token);
 	}
 
+	async deleteAllFromUserId(userId: string): Promise<void> {
+		await this.repository.delete({
+			userId
+		});
+	}
+
 }

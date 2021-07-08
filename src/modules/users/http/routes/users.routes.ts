@@ -9,10 +9,12 @@ import { ChangeUserAvatarService } from '../../services/ChangeUserAvatarService'
 import { DiskStorageProvider } from '../../../../shared/providers/StorageProvider/implementations/DiskStorageProvider';
 import { upload } from '../../../../shared/http/middlewares/upload';
 import { BCryptHashProvider } from '../../providers/HashProvider/implementations/BCryptHashProvider';
+import { forgotPasswordRouter } from './forgotPassword.routes';
 
 const usersRouter = Router();
 
 usersRouter.use('/sessions', userSessionsRouter);
+usersRouter.use('/forgot-my-password', forgotPasswordRouter);
 
 usersRouter.post('/', async (request, response) => {
 	const usersRepository = new UsersRepository();

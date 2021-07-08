@@ -17,6 +17,10 @@ import { PyMlpSegmentationProvider } from '../../../modules/exams/providers/MlpS
 import { IMlpSegmentationProvider } from '../../../modules/exams/providers/MlpSegmentationProvider /models/IMlpSegmentationProvider';
 import { INaiveBayesSegmentationProvider } from '../../../modules/exams/providers/NaiveBayesSegmentationProvider/models/INaiveBayesSegmentationProvider';
 import { PyNaiveBayesSegmentationProvider } from '../../../modules/exams/providers/NaiveBayesSegmentationProvider/implementations/PyNaiveBayesSegmentationProvider';
+import { IMailProvider } from '../../providers/MailProvider/models/IMailProvider';
+import { EtherialMailProvider } from '../../providers/MailProvider/implementations/EtherialMailProvider';
+import { ITemplateEngineProvider } from '../../providers/TemplateEngineProvider/models/ITemplateEngineProvider';
+import { HandleBarsTemplateEngineProvider } from '../../providers/TemplateEngineProvider/implementations/HandleBarsTemplateEngineProvider';
 
 
 container.registerSingleton<IHashProvider>('HashProvider', BCryptHashProvider);
@@ -27,3 +31,5 @@ container.registerSingleton<INaiveBayesSegmentationProvider>('NaiveBayesSegmenta
 container.registerSingleton<IPixelCounterProvider>('PixelCounterProvider', NumpyPixelCounterProvider);
 container.registerSingleton<IGenerateOverlayImageProvider>('GenerateOverlayImageProvider', SkimageGenerateOverlayImageProvider);
 container.registerSingleton<IGenerateAttributesVectorProvider>('GenerateAttributesVectorProvider', PyGenerateAttributesVectorProvider);
+container.registerSingleton<IMailProvider>('MailProvider', EtherialMailProvider);
+container.registerSingleton<ITemplateEngineProvider>('TemplateEngineProvider', HandleBarsTemplateEngineProvider);

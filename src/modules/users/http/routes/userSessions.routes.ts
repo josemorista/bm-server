@@ -1,3 +1,4 @@
+import { classToPlain } from 'class-transformer';
 import { Router } from 'express';
 import { UsersRepository } from '../../infra/typeorm/repositories/UsersRepository';
 import { BCryptHashProvider } from '../../providers/HashProvider/implementations/BCryptHashProvider';
@@ -10,7 +11,7 @@ userSessionsRouter.post('/', async (request, response) => {
 	const usersRepository = new UsersRepository();
 	const hashProvider = new BCryptHashProvider();
 	const createSessionService = new CreateUserSessionService(usersRepository, hashProvider);
-	return response.json(await createSessionService.execute(request.body));
+	return response.json(classToPlain(await createSessionService.execute(request.body)));
 });
 
 userSessionsRouter.post('/verify-token', async (request, response) => {

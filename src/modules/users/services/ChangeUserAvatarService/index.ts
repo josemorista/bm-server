@@ -21,7 +21,7 @@ export class ChangeUserAvatarService {
 			this.storageProvider.remove(user.avatar);
 		}
 		const newAvatar = await this.storageProvider.save(tmpFileName);
-		this.usersRepository.updateUserAvatar(userId, newAvatar);
+		this.usersRepository.updateAvatar(userId, newAvatar);
 		user.avatar = newAvatar;
 		return user;
 	}

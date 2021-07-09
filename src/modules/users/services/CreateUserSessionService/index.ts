@@ -13,12 +13,8 @@ export class CreateUserSessionService {
 	async execute({ email, password }: ICreateUserSessionServiceDTO): Promise<{ user: Pick<IUser, 'id' | 'firstName'>, token: string }> {
 		const user = await this.usersRepository.findByEmail(email);
 
-		if (!user) {
+		if (!user || !await this.hashProvider.compare(password, user.password)) {
 			throw new AppError('user not found');
-		}
-
-		if (!await this.hashProvider.compare(password, user.password)) {
-			throw new AppError('wrong password');
 		}
 
 		const token = await jwt.sign({ user: { id: user.id, firstName: user.firstName } }, authConfig.secret, {

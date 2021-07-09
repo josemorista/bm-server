@@ -7,4 +7,8 @@ export class DayJsDateProvider implements IDateProvider {
 		return dayjs(date).add(hours, 'hours').toDate();
 	}
 
+	async isBefore(date: Date, dateToCompare: Date): Promise<boolean> {
+		return dayjs(date).isBefore(dateToCompare);
+	}
+
 }

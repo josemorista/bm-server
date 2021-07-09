@@ -10,7 +10,7 @@ export class FakeUsersRepository implements IUsersRepository {
 	}
 
 	async create(data: ICreateUserDTO): Promise<IUser> {
-		const user = { ...data, createdAt: new Date(), updatedAt: new Date() };
+		const user = { ...data, createdAt: new Date(), updatedAt: new Date(), avatarURL: null };
 		this.users.push(user);
 		return user;
 	}
@@ -31,12 +31,20 @@ export class FakeUsersRepository implements IUsersRepository {
 		return user;
 	}
 
-	async updateUserAvatar(id: string, avatar: string): Promise<void> {
+	async updateAvatar(id: string, avatar: string): Promise<void> {
 		const index = this.users.findIndex(el => el.id === id);
 		if (index === -1) {
 			throw new AppError('user does not exists');
 		}
 		this.users[index].avatar = avatar;
+	}
+
+	async updatePassword(id: string, password: string): Promise<void> {
+		const index = this.users.findIndex(el => el.id === id);
+		if (index === -1) {
+			throw new AppError('user does not exists');
+		}
+		this.users[index].password = password;
 	}
 
 }

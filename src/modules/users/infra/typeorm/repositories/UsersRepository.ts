@@ -34,7 +34,12 @@ export class UsersRepository implements IUsersRepository {
 		return await this.ormRepository.find();
 	}
 
-	async updateUserAvatar(id: string, avatar: string): Promise<void> {
+	async updateAvatar(id: string, avatar: string): Promise<void> {
 		await this.ormRepository.update({ id }, { avatar });
 	}
+
+	async updatePassword(id: string, password: string): Promise<void> {
+		await this.ormRepository.update({ id }, { password });
+	}
+
 }

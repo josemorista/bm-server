@@ -39,7 +39,7 @@ usersRouter.patch('/avatar', ensureAuthentication, upload.single('avatar'), asyn
 	const changeUserAvatarService = new ChangeUserAvatarService(usersRepository, diskStorageProvider);
 	return response.json(await changeUserAvatarService.execute({
 		userId: request.user.id,
-		tmpFileName: request.file.filename
+		tmpFileName: request.file?.filename || ''
 	}));
 });
 

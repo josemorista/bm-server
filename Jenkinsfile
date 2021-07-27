@@ -30,7 +30,6 @@ pipeline {
 							rm -rf $directory/dist
 							rm -rf $directory/tmp
 							rm -rf $directory/node_modules
-							rm $directory/docker-compose.yml
 							rm $directory/package.json
 							rm $directory/process.json
 							tar -xf /tmp/$artifact -C $directory

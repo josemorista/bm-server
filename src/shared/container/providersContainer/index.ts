@@ -23,7 +23,7 @@ import { ITemplateEngineProvider } from '../../providers/TemplateEngineProvider/
 import { HandleBarsTemplateEngineProvider } from '../../providers/TemplateEngineProvider/implementations/HandleBarsTemplateEngineProvider';
 import { IDateProvider } from '../../providers/DateProvider/models/IDateProvider';
 import { DayJsDateProvider } from '../../providers/DateProvider/implementations/DayjsDateProvider';
-
+import { SESMailProvider } from '../../providers/MailProvider/implementations/SESMailProvider';
 
 container.registerSingleton<IHashProvider>('HashProvider', BCryptHashProvider);
 container.registerSingleton<IStorageProvider>('StorageProvider', DiskStorageProvider);
@@ -33,6 +33,11 @@ container.registerSingleton<INaiveBayesSegmentationProvider>('NaiveBayesSegmenta
 container.registerSingleton<IPixelCounterProvider>('PixelCounterProvider', NumpyPixelCounterProvider);
 container.registerSingleton<IGenerateOverlayImageProvider>('GenerateOverlayImageProvider', SkimageGenerateOverlayImageProvider);
 container.registerSingleton<IGenerateAttributesVectorProvider>('GenerateAttributesVectorProvider', PyGenerateAttributesVectorProvider);
-container.registerSingleton<IMailProvider>('MailProvider', EtherialMailProvider);
 container.registerSingleton<ITemplateEngineProvider>('TemplateEngineProvider', HandleBarsTemplateEngineProvider);
 container.registerSingleton<IDateProvider>('DateProvider', DayJsDateProvider);
+
+if (process.env.NODE_ENV === 'development') {
+	container.registerSingleton<IMailProvider>('MailProvider', EtherialMailProvider);
+} else {
+	container.registerSingleton<IMailProvider>('MailProvider', SESMailProvider);
+}

@@ -31,6 +31,8 @@ export class RedefineUserPasswordService {
 			throw new AppError('Token not found', 404);
 		}
 
+		await this.usersTokensRepository.deleteAllFromUserId(userToken.userId);
+
 		if (!this.dateProvider.isBefore(
 			new Date(), typeof userToken.expiresAt === 'string' ? new Date(userToken.expiresAt) : userToken.expiresAt)) {
 			throw new AppError('Token expired', 401);

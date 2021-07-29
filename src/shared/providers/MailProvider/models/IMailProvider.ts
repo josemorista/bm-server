@@ -1,5 +1,4 @@
 export interface ISendMailDTO {
-	from?: string;
 	to: string;
 	subject: string;
 	content: string;

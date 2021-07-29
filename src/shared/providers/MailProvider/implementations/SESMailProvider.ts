@@ -10,7 +10,7 @@ export class SESMailProvider implements IMailProvider {
 
 	constructor() {
 		this.ses = new aws.SES({
-			region: 'us-east-1'
+			region: mailConfig.SES.region
 		});
 		this.transporter = createTransport({
 			SES: { ses: this.ses, aws }

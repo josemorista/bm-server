@@ -13,7 +13,6 @@ import { IGenerateOverlayImageProvider } from '../../providers/GenerateOverlayIm
 import { IMlpSegmentationProvider } from '../../providers/MlpSegmentationProvider /models/IMlpSegmentationProvider';
 import { IGenerateAttributesVectorProvider } from '../../providers/GenerateAttributesVectorProvider/models';
 import { AppError } from '../../../../shared/errors/AppError';
-import { INaiveBayesSegmentationProvider } from '../../providers/NaiveBayesSegmentationProvider/models/INaiveBayesSegmentationProvider';
 
 interface IApplySegmentationModelServiceDTO {
 	id: string;
@@ -41,8 +40,6 @@ export class ApplySegmentationModelService {
 		private randomForestSegmentationProvider: IRandomForestSegmentationProvider,
 		@inject('MlpSegmentationProvider')
 		private mlpSegmentationProvider: IMlpSegmentationProvider,
-		@inject('NaiveBayesSegmentationProvider')
-		private naiveBayesSegmentationProvider: INaiveBayesSegmentationProvider,
 		@inject('PixelCounterProvider')
 		private pixelCounterProvider: IPixelCounterProvider,
 		@inject('GenerateOverlayImageProvider')
@@ -84,15 +81,6 @@ export class ApplySegmentationModelService {
 			}
 			case 'randomForest': {
 				segmented = await this.randomForestSegmentationProvider.applyModel({
-					csvPath: path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath),
-					outDirectoryPath: uploadConfig.tmpUploadsPath,
-					proba: threshold,
-					shape: [rows, cols]
-				});
-				break;
-			}
-			case 'naiveBayes': {
-				this.naiveBayesSegmentationProvider.applyModel({
 					csvPath: path.resolve(uploadConfig.tmpUploadsPath, attributesCsvPath),
 					outDirectoryPath: uploadConfig.tmpUploadsPath,
 					proba: threshold,

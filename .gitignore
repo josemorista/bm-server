@@ -10,3 +10,4 @@ dist
 */**/*.png
 */*.png
 */*.dcm
+.yarn

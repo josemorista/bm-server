@@ -48,6 +48,4 @@ RUN mkdir -p ./uploads
 
 EXPOSE 3333
 
-# CMD ["npm", "run", "dev:server"]
-
 CMD [ "pm2-runtime", "start", "process.json" ]

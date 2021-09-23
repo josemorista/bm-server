@@ -35,6 +35,8 @@ img = cv.imread(f"{outFolderPath}/org-{filename}.png", cv.IMREAD_GRAYSCALE);
 df = pd.DataFrame()
 pixelData = img.reshape(-1)
 df["originalValue"] = pixelData;
+df["position"] = range(0, len(pixelData));
+df["position"] = df["position"] / df["position"].max();
 df["dicomValue"] = ds.pixel_array.reshape(-1);
 df["gaussian5"] = (nd.gaussian_filter(img, sigma=5).reshape(-1));
 df["gaussian3"] = (nd.gaussian_filter(img, sigma=3).reshape(-1));

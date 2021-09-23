@@ -11,3 +11,6 @@ dist
 */*.png
 */*.dcm
 .yarn
+.mypy_cache
+.vscode
+include

@@ -8,7 +8,8 @@ export class PyGenerateAttributesVectorProvider implements IGenerateAttributesVe
 		const process = spawnSync('python3', [
 			path.resolve(__dirname, 'generate.py'),
 			dcmPath,
-			outDirectoryPath
+			outDirectoryPath,
+			__dirname
 		]);
 		return JSON.parse(process.stdout.toString());
 	}

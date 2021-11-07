@@ -9,6 +9,7 @@ ormconfig.json
 dist
 */**/*.png
 */*.png
+!*/**/waist.png
 */*.dcm
 .yarn
 .mypy_cache

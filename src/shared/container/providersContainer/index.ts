@@ -13,8 +13,6 @@ import { IGenerateOverlayImageProvider } from '../../../modules/exams/providers/
 import { SkimageGenerateOverlayImageProvider } from '../../../modules/exams/providers/GenerateOverlayImageProvider/implementations/SkimageGenerateOverlayImageProvider';
 import { IGenerateAttributesVectorProvider } from '../../../modules/exams/providers/GenerateAttributesVectorProvider/models';
 import { PyGenerateAttributesVectorProvider } from '../../../modules/exams/providers/GenerateAttributesVectorProvider/implementations/PyGenerateAttributesVectorProvider';
-import { PyMlpSegmentationProvider } from '../../../modules/exams/providers/MlpSegmentationProvider /implementations/PyMlpSegmentationProvider';
-import { IMlpSegmentationProvider } from '../../../modules/exams/providers/MlpSegmentationProvider /models/IMlpSegmentationProvider';
 import { IMailProvider } from '../../providers/MailProvider/models/IMailProvider';
 import { EtherialMailProvider } from '../../providers/MailProvider/implementations/EtherialMailProvider';
 import { ITemplateEngineProvider } from '../../providers/TemplateEngineProvider/models/ITemplateEngineProvider';
@@ -22,6 +20,8 @@ import { HandleBarsTemplateEngineProvider } from '../../providers/TemplateEngine
 import { IDateProvider } from '../../providers/DateProvider/models/IDateProvider';
 import { DayJsDateProvider } from '../../providers/DateProvider/implementations/DayjsDateProvider';
 import { SESMailProvider } from '../../providers/MailProvider/implementations/SESMailProvider';
+import { PyMlpSegmentationProvider } from '../../../modules/exams/providers/MlpSegmentationProvider/implementations/PyMlpSegmentationProvider';
+import { IMlpSegmentationProvider } from '../../../modules/exams/providers/MlpSegmentationProvider/models/IMlpSegmentationProvider';
 
 container.registerSingleton<IHashProvider>('HashProvider', BCryptHashProvider);
 container.registerSingleton<IStorageProvider>('StorageProvider', DiskStorageProvider);

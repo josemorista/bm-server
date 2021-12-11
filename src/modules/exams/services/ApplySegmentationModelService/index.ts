@@ -10,7 +10,7 @@ import { ISegmentedExamsRepository } from '../../repositories/SegmentedExamsRepo
 import { ISegmentedExam } from '../../entities/models/ISegmentedExam';
 import { IPixelCounterProvider } from '../../providers/PixelCounterProvider/models/IPixelCounterProvider';
 import { IGenerateOverlayImageProvider } from '../../providers/GenerateOverlayImageProvider/models/IGenerateOverlayImageProvider';
-import { IMlpSegmentationProvider } from '../../providers/MlpSegmentationProvider /models/IMlpSegmentationProvider';
+import { IMlpSegmentationProvider } from '../../providers/MlpSegmentationProvider/models/IMlpSegmentationProvider';
 import { IGenerateAttributesVectorProvider } from '../../providers/GenerateAttributesVectorProvider/models';
 import { AppError } from '../../../../shared/errors/AppError';
 

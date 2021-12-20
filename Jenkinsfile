@@ -19,7 +19,7 @@ pipeline {
 								sh('npm run build')
 								sh('cp ./src/modules/exams/providers/GenerateAttributesVectorProvider/implementations/PyGenerateAttributesVectorProvider/pca ./dist/modules/exams/providers/GenerateAttributesVectorProvider/implementations/PyGenerateAttributesVectorProvider/pca')
 								sh('cp ./src/modules/exams/providers/GenerateAttributesVectorProvider/implementations/PyGenerateAttributesVectorProvider/scaler ./dist/modules/exams/providers/GenerateAttributesVectorProvider/implementations/PyGenerateAttributesVectorProvider/scaler')
-								sh('cp ./src/modules/exams/providers/RandomForestSegmentationProvider/implementations/PyRandomForestSegmentationProvider/rf.model ./dist/modules/exams/providers/RandomForestSegmentationProvider/implementations/PyRandomForestSegmentationProvider/rf.model')
+								sh('cp ./src/modules/exams/providers/RandomForestSegmentationProvider/implementations/PyRandomForestSegmentationProvider/rfmodel ./dist/modules/exams/providers/RandomForestSegmentationProvider/implementations/PyRandomForestSegmentationProvider/rfmodel')
 								sh('tar czf $artifact node_modules package.json dist process.json ormconfig.json')
 								sh('scp ./$artifact $sshuser@$host:/tmp/$artifact')
 								sh('rm -rf ./*')

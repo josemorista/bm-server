@@ -1,1 +1,4 @@
 *.model filter=lfs diff=lfs merge=lfs -text
+src/modules/exams/providers/RandomForestSegmentationProvider/implementations/PyRandomForestSegmentationProvider/rfmodel filter=lfs diff=lfs merge=lfs -text
+src/modules/exams/providers/GenerateAttributesVectorProvider/implementations/PyGenerateAttributesVectorProvider/pca filter=lfs diff=lfs merge=lfs -text
+src/modules/exams/providers/RandomForestSegmentationProvider/implementations/PyRandomForestSegmentationProvider/rf.model filter=lfs diff=lfs merge=lfs -text

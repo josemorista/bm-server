@@ -9,7 +9,7 @@ export class PyRandomForestSegmentationProvider implements IRandomForestSegmenta
 			csvPath,
 			outDirectoryPath,
 			String(proba),
-			path.resolve(__dirname, 'rf.model'),
+			path.resolve(__dirname, 'rfmodel'),
 			String(shape[0]),
 			String(shape[1])
 		]);

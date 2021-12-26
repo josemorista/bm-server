@@ -14,6 +14,9 @@ export class Exam implements IExam {
 	@Column({ type: 'varchar' })
 	label: string;
 
+	@Column({ type: 'smallint', name: 'radiotracerapplicationhours' })
+	radioTracerApplicationHours: number;
+
 	@Column({ type: 'varchar', name: 'patientid' })
 	patientId: string;
 

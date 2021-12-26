@@ -1,7 +1,7 @@
 
 export interface IGenerateOverlayImageDTO {
 	originalImagePath: string;
-	edgeImagePath: string;
+	resultImagePath: string;
 	outDirPath: string;
 }
 

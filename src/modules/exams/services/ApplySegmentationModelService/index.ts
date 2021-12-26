@@ -98,7 +98,7 @@ export class ApplySegmentationModelService {
 
 		const overlayImagePath = await this.generateImageOverlayProvider.apply({
 			originalImagePath: path.resolve(uploadConfig.tmpUploadsPath, originalImagePath),
-			edgeImagePath: path.resolve(uploadConfig.tmpUploadsPath, edgeImagePath),
+			resultImagePath: path.resolve(uploadConfig.tmpUploadsPath, resultImagePath),
 			outDirPath: uploadConfig.tmpUploadsPath
 		});
 

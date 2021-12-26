@@ -5,11 +5,11 @@ import { IGenerateOverlayImageProvider, IGenerateOverlayImageDTO } from '../../m
 
 export class SkimageGenerateOverlayImageProvider implements IGenerateOverlayImageProvider {
 
-	async apply({ originalImagePath, edgeImagePath, outDirPath }: IGenerateOverlayImageDTO): Promise<string> {
+	async apply({ originalImagePath, resultImagePath, outDirPath }: IGenerateOverlayImageDTO): Promise<string> {
 		const process = spawnSync('python3', [
 			path.resolve(__dirname, 'apply.py'),
 			originalImagePath,
-			edgeImagePath,
+			resultImagePath,
 			outDirPath
 		]);
 		return process.stdout.toString();

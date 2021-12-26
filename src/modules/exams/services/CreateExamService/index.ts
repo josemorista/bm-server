@@ -9,6 +9,7 @@ interface ICreateExamServiceDTO {
 	filename: string;
 	patientId: string;
 	category: IExam['category'];
+	radioTracerApplicationHours: number;
 	date: Date | string;
 }
 
@@ -22,7 +23,7 @@ export class CreateExamService {
 		private storageProvider: IStorageProvider
 	) { }
 
-	async execute({ filename, label, patientId, category, date }: ICreateExamServiceDTO): Promise<IExam> {
+	async execute({ filename, label, patientId, category, date, radioTracerApplicationHours }: ICreateExamServiceDTO): Promise<IExam> {
 		const id = uuid();
 
 		const dicomFileLocation = await this.storageProvider.save(filename, id);
@@ -34,6 +35,7 @@ export class CreateExamService {
 				category,
 				patientId,
 				dicomFileLocation,
+				radioTracerApplicationHours,
 				date
 			});
 

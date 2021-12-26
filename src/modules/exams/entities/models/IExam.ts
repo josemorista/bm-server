@@ -7,6 +7,7 @@ export interface IExam {
 	category: 'ant' | 'post' | 'cra';
 
 	date: Date | string;
+	radioTracerApplicationHours: number;
 
 	patientId: string;
 	patient?: IPatient;

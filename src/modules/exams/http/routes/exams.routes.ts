@@ -36,7 +36,8 @@ examsRouter.post('/', upload.single('dcm'), async (request, response) => {
 	return response.json(await createExamService.execute({
 		filename: request.file?.filename || '',
 		patientId: String(patientId),
-		...request.body
+		...request.body,
+		radioTracerApplicationHours: Number(request.body.radioTracerApplicationHours)
 	}));
 });
 
